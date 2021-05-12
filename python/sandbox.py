@@ -1,12 +1,17 @@
 from random import random
+from os import listdir
+import os
 
 print("HV!")
 
-names = ["killo", "mollo", "shadir"]
-print(names)
+files = os.listdir('/robokerho/python')
+print(files)
 
-#while(True):
-    #print((int)(random()*len(names)))
+alea = (int)(random()*len(files))
+
+while(True):
+    print(files[alea])
+    alea = (int)(random()*len(files))
 
 lotr = '/home/pi/kikkelis/kokkelis'
 print(lotr.rsplit('/home/pi'))
