@@ -1,7 +1,7 @@
 import sounddevice as sd
 import soundfile as sf
 
-filename = '/home/pi/robokerho/samples/marina/1 Felicidad.wav'
+filename = '/home/pi/robokerho/samples/hurjajuttu/Puhe 006HalvintaKaljaa.wav'
 # Extract data and sampling rate from file
 data, fs = sf.read(filename, dtype='float32')  
 sd.play(data, fs)

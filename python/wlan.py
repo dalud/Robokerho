@@ -3,6 +3,7 @@ import socket
 HOST = '192.168.1.104'
 PORT = 9050
 
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
@@ -12,6 +13,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         print('Connected by', addr)
 
         while True:
+            #Listen
             data = conn.recv(1024)
             if not data:
                 break
