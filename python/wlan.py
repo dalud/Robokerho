@@ -1,20 +1,21 @@
-import socket
+from socket import *
 
-HOST = '192.168.1.104'
-PORT = 9050
+# Listen
+with socket(AF_INET, SOCK_DGRAM) as s:
+    s.bind(('', 12345))
+
+    while True:
+        data = s.recvfrom(1024)
+        print('I hear:' + data[0].decode())
+
+# Speak
+s=socket(AF_INET, SOCK_DGRAM)
+s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+
+while True:
+    try:        
+        s.sendto(b'this is testing',('255.255.255.255',12345))
+    except:
+        print('No one listening')
 
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-
-    with conn:
-        print('Connected by', addr)
-
-        while True:
-            #Listen
-            data = conn.recv(1024)
-            if not data:
-                break
-            print(data)
