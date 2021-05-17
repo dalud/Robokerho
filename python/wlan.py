@@ -1,21 +1,20 @@
 from socket import *
 
 # Listen
-with socket(AF_INET, SOCK_DGRAM) as s:
-    s.bind(('', 12345))
-
-    while True:
-        data = s.recvfrom(1024)
-        print('I hear:' + data[0].decode())
+def listen():
+    ear = socket(AF_INET, SOCK_DGRAM)
+    ear.bind(('', 12345))    
+    data = ear.recvfrom(1024)
+    print('I hear:', data)
 
 # Speak
-s=socket(AF_INET, SOCK_DGRAM)
-s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+def speak():
+    mouth = socket(AF_INET, SOCK_DGRAM)
+    mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+    mouth.sendto(b'this is Ile',('255.255.255.255',12345))
 
 while True:
-    try:        
-        s.sendto(b'this is testing',('255.255.255.255',12345))
-    except:
-        print('No one listening')
+    speak()
+    listen()
 
 
