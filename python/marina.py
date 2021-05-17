@@ -7,13 +7,6 @@ from time import sleep
 import serial
 from socket import *
 
-ear = socket(AF_INET, SOCK_DGRAM)
-ear.bind(('', 12345))
-
-        #if not data:
-            #break
-        #print(data)
-
 usb = False
 while(not usb):
    try:
@@ -26,33 +19,55 @@ dir = '/home/pi/robokerho/samples/marina/'
 samples = os.listdir(dir)
 print(samples)
 
+def listen():
+   print('I am listening')
+   ear = socket(AF_INET, SOCK_DGRAM)    
+   ear.bind(('', 12345))
+   ear.settimeout(10)
+
+   try:
+      hear = ear.recvfrom(1024)
+      print('Hear?', hear)
+      while hear[0].decode().startswith('playing:'):
+         print('Hear?', hear)         
+         sout('Listening:' + str(hear[1]))
+         hear = ear.recvfrom(1024)         
+   except:
+      print('I hear nothing')   
+   ear.close()
+
+def speak():
+   # Cast die
+   alea = (int)(random()*len(samples))
+   sout('alea est:' + str(alea))
+
+   # Play sound
+   data, fs = sf.read(dir+samples[alea], dtype='float32')      
+   sd.play(data, fs)
+
+   # Broadcast
+   mouth = socket(AF_INET, SOCK_DGRAM)    
+   mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+   mouth.setblocking(False)      
+   while sd.get_stream().active:
+      sout('playing:' + samples[alea])
+      mouth.sendto(bytes('playing:' + samples[alea], encoding='utf-8'),('255.255.255.255',12345))
+   mouth.close()
+
+def broadcast(msg):
+   mouth = socket(AF_INET, SOCK_DGRAM)    
+   mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+   mouth.setblocking(False)
+   mouth.sendto(bytes(msg, encoding='utf-8'),('255.255.255.255',12345))
+   mouth.close()
 
 def sout(msg):
     usb.write('clr'.encode())
     sleep(1)    
-    print(msg)    
-    #for part in msg:
-       #usb.write(part.encode())
-    usb.write(msg.encode())
+    print(msg)
+    usb.write(msg.encode())    
 
-def speak():
-    alea = (int)(random()*len(samples))
-    sout('alea est:' + str(alea))
-    data, fs = sf.read(dir+samples[alea], dtype='float32')  
-    sout('playing:' + samples[alea])
-    sd.play(data, fs)
-
-while(True):
-    hear = ear.recvfrom(1024)
-    print('Hear:', hear)
-        
-    while hear[0].decode().startswith('playing:'):
-       sout('Listening:' + str(hear[1]))
-       hear = ear.recvfrom(1024)
-
-    speak()
-    
-    #status = sd.wait()  # Wait until file is done playing
-    #slp = (int)(random()*100)
-    #sout('sleeping for:' + str(slp))
-    #sleep(slp)
+while(True):    
+   broadcast('snoozing')
+   listen()
+   speak()
