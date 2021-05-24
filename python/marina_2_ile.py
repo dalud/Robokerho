@@ -7,13 +7,8 @@ from time import sleep
 import serial
 from socket import *
 
-#try:
-   #usb = serial.Serial(USB_PORT, 9600, timeout=1)
-#except:
-   #print("ERROR - Could not open USB serial port.  Please check your port name and permissions.")
-   #print("Exiting program.")
-   #exit()
-usb = True
+#usb = True
+usb = False
 while(not usb):
    try:
       USB_PORT = "/dev/ttyACM0" #TODO: write getter()
@@ -36,9 +31,7 @@ def listen():
       print('Hear?', hear)
       while hear[0].decode().startswith('playing'):
          print('Hear?', hear)
-         #sout(...)
-         sleep(1)
-         print('Listening:', str(hear[1]))
+         sout('Listening:' + str(hear[1]))
          hear = ear.recvfrom(1024)
    except:
       print('I hear nothing')
@@ -69,11 +62,11 @@ def broadcast(msg):
    mouth.sendto(bytes(msg, encoding='utf-8'),('255.255.255.255',12345))
 
 def sout(msg):
-   # usb.write('clr'.encode())
+   usb.write('clr'.encode())
    sleep(1)    
    print(msg)    
-   #for part in msg:
-       #usb.write(part.encode())
+   for part in msg:
+       usb.write(part.encode())
 
 while True:
    broadcast('snoozing')   
