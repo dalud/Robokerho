@@ -22,8 +22,9 @@ void loop(){
     command = "";
   }*/
   
-  Serial.println("Command" + command);
-  sout(command.toInt());  
+  // Serial.println("command:" + command);
+  sout(command.toInt());
+  delay(100);
 }
 
 void sout(int pos) {
@@ -33,7 +34,7 @@ void sout(int pos) {
   } else {
     ledOff();
   }
-  delay(15);
+  // delay(100);
 }
 
 void ledOn() {

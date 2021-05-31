@@ -22,6 +22,6 @@ while sd.get_stream().active:
         print(amp)
         arduino.write(str(amp).encode())
         arduino.write('\n'.encode())
-        sleep(.015)
+        sleep(.1)
         
     
