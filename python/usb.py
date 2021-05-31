@@ -13,7 +13,6 @@ USB_PORT = "/dev/ttyACM0"  # Arduino Uno WiFi Rev2
 # Imports
 import serial
 
-
 # Functions
 def print_commands():
    """Prints available commands."""

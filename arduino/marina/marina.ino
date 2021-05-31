@@ -4,15 +4,8 @@
 String command;
 boolean led;
 Servo myservo;
-// int pos = 0;
-
-// LiquidCrystal lcd(2,3,4,5,6,7);
-
 
 void setup() {
- /*lcd.begin(16, 2);
- lcd.setCursor(0,0);*/
- 
  pinMode(LED_BUILTIN, OUTPUT);
  myservo.attach(9); 
  Serial.begin(9600);
@@ -20,19 +13,17 @@ void setup() {
 
 void loop(){
   if (Serial.available()) {
-    command = Serial.readString();
+    command = Serial.readStringUntil('\n');
   }
-  if(command == "on") ledOn();
+  /*if(command == "on") ledOn();
   if(command == "off") ledOff();
   if(command == "clr") {
     // lcd.clear();
     command = "";
-  }
+  }*/
   
-  sout(command.toInt());
-  
-  // lcd.setCursor(0,1);
-  // lcd.print(millis());   
+  Serial.println("Command" + command);
+  sout(command.toInt());  
 }
 
 void sout(int pos) {
@@ -42,7 +33,7 @@ void sout(int pos) {
   } else {
     ledOff();
   }
-  delay(15)
+  delay(15);
 }
 
 void ledOn() {
