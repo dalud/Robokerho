@@ -4,10 +4,12 @@ import serial
 from time import sleep
 
 filename = '/home/pi/robokerho/samples/hurjajuttu/Puhe 006HalvintaKaljaa.wav'
-data, fs = sf.read(filename, dtype='float32')  
+data, fs = sf.read(filename, dtype='float32')
+mouthVel = 90 # scale according to mechanics
+
 sd.play(data, fs)
 
-#usb = True
+#arduino = True
 arduino = False
 while(not arduino):
    try:
@@ -18,10 +20,10 @@ while(not arduino):
 
 while sd.get_stream().active:    
     with sd.Stream() as stream:
-        amp = round(stream.read(1024)[0].max(), 1)*90 #TODO: scale according to mechanics
+        amp = round(stream.read(1024)[0].max(), 1)*mouthVel
         print(amp)
         arduino.write(str(amp).encode())
         arduino.write('\n'.encode())
-        sleep(.1)
+        sleep(.025)
         
     
