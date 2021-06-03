@@ -13,3 +13,11 @@ while(True):
 
 lotr = '/home/pi/kikkelis/kokkelis'
 print(lotr.rsplit('/home/pi'))
+
+# inheritance
+class Robohemian:
+    def __init__(self, name):
+        self.name = name
+
+    def sout(self):
+        print('My name is ', self.name)
