@@ -2,7 +2,7 @@ import sounddevice as sd
 import soundfile as sf
 
 
-filename = '/home/pi/robokerho/samples/hurjajuttu/Puhe 006HalvintaKaljaa.wav'
+filename = '/home/pi/robokerho/samples/Hurjajuttu/Puhe 006HalvintaKaljaa.wav'
 data, fs = sf.read(filename, dtype='float32')  
 mouthVel = 90 #scale according to mouth motor
 sd.play(data, fs)
