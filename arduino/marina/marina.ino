@@ -1,18 +1,13 @@
 #include <Servo.h>
 
-boolean continuous = true;
-int scalar;
 String command;
 boolean led;
 Servo mouthL;
+int scalarL = 90; // 90 for continuous, 0 for standard 180*d
+int scalarR = 90;
 Servo mouthR;
 
 void setup() {
-  if(continuous) {
-    scalar = 90;
-  } else {
-    scalar = 0;
-  }
  pinMode(LED_BUILTIN, OUTPUT);
  mouthL.attach(2);
  mouthR.attach(3);
@@ -42,10 +37,10 @@ void loop(){
 void moveMouth(char channel, int pos) {  
   switch(channel) {
     case('L'):
-      if(mouthL.attached()) mouthL.write(pos+scalar);
+      if(mouthL.attached()) mouthL.write(pos+scalarL);
       break;
     case('R'):
-      if(mouthR.attached()) mouthR.write(pos+scalar);
+      if(mouthR.attached()) mouthR.write(pos+scalarR);
       break;
   }
 }
