@@ -25,14 +25,14 @@ void loop(){
   Serial.println(command);
   String cmd = command.substring(0,2);
   
-  if(cmd == "mL") {
+  if(cmd == "ml") {
     moveMouth('L', command.substring(2).toInt());
   }
-  if(cmd == "mR") {
+  if(cmd == "mr") {
     moveMouth('R', command.substring(2).toInt());
   }
   
-  delay(30);
+  delay(40);
 }
 
 void moveMouth(char channel, int pos) {  

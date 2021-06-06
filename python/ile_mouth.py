@@ -3,8 +3,8 @@ import soundfile as sf
 import serial
 from time import sleep
 
-filename = '/home/pi/robokerho/samples/Hurjajuttu/Puhe 006HalvintaKaljaa.wav'
-#filename = '/media/pi/EMTII/samples/ile/Hurjajutut_LeftRightPan/02_josjokuhuutaasulle.wav'
+#filename = '/home/pi/robokerho/samples/Hurjajuttu/Puhe 006HalvintaKaljaa.wav'
+filename = '/media/pi/EMTII/samples/ile/Hurjajutut_LeftRightPan/02_josjokuhuutaasulle.wav'
 data, fs = sf.read(filename, dtype='float32')
 mouthVel = 150 # scale according to mechanics
 
@@ -14,7 +14,8 @@ sd.play(data, fs)
 arduino = False
 while(not arduino):
    try:
-      USB_PORT = "/dev/ttyACM0" #TODO: write getter()
+      #TODO: write getter()
+      USB_PORT = "/dev/ttyACM1"
       arduino = serial.Serial(USB_PORT, 9600, timeout=1)
    except:
       print('Connecting USB...')
@@ -34,19 +35,19 @@ while sd.get_stream().active:
       print('L:', amp_L, 'R:', amp_R)
       # Left audio channel
       if(amp_L):
-         arduino.write('mL'.encode())
+         arduino.write('ml'.encode())
          arduino.write(str(amp_L).encode())
          arduino.write('\n'.encode())
       # R
       if(amp_R):
-         arduino.write('mR'.encode())
+         arduino.write('mr'.encode())
          arduino.write(str(amp_R).encode())
          arduino.write('\n'.encode())
       
-      sleep(.03)
-   arduino.write('mL'.encode())
+      sleep(.040)
+   arduino.write('ml'.encode())
    arduino.write(0)
    arduino.write('\n'.encode())
-   arduino.write('mR'.encode())
+   arduino.write('mr'.encode())
    arduino.write(0)
    arduino.write('\n'.encode())
