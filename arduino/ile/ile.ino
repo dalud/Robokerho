@@ -7,10 +7,11 @@ Servo mouthR;
 int scalarL = 90; // 90 for continuous, 0 for standard 180*d
 int scalarR = 90;
 
+
 void setup() {
  pinMode(LED_BUILTIN, OUTPUT);
  mouthL.attach(2);
- // mouthR.attach(3);
+ mouthR.attach(3);
  Serial.begin(9600);
  // zero motors
  moveMouth('L', 0);

@@ -3,8 +3,8 @@ import soundfile as sf
 import serial
 from time import sleep
 
-#filename = '/home/pi/robokerho/samples/Hurjajuttu/Puhe 006HalvintaKaljaa.wav'
-filename = '/media/pi/EMTII/samples/ile/Hurjajutut_LeftRightPan/02_josjokuhuutaasulle.wav'
+filename = '/home/pi/robokerho/samples/Hurjajuttu/Puhe 006HalvintaKaljaa.wav'
+#filename = '/media/pi/EMTII/samples/ile/Hurjajutut_LeftRightPan/02_josjokuhuutaasulle.wav'
 data, fs = sf.read(filename, dtype='float32')
 mouthVel = 150 # scale according to mechanics
 
@@ -44,5 +44,9 @@ while sd.get_stream().active:
          arduino.write('\n'.encode())
       
       sleep(.03)
+   arduino.write('mL'.encode())
+   arduino.write(0)
+   arduino.write('\n'.encode())
+   arduino.write('mR'.encode())
    arduino.write(0)
    arduino.write('\n'.encode())
