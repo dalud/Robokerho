@@ -20,7 +20,8 @@ dir = '/home/pi/robokerho/samples/marina/'
 #dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
 samples = os.listdir(dir)
 print(samples)
-mouthVel = 150 # scale according to mechanics
+mouthVel_L = 150 # scale according to mechanics
+mouthVel_R = 150 # scale according to mechanics
 
 def listen():
    print('I am listening')
@@ -59,8 +60,8 @@ def speak():
          for i in range(len(amp)):         
             L.append(amp[i][0])
             R.append(amp[i][1])
-         amp_L = round(max(L)*mouthVel, 1)
-         amp_R = round(max(R)*mouthVel, 1)      
+         amp_L = round(max(L)*mouthVel_L, 1)
+         amp_R = round(max(R)*mouthVel_R, 1)      
 
          print('L:', amp_L, 'R:', amp_R)
          # Left audio channel
