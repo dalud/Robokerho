@@ -1,7 +1,7 @@
 #include <Stepper.h>
 
 
-const int stepsPerRevolution = 30750; // 14HS13-0804S-PG19
+const int stepsPerRevolution = 30725; // 14HS13-0804S-PG19
 const int dly = 500;
 
 Stepper myStepper(stepsPerRevolution, 8, 9);
