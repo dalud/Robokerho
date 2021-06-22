@@ -4,7 +4,7 @@ String command;
 boolean led;
 Servo mouthL;
 Servo mouthR;
-int scalarL = 90; // 90 for continuous, 0 for standard 180*d
+int scalarL = 0; // 90 for continuous, 0 for standard 180*d
 int scalarR = 90;
 
 

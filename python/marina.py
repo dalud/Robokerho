@@ -16,12 +16,12 @@ while(not arduino):
    except:
       print('Connecting Arduino via USB...')
 
-dir = '/home/pi/robokerho/samples/marina/'
-#dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
+#dir = '/home/pi/robokerho/samples/marina/'
+dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
 samples = os.listdir(dir)
 print(samples)
-mouthVel_L = 150 # scale according to mechanics
-mouthVel_R = 150 # scale according to mechanics
+mouthVel_L = 290 # scale according to mechanics
+mouthVel_R = 90 # scale according to mechanics
 
 def listen():
    print('I am listening')

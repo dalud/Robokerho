@@ -4,12 +4,12 @@ String command;
 boolean led;
 Servo mouthL;
 Servo mouthR;
-int scalarL = 90; // 90 for continuous, 0 for standard 180*d
+int scalarL = 0; // 90 for continuous, 0 for standard 180*d
 int scalarR = 90;
 
 void setup() {
  pinMode(LED_BUILTIN, OUTPUT);
- mouthL.attach(2);
+ mouthL.attach(3);
  // mouthR.attach(3);
  Serial.begin(9600);
  // zero motors
