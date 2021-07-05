@@ -7,12 +7,12 @@ const int dly = 500;
 Stepper myStepper(stepsPerRevolution, 8, 9);
 
 void setup() {
-  myStepper.setSpeed(60); //speed is in RPM;
+  myStepper.setSpeed(30); //60: max for 14HS13-0804S-PG19 = 825Hz
 }
 
 void loop() {
   myStepper.step(stepsPerRevolution);
-  delay(dly); //the delay time between turns;
+  delay(dly);
 
   myStepper.step(-stepsPerRevolution);
   delay(dly);
