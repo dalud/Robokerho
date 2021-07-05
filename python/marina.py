@@ -20,8 +20,9 @@ while(not arduino):
 dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
 samples = os.listdir(dir)
 print(samples)
-mouthVel_L = 150 # scale according to mechanics
-mouthVel_R = 500 # scale according to mechanics
+
+mouthVel_L = 290 # scale according to mechanics
+mouthVel_R = 90 # scale according to mechanics
 
 def listen():
    print('I am listening')
@@ -63,7 +64,7 @@ def speak():
          amp_L = round(max(L)*mouthVel_L, 1)
          amp_R = round(max(R)*mouthVel_R, 1)      
 
-         print('L:', amp_L, 'R:', amp_R)
+         print('Playing:', samples[alea], 'L:', amp_L, 'R:', amp_R)
          # Left audio channel
          if(amp_L):
             arduino.write('ml'.encode())
@@ -82,10 +83,13 @@ def speak():
       arduino.write('mr'.encode())
       arduino.write(0)
       arduino.write('\n'.encode())
+      arduino.write(''.encode())
+      arduino.write('\n'.encode())
       
       mouth.sendto(bytes('playing:' + samples[alea], encoding='utf-8'),('255.255.255.255',12345))
    mouth.close()
 
+# TODO: error prone if network not available
 def broadcast(msg):
    mouth = socket(AF_INET, SOCK_DGRAM)    
    mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
