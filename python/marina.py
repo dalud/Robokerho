@@ -6,15 +6,18 @@ from random import random
 from time import sleep
 from socket import *
 import serial
+from serial.tools import list_ports
 
 
 arduino = False
-while(not arduino):
-   try:
-      USB_PORT = "/dev/ttyACM0" #TODO: write getter()
-      arduino = serial.Serial(USB_PORT, 9600, timeout=1)
-   except:
-      print('Connecting Arduino via USB...')
+i = 0
+
+while(not arduino):    
+    try:                
+        arduino = serial.Serial(str(list_ports.comports()[i]).split()[0], 9600, timeout=1)        
+    except:
+        print('Connecting Arduino via USB. i =', i)
+        i += 1
 
 #dir = '/home/pi/robokerho/samples/marina/'
 dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
@@ -70,24 +73,35 @@ def speak():
             arduino.write('ml'.encode())
             arduino.write(str(amp_L).encode())
             arduino.write('\n'.encode())
+            sleep(.01)
          # R
          if(amp_R):
             arduino.write('mr'.encode())
             arduino.write(str(amp_R).encode())
             arduino.write('\n'.encode())
+            sleep(.01)         
          
-         sleep(.04)
       arduino.write('ml'.encode())
       arduino.write(0)
       arduino.write('\n'.encode())
+      sleep(.01)
       arduino.write('mr'.encode())
       arduino.write(0)
       arduino.write('\n'.encode())
+      sleep(.01)
       arduino.write(''.encode())
       arduino.write('\n'.encode())
+      sleep(.01)
       
       mouth.sendto(bytes('playing:' + samples[alea], encoding='utf-8'),('255.255.255.255',12345))
    mouth.close()
+   
+   arduino.write('s'.encode())
+   arduino.write('\n'.encode())
+   sleep(.01)
+   arduino.write(''.encode())
+   arduino.write('\n'.encode())
+   sleep(.01)
 
 # TODO: error prone if network not available
 def broadcast(msg):

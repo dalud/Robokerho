@@ -1,38 +1,52 @@
 #include <Servo.h>
+#include <Stepper.h>
 
+// Utils
 String command;
 boolean led;
+
+// Mouths
 Servo mouthL;
 Servo mouthR;
+// Mouth scalars
 int scalarL = 0; // 90 for continuous, 0 for standard 180*d
 int scalarR = 90;
 
+// Shoulder
+const int stepsPerRevolution = 30725; // 14HS13-0804S-PG19
+const int dly = 500;
+Stepper shoulder(stepsPerRevolution, 8, 9);
 
 void setup() {
  pinMode(LED_BUILTIN, OUTPUT);
+  
  mouthL.attach(2);
  mouthR.attach(3);
  Serial.begin(9600);
  // zero motors
  moveMouth('L', 0);
  moveMouth('R', 0);
+ 
+ shoulder.setSpeed(60); //60: max for 14HS13-0804S-PG19 = 825Hz
 }
 
-void loop(){
+void loop(){   
   if (Serial.available()) {
     command = Serial.readStringUntil('\n');
   }
-//   Serial.println(command);
+  // Serial.println(command);
   String cmd = command.substring(0,2);
   
-  if(cmd == "ml") {
+  if(cmd == "ml") { // Mouth Left
     moveMouth('L', command.substring(2).toInt());
   }
-  if(cmd == "mr") {
+  if(cmd == "mr") { // MOuth Right
     moveMouth('R', command.substring(2).toInt());
   }
-  
-  delay(40);
+  if(cmd == "s") { // Shoulder Right
+    moveShoulder();
+  }
+  delay(10);
 }
 
 void moveMouth(char channel, int pos) {  
@@ -44,6 +58,11 @@ void moveMouth(char channel, int pos) {
       if(mouthR.attached()) mouthR.write(pos+scalarR);
       break;
   }
+}
+
+void moveShoulder() {
+  shoulder.step(stepsPerRevolution);
+  delay(20);
 }
 
 void ledOn() {
