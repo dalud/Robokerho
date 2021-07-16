@@ -14,7 +14,7 @@ i = 0
 
 while(not arduino):    
     try:                
-        arduino = serial.Serial(str(list_ports.comports()[i]).split()[0], 9600, timeout=1)        
+        arduino = serial.Serial(str(list_ports.comports()[i]).split()[0], 9600, timeout=1)
     except:
         print('Connecting Arduino via USB. i =', i)
         i += 1
