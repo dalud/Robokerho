@@ -18,5 +18,6 @@ class Arduino:
                 self.i += 1
 
     def write(self, msg):
-        self.arduino.write(msg)
-        sleep(.04)
+        self.arduino.write(msg.encode())
+        self.arduino.write('\n'.encode())
+        sleep(.01)

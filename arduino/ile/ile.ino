@@ -13,8 +13,8 @@ int scalarL = 0; // 90 for continuous, 0 for standard 180*d
 int scalarR = 90;
 
 // Shoulder
-const int stepsPerRevolution = 30725; // 14HS13-0804S-PG19
-const int dly = 500;
+const int stepsPerRevolution = 20000; // 30725 = MAX: 14HS13-0804S-PG19
+const int dly = 10;
 Stepper shoulder(stepsPerRevolution, 8, 9);
 
 void setup() {
@@ -27,7 +27,7 @@ void setup() {
  moveMouth('L', 0);
  moveMouth('R', 0);
  
- shoulder.setSpeed(60); //60: max for 14HS13-0804S-PG19 = 825Hz
+ shoulder.setSpeed(10); //60: max for 14HS13-0804S-PG19 = 825Hz
 }
 
 void loop(){   
@@ -46,7 +46,7 @@ void loop(){
   if(cmd == "s") { // Shoulder Right
     moveShoulder();
   }
-  delay(10);
+  delay(dly);
 }
 
 void moveMouth(char channel, int pos) {  
@@ -62,7 +62,7 @@ void moveMouth(char channel, int pos) {
 
 void moveShoulder() {
   shoulder.step(stepsPerRevolution);
-  delay(20);
+  delay(dly);
 }
 
 void ledOn() {

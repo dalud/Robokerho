@@ -79,7 +79,7 @@ def speak():
             arduino.write('mr'.encode())
             arduino.write(str(amp_R).encode())
             arduino.write('\n'.encode())
-            sleep(.01)         
+            sleep(.01)        
          
       arduino.write('ml'.encode())
       arduino.write(0)

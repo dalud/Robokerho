@@ -16,6 +16,7 @@ class Wlan:
             print('I hear nothing')   
         ear.close()
 
+    # TODO: error prone if network not available
     def broadcast(self, msg):
         mouth = socket(AF_INET, SOCK_DGRAM)    
         mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
