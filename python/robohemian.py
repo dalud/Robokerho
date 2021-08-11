@@ -8,7 +8,7 @@ from soundIF import Sound
 
 # Get samples
 # dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
-dir = '/home/pi/robokerho/samples/marina'
+dir = '/home/pi/robokerho/samples/marina/'
 samples = os.listdir(dir)
 print(samples)
 
