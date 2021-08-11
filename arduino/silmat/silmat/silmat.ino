@@ -1,19 +1,11 @@
 #include <Adafruit_PWMServoDriver.h>
-
-
-
-//  Nilheim Mechatronics Simplified Eye Mechanism Code
-//  Make sure you have the Adafruit servo driver library installed >>>>> https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library
-//  X-axis joystick pin: A1
-//  Y-axis joystick pin: A0
-//  Trim potentiometer pin: A2
-//  Button pin: 2
-
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
+String command;
 
 #define SERVOMIN  140 // this is the 'minimum' pulse length count (out of 4096)
 #define SERVOMAX  520 // this is the 'maximum' pulse length count (out of 4096)
@@ -45,41 +37,50 @@ void setup() {
   pinMode(analogInPin, INPUT);
   pinMode(2, INPUT);
  
-  pwm.begin();
-  
+  pwm.begin();  
   pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates
 
   delay(10);
 }
 
-// you can use this function if you'd like to set the pulse length in seconds
-// e.g. setServoPulse(0, 0.001) is a ~1 millisecond pulse width. its not precise!
-void setServoPulse(uint8_t n, double pulse) {
-  double pulselength;
-  
-  pulselength = 1000000;   // 1,000,000 us per second
-  pulselength /= 60;   // 60 Hz
-  Serial.print(pulselength); Serial.println(" us per period"); 
-  pulselength /= 4096;  // 12 bits of resolution
-  Serial.print(pulselength); Serial.println(" us per bit"); 
-  pulse *= 1000000;  // convert to us
-  pulse /= pulselength;
-  Serial.println(pulse);
- // pwm.setPWM(n, 0, pulse);
-}
 
 void loop() {
+  // Serial cmd
+  if (Serial.available()) {
+    command = Serial.readStringUntil('\n');
+  }
+  String cmd = command.substring(0,2);
+  
+  if(cmd == "ex") { // Eye X
+    xval = command.substring(2).toInt();
+    // 0-1023 (lepo = 500)
+    if(xval < 0) xval = 0;
+    if(xval > 1023) xval = 1023;
+  } else {
+    xval = analogRead(A1);
+  }
+  if(cmd == "ey") { // Eye Y
+    yval = command.substring(2).toInt();
+    // 0-1023 (lepo = 500)
+    if(yval < 0) yval = 0;
+    if(yval > 1023) yval = 1023;
+  } else {
+    yval = analogRead(A0);
+  }
+  if(cmd == "b") { // Blink
+    blink();
+  }
 
-  xval = analogRead(A1);
-    lexpulse = map(xval, 0,1023, 270, 390);
-    rexpulse = lexpulse;
+  // Eye read
+  // xval = analogRead(A1); // 0-1023 (lepo = 500)
+  // xval = random(1023); // 0-1023 (lepo = 500)  
+  lexpulse = map(xval, 0,1023, 270, 390);
+  rexpulse = lexpulse;
 
-    switchval = digitalRead(2);
+  switchval = digitalRead(2); // blink
     
-    
-  yval = analogRead(A0);
-    leypulse = map(yval, 0,1023, 280, 400);
-    reypulse = map(yval, 0,1023, 400, 280);
+  leypulse = map(yval, 0,1023, 280, 400);
+  reypulse = map(yval, 0,1023, 400, 280);
 
   trimval = analogRead(A2);
     trimval=map(trimval, 320, 580, -40, 40);
@@ -88,14 +89,14 @@ void loop() {
           uplidpulse = constrain(uplidpulse, 280, 400);
       lolidpulse = map(yval, 0, 1023, 410, 280);
         lolidpulse += (trimval/2);
-          lolidpulse = constrain(lolidpulse, 280, 400);      
-    
+          lolidpulse = constrain(lolidpulse, 280, 400);    
     
       pwm.setPWM(0, 0, lexpulse);
       pwm.setPWM(1, 0, leypulse);
       pwm.setPWM(2, 0, rexpulse);
       pwm.setPWM(3, 0, reypulse); 
 
+      // Analog blink
       if (switchval == HIGH) {
       pwm.setPWM(4, 0, 240);
       pwm.setPWM(5, 0, 240);
@@ -104,9 +105,16 @@ void loop() {
       pwm.setPWM(4, 0, uplidpulse);
       pwm.setPWM(5, 0, lolidpulse);
       }
-
       
-  delay(5);
+  delay(5); // default 5ms
+}
 
-
+// Serial cmd blink
+void blink() {
+  pwm.setPWM(4, 0, uplidpulse);
+  pwm.setPWM(5, 0, lolidpulse);
+  delay(200);
+  pwm.setPWM(4, 0, 240);
+  pwm.setPWM(5, 0, 240);
+  delay(1000);
 }
