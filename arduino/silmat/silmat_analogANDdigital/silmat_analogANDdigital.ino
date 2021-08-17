@@ -66,13 +66,16 @@ void loop() {
   } else {
     yval = analogRead(A0);
   }
+  if(cmd == "li") { // Lids trimval (0-1023 0 = auki, 1023 = kiinni)
+    trimval = command.substring(2).toInt();
+  } else {
+    trimval = analogRead(A2);
+  }
   if(cmd == "b") { // Blink
     blink();
   }
 
   // Eye read
-  // xval = analogRead(A1); // 0-1023 (lepo = 500)
-  // xval = random(1023); // 0-1023 (lepo = 500)  
   lexpulse = map(xval, 0,1023, 270, 390);
   rexpulse = lexpulse;
 
@@ -81,14 +84,13 @@ void loop() {
   leypulse = map(yval, 0,1023, 280, 400);
   reypulse = map(yval, 0,1023, 400, 280);
 
-  trimval = analogRead(A2);
-    trimval=map(trimval, 320, 580, -40, 40);
-      uplidpulse = map(yval, 0, 1023, 280, 420);
-        uplidpulse += (trimval-40);
-          uplidpulse = constrain(uplidpulse, 280, 400);
-      lolidpulse = map(yval, 0, 1023, 410, 280);
-        lolidpulse += (trimval/2);
-          lolidpulse = constrain(lolidpulse, 280, 400);    
+  trimval=map(trimval, 320, 580, -40, 40);
+    uplidpulse = map(yval, 0, 1023, 280, 420);
+      uplidpulse += (trimval-40);
+        uplidpulse = constrain(uplidpulse, 280, 400);
+    lolidpulse = map(yval, 0, 1023, 410, 280);
+      lolidpulse += (trimval/2);
+        lolidpulse = constrain(lolidpulse, 280, 400);    
     
       pwm.setPWM(0, 0, lexpulse);
       pwm.setPWM(1, 0, leypulse);
@@ -115,5 +117,5 @@ void blink() {
   delay(200);
   pwm.setPWM(4, 0, 240);
   pwm.setPWM(5, 0, 240);
-  delay(1000);
+  delay(1000); // set to proper delay after blink recovery
 }
