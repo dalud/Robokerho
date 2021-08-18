@@ -31,13 +31,13 @@ class Ile:
             self.arduino.write('ml' + str(amp_L))
             # Move eyes
             self.arduino.write('ex' + str(amp_L))
+            # Blink
+            if(random() < .05):
+                self.arduino.write('b')
+                sleep(.15)
         # Right audio channel (Veke)
         if(amp_R > self.pause):
-            self.arduino.write('mr' + str(amp_R))
-        # Blink
-        if(random() < .05):
-            self.arduino.write('b')
-            sleep(.15)
+            self.arduino.write('mr' + str(amp_R))        
         # Reset eyes
         if(amp_L < self.pause):
             self.resetEyes()
