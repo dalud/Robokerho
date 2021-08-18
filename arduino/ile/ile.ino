@@ -7,10 +7,11 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 // Utils
 String command;
+const int dly = 10;
 
 // Eyes
-int xval;
-int yval;
+int xval = 500;
+int yval = 500;
 int lexpulse;
 int rexpulse;
 int leypulse;
@@ -29,7 +30,6 @@ int scalarR = 90;
 
 // Shoulder
 const int stepsPerRevolution = 20000; // 30725 = MAX: 14HS13-0804S-PG19
-const int dly = 10;
 Stepper shoulder(stepsPerRevolution, 8, 9);
 
 void setup() {
@@ -45,7 +45,7 @@ void setup() {
  
  shoulder.setSpeed(10); //60: max for 14HS13-0804S-PG19 = 825Hz
 
- delay(10);
+ delay(dly);
 }
 
 void loop(){   
@@ -53,6 +53,7 @@ void loop(){
     command = Serial.readStringUntil('\n');
   }
   // Serial.println(command);
+  delay(10);
   String cmd = command.substring(0,2);
 
   // Eyes
@@ -61,16 +62,12 @@ void loop(){
     // 0-1023 (lepo = 500)
     if(xval < 0) xval = 0;
     if(xval > 1023) xval = 1023;
-  } else {
-    xval = 500;
   }
   if(cmd == "ey") { // Eye Y
     yval = command.substring(2).toInt();
     // 0-1023 (lepo = 500)
     if(yval < 0) yval = 0;
     if(yval > 1023) yval = 1023;
-  } else {
-    yval = 500;
   }
   if(cmd == "li") { // Lids trimval (0-1023, 0 = auki, 1023 = kiinni)
     trimval = command.substring(2).toInt();
@@ -118,7 +115,7 @@ void moveEyes() {
       pwm.setPWM(2, 0, rexpulse);
       pwm.setPWM(3, 0, reypulse); 
 
-      // Analog blink
+      // Blink
       if (switchval == HIGH) {
       pwm.setPWM(4, 0, 240);
       pwm.setPWM(5, 0, 240);
@@ -128,7 +125,7 @@ void moveEyes() {
       pwm.setPWM(5, 0, lolidpulse);
       }
       
-  delay(5); // default 5ms
+  delay(dly);
 }
 
 void moveMouth(char channel, int pos) {  
@@ -147,10 +144,3 @@ void moveShoulder() {
   delay(dly);
 }
 
-void ledOn() {
-  digitalWrite(LED_BUILTIN, HIGH);
-}
-
-void ledOff() {
-  digitalWrite(LED_BUILTIN, LOW);
-}
