@@ -21,5 +21,8 @@ class Wlan:
         mouth = socket(AF_INET, SOCK_DGRAM)    
         mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
         mouth.setblocking(False)
-        mouth.sendto(bytes(msg, encoding='utf-8'),('255.255.255.255',12345))
+        try:
+            mouth.sendto(bytes(msg, encoding='utf-8'),('255.255.255.255',12345))
+        except:
+            pass
         mouth.close()

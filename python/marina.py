@@ -19,8 +19,8 @@ while(not arduino):
         print('Connecting Arduino via USB. i =', i)
         i += 1
 
-dir = '/home/pi/robokerho/samples/marina/'
-#dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
+#dir = '/home/pi/robokerho/samples/marina/'
+dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
 samples = os.listdir(dir)
 print(samples)
 
@@ -57,7 +57,7 @@ def speak():
     # Move mouths and eyes
     while sd.get_stream().active:
         with sd.Stream(sd.default.samplerate, 0, sd.default.device, 2) as stream:
-            amp = stream.read(128)[0] # increase blocksize for better accuracy     
+            amp = stream.read(128)[0] # increase blocksize for better accuracy
             #print(amp)
             L = []
             R = []
@@ -95,7 +95,6 @@ def speak():
             if(amp_L < pause):
                 resetEyes()
         
-        #mouth.sendto(bytes('playing:' + samples[alea], encoding='utf-8'),('255.255.255.255',12345))
         broadcast('playing:' + samples[alea])
         resetMotors()
     resetEyes()
@@ -123,9 +122,6 @@ def resetMotors():
     arduino.write(0)
     arduino.write('\n'.encode())
     sleep(dly)
-    arduino.write(''.encode())
-    arduino.write('\n'.encode())
-    sleep(dly)       
     arduino.write(''.encode())
     arduino.write('\n'.encode())
     sleep(dly)
