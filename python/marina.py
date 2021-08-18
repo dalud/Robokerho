@@ -19,8 +19,8 @@ while(not arduino):
         print('Connecting Arduino via USB. i =', i)
         i += 1
 
-#dir = '/home/pi/robokerho/samples/marina/'
-dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
+dir = '/home/pi/robokerho/samples/marina/'
+#dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
 samples = os.listdir(dir)
 print(samples)
 

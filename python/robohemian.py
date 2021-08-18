@@ -18,7 +18,6 @@ arduino.connect()
 
 # Init Wlan
 wlan = Wlan()
-#wlan.broadcast('HORO!')
 
 # Init Sound
 sound = Sound()
