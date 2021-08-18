@@ -40,7 +40,7 @@ def listen():
         hear = ear.recvfrom(1024)
         print('Hear?', hear)
         while hear[0].decode().startswith('playing:'):
-            print('Hear?', hear)         
+            print('Hear?', hear)
             hear = ear.recvfrom(1024)         
     except:
         print('I hear nothing')   
@@ -54,10 +54,7 @@ def speak():
     data, fs = sf.read(dir+samples[alea], dtype='float32')      
     sd.play(data, fs)
 
-    # Broadcast
-    mouth = socket(AF_INET, SOCK_DGRAM)    
-    mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-    mouth.setblocking(False)      
+    # Move mouths and eyes
     while sd.get_stream().active:
         with sd.Stream(sd.default.samplerate, 0, sd.default.device, 2) as stream:
             amp = stream.read(128)[0] # increase blocksize for better accuracy     
@@ -98,10 +95,10 @@ def speak():
             if(amp_L < pause):
                 resetEyes()
         
-        mouth.sendto(bytes('playing:' + samples[alea], encoding='utf-8'),('255.255.255.255',12345))
+        #mouth.sendto(bytes('playing:' + samples[alea], encoding='utf-8'),('255.255.255.255',12345))
+        broadcast('playing:' + samples[alea])
         resetMotors()
     resetEyes()
-    mouth.close()
    
 
 # TODO: error prone if network not available
@@ -109,7 +106,12 @@ def broadcast(msg):
     mouth = socket(AF_INET, SOCK_DGRAM)    
     mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
     mouth.setblocking(False)
-    mouth.sendto(bytes(msg, encoding='utf-8'),('255.255.255.255',12345))
+
+    try:
+        mouth.sendto(bytes(msg, encoding='utf-8'),('255.255.255.255',12345))
+    except:
+        pass
+            
     mouth.close()
 
 def resetMotors():
