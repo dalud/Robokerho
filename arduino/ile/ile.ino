@@ -7,7 +7,7 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 // Utils
 String command;
-const int dly = 10;
+const int dly = 5;
 
 // Eyes
 int xval = 500;

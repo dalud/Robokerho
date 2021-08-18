@@ -28,6 +28,7 @@ mouthVel_L = 1023 # scale according to mechanics
 mouthVel_R = 1023 # 1023 max X/Y value for silmat, 500 = lepo
 
 pause = .3 # Amp threshold interpreted as pause
+dly = .01 # Universal delay
 
 def listen():
     print('I am listening')
@@ -75,34 +76,31 @@ def speak():
                 arduino.write('ml'.encode())
                 arduino.write(str(amp_L).encode())
                 arduino.write('\n'.encode())
-                sleep(.01)
+                sleep(dly)
                 # Move eyes
                 arduino.write('ex'.encode())
                 arduino.write(str(amp_L).encode())
                 arduino.write('\n'.encode())
-                sleep(.01)
+                sleep(dly)
             # Right audio channel
             if(amp_R > pause):
                 arduino.write('mr'.encode())
                 arduino.write(str(amp_R).encode())
                 arduino.write('\n'.encode())
-                sleep(.01)
+                sleep(dly)
             # Blink
-            # if(amp_L < pause and amp_R < pause):
-            b = random()
-            print(b)
+            # if(amp_L < pause and amp_R < pause):            
             if(random() < .05):
                 arduino.write('b'.encode())            
                 arduino.write('\n'.encode())
-                sleep(.1)
+                sleep(.15)
             # Reset eyes
             if(amp_L < pause):
-                arduino.write('ex500'.encode())
-                arduino.write('\n'.encode())
-                sleep(.01)
+                resetEyes()
         
         mouth.sendto(bytes('playing:' + samples[alea], encoding='utf-8'),('255.255.255.255',12345))
-        resetMotors()      
+        resetMotors()
+    resetEyes()
     mouth.close()
    
 
@@ -118,17 +116,22 @@ def resetMotors():
     arduino.write('ml'.encode())
     arduino.write(0)
     arduino.write('\n'.encode())
-    sleep(.01)
+    sleep(dly)
     arduino.write('mr'.encode())
     arduino.write(0)
     arduino.write('\n'.encode())
-    sleep(.01)
+    sleep(dly)
     arduino.write(''.encode())
     arduino.write('\n'.encode())
-    sleep(.01)       
+    sleep(dly)       
     arduino.write(''.encode())
     arduino.write('\n'.encode())
-    sleep(.01)
+    sleep(dly)
+
+def resetEyes():
+    arduino.write('ex500'.encode())
+    arduino.write('\n'.encode())
+    sleep(dly)
 
 while(True):    
     broadcast('snoozing')
