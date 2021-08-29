@@ -1,45 +1,49 @@
-#include <LiquidCrystal.h>
+#include <Servo.h>
 
 String command;
 boolean led;
-
-LiquidCrystal lcd(2,3,4,5,6,7);
-
+Servo mouthL;
+Servo mouthR;
+int scalarL = 0; // 90 for continuous, 0 for standard 180*d
+int scalarR = 90;
 
 void setup() {
- lcd.begin(16, 2);
- lcd.setCursor(0,0);
- 
  pinMode(LED_BUILTIN, OUTPUT);
- 
+ mouthL.attach(3);
+ // mouthR.attach(3);
  Serial.begin(9600);
+ // zero motors
+ moveMouth('L', 0);
+ moveMouth('R', 0);
 }
 
 void loop(){
   if (Serial.available()) {
-    command = Serial.readString();
-  }
-  if(command == "on") ledOn();
-  if(command == "off") ledOff();
-  if(command == "clr") {
-    lcd.clear();
-    command = "";
+    command = Serial.readStringUntil('\n');
   }
   
-  sout(command);
+  //  Serial.println(command);
+  String cmd = command.substring(0,2);
   
-  lcd.setCursor(0,1);
-  // lcd.print(millis());  
+  if(cmd == "mL") {
+    moveMouth('L', command.substring(2).toInt());
+  }
+  if(cmd == "mR") {
+    moveMouth('R', command.substring(2).toInt());
+  }
+  
+  delay(30);
 }
 
-void sout(String message) {
-  lcd.setCursor(0,0);
-  if(message.length() > 16) {
-    String scd = message.substring(16);
-    lcd.print(message);
-    lcd.setCursor(0,1);
-    lcd.print(scd);
-  } else lcd.print(message);
+void moveMouth(char channel, int pos) {  
+  switch(channel) {
+    case('L'):
+      if(mouthL.attached()) mouthL.write(pos+scalarL);
+      break;
+    case('R'):
+      if(mouthR.attached()) mouthR.write(pos+scalarR);
+      break;
+  }
 }
 
 void ledOn() {

@@ -1,18 +1,22 @@
-import socket
+from socket import *
 
-HOST = '192.168.1.104'
-PORT = 9050
+# Listen
+def listen():
+    print('I am listening')
+    ear = socket(AF_INET, SOCK_DGRAM)
+    ear.bind(('', 12345))
+    data = ear.recvfrom(1024)    
+    print('I hear:', data)
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
+# Speak
+def speak():
+    print('I am speaking')
+    mouth = socket(AF_INET, SOCK_DGRAM)
+    mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+    mouth.sendto(b'this is ...',('255.255.255.255',12345))
 
-    with conn:
-        print('Connected by', addr)
+while True:
+    speak()
+    listen()
 
-        while True:
-            data = conn.recv(1024)
-            if not data:
-                break
-            print(data)
+

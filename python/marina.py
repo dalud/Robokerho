@@ -1,93 +1,137 @@
-from tkinter import *
-import tkSnack
+import sounddevice as sd
+import soundfile as sf
+from os import listdir
+import os
 from random import random
 from time import sleep
+from socket import *
 import serial
+from serial.tools import list_ports
 
 
-#try:
-   #usb = serial.Serial(USB_PORT, 9600, timeout=1)
-#except:
-   #print("ERROR - Could not open USB serial port.  Please check your port name and permissions.")
-   #print("Exiting program.")
-   #exit()
-usb = False
-while(not usb):
-   try:
-      USB_PORT = "/dev/ttyACM0" #TODO: write getter()
-      usb = serial.Serial(USB_PORT, 9600, timeout=1)
-   except:
-      print('Connecting USB...')
+arduino = False
+i = 0
 
-root = Tk()
-tkSnack.initializeSnack(root)
+while(not arduino):    
+    try:                
+        arduino = serial.Serial(str(list_ports.comports()[i]).split()[0], 9600, timeout=1)
+    except:
+        print('Connecting Arduino via USB. i =', i)
+        i += 1
 
-samples = [    
-    '/home/pi/robokerho/samples/marina/1 Felicidad.wav',
-    '/home/pi/robokerho/samples/marina/2 Enredadera.wav',
-    '/home/pi/robokerho/samples/marina/3 Jaula.wav',
-    '/home/pi/robokerho/samples/marina/4 Vomito.wav',    
-    '/home/pi/robokerho/samples/marina/5 Jacaranda.wav',
-    '/home/pi/robokerho/samples/marina/6 Polvo.wav',
-    '/home/pi/robokerho/samples/marina/7 Polvo 2.wav',
-    '/home/pi/robokerho/samples/marina/8 Caminante.wav',
-    '/home/pi/robokerho/samples/marina/9 Caminante 2.wav',
-    '/home/pi/robokerho/samples/marina/10 Creatura 1.wav',
-    '/home/pi/robokerho/samples/marina/11 Creatura 2.wav',
-    '/home/pi/robokerho/samples/marina/12 Tu aire.wav',
-    '/home/pi/robokerho/samples/marina/13 Secreto.wav',
-    '/home/pi/robokerho/samples/marina/14 llave.wav',    
-    '/home/pi/robokerho/samples/marina/15 vergüenza.wav',
-    '/home/pi/robokerho/samples/marina/16 inmunoglobina.wav',
-    '/home/pi/robokerho/samples/marina/17 arbol menstrual.wav',
-    '/home/pi/robokerho/samples/marina/18 auuuuu.wav',
-    '/home/pi/robokerho/samples/marina/19 A la verga.wav',
-    '/home/pi/robokerho/samples/marina/20 One more .wav',
-    '/home/pi/robokerho/samples/marina/21 Who are you.wav',
-    '/home/pi/robokerho/samples/marina/22 Laugh Cry.wav',
-    "/home/pi/robokerho/samples/marina/23 i don't feel good.wav",
-    '/home/pi/robokerho/samples/marina/24 miss my country.wav',
-    '/home/pi/robokerho/samples/marina/25 hate people.wav',
-    '/home/pi/robokerho/samples/marina/26 crying.wav',
-    '/home/pi/robokerho/samples/marina/27 crying y voz.wav',
-    '/home/pi/robokerho/samples/marina/28 niña fantasma.wav',
-    '/home/pi/robokerho/samples/marina/29 cryng tristeza.wav',
-    '/home/pi/robokerho/samples/marina/30 amor.wav',
-    '/home/pi/robokerho/samples/marina/31 corazoncito.wav',    
-    '/home/pi/robokerho/samples/marina/32 suicidio.wav',
-    '/home/pi/robokerho/samples/marina/33 diosa .wav',
-    '/home/pi/robokerho/samples/marina/34 olas de silencio .wav',
-    '/home/pi/robokerho/samples/marina/35 angustia.wav',
-    '/home/pi/robokerho/samples/marina/36 dicen que lo sano.wav',
-    '/home/pi/robokerho/samples/marina/37 crying hombre cruel.wav',
-    '/home/pi/robokerho/samples/marina/38 contenta.wav',
-    '/home/pi/robokerho/samples/marina/39 chiquilla.wav',
-    '/home/pi/robokerho/samples/marina/40 adolescente.wav',
-    '/home/pi/robokerho/samples/marina/42 quiero saber.wav',    
-    '/home/pi/robokerho/samples/marina/43 soap  .wav',
-    '/home/pi/robokerho/samples/marina/44 dance  .wav',
-    '/home/pi/robokerho/samples/marina/45 cuarentena .wav',
-    '/home/pi/robokerho/samples/marina/46 cabezas calvas .wav',
-    '/home/pi/robokerho/samples/marina/47 gracias song.wav',
-    '/home/pi/robokerho/samples/marina/48 tired .wav',
-    '/home/pi/robokerho/samples/marina/49 moment dad .wav',
-    '/home/pi/robokerho/samples/marina/50 meille.wav',
-]
+#dir = '/home/pi/robokerho/samples/marina/'
+dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
+samples = os.listdir(dir)
+print(samples)
 
-def sout(msg):
-    usb.write('clr'.encode())
-    sleep(1)    
-    print(msg)    
-    for part in msg:
-        usb.write(part.encode())
+mouthVel_L = 1023 # scale according to mechanics
+mouthVel_R = 1023 # 1023 max X/Y value for silmat, 500 = lepo
 
-snd = tkSnack.Sound()
-while(True):
+pause = .3 # Amp threshold interpreted as pause
+dly = .01 # Universal delay
+
+def listen():
+    print('I am listening')
+    ear = socket(AF_INET, SOCK_DGRAM)    
+    ear.bind(('', 12345))
+    ear.settimeout(10)
+
+    try:
+        hear = ear.recvfrom(1024)
+        print('Hear?', hear)
+        while hear[0].decode().startswith('playing:'):
+            print('Hear?', hear)
+            hear = ear.recvfrom(1024)         
+    except:
+        print('I hear nothing')   
+    ear.close()
+
+def speak():
+    # Cast die
     alea = (int)(random()*len(samples))
-    sout(["Alea est:", str(alea)])
-    snd.read(samples[alea])
-    sout(['Playing:', samples[alea].rsplit('/home/pi/robokerho/samples/marina/')[1]])
-    snd.play(blocking=1)
-    slp = (int)(random()*100)
-    sout(["Sleeping for:", str(slp)])
-    sleep(slp)
+
+    # Play sound
+    data, fs = sf.read(dir+samples[alea], dtype='float32')      
+    sd.play(data, fs)
+
+    # Move mouths and eyes
+    while sd.get_stream().active:
+        with sd.Stream(sd.default.samplerate, 0, sd.default.device, 2) as stream:
+            amp = stream.read(128)[0] # increase blocksize for better accuracy
+            #print(amp)
+            L = []
+            R = []
+            for i in range(len(amp)):         
+                L.append(amp[i][0])
+                R.append(amp[i][1])
+            amp_L = round(max(L)*mouthVel_L, 1)
+            amp_R = round(max(R)*mouthVel_R, 1)      
+
+            print('Playing:', samples[alea], 'L:', amp_L, 'R:', amp_R)
+            # Left audio channel
+            if(amp_L > pause):
+                arduino.write('ml'.encode())
+                arduino.write(str(amp_L).encode())
+                arduino.write('\n'.encode())
+                sleep(dly)
+                # Move eyes
+                arduino.write('ex'.encode())
+                arduino.write(str(amp_L).encode())
+                arduino.write('\n'.encode())
+                sleep(dly)
+            # Right audio channel
+            if(amp_R > pause):
+                arduino.write('mr'.encode())
+                arduino.write(str(amp_R).encode())
+                arduino.write('\n'.encode())
+                sleep(dly)
+            # Blink
+            # if(amp_L < pause and amp_R < pause):            
+            if(random() < .05):
+                arduino.write('b'.encode())            
+                arduino.write('\n'.encode())
+                sleep(.15)
+            # Reset eyes
+            if(amp_L < pause):
+                resetEyes()
+        
+        broadcast('playing:' + samples[alea])
+        resetMotors()
+    resetEyes()
+   
+
+# TODO: error prone if network not available
+def broadcast(msg):
+    mouth = socket(AF_INET, SOCK_DGRAM)    
+    mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+    mouth.setblocking(False)
+
+    try:
+        mouth.sendto(bytes(msg, encoding='utf-8'),('255.255.255.255',12345))
+    except:
+        pass
+            
+    mouth.close()
+
+def resetMotors():
+    arduino.write('ml'.encode())
+    arduino.write(0)
+    arduino.write('\n'.encode())
+    sleep(dly)
+    arduino.write('mr'.encode())
+    arduino.write(0)
+    arduino.write('\n'.encode())
+    sleep(dly)
+    arduino.write(''.encode())
+    arduino.write('\n'.encode())
+    sleep(dly)
+
+def resetEyes():
+    arduino.write('ex500'.encode())
+    arduino.write('\n'.encode())
+    sleep(dly)
+
+while(True):    
+    broadcast('snoozing')
+    listen()
+    speak()
