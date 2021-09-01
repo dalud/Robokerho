@@ -33,6 +33,8 @@ const int stepsPerRevolution = 20000; // 30725 = MAX: 14HS13-0804S-PG19
 Stepper shoulder(stepsPerRevolution, 8, 9);
 
 void setup() {
+ pinMode(4, OUTPUT); // Suu
+ digitalWrite(4, LOW);
  pwm.begin();  
  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates
    
@@ -50,11 +52,13 @@ void setup() {
 
 void loop(){   
   if (Serial.available()) {
-    command = Serial.readStringUntil('\n');
+    command = Serial.readStringUntil('\n');    
   }
   // Serial.println(command);
   delay(10);
   String cmd = command.substring(0,2);
+  
+  digitalWrite(4, LOW);
 
   // Eyes
   if(cmd == "ex") { // Eye X
@@ -84,13 +88,16 @@ void loop(){
   // Mouths
   if(cmd == "ml") { // Mouth Left
     moveMouth('L', command.substring(2).toInt());
+  } else {
+    // moveMouth('X', 0);
   }
   if(cmd == "mr") { // Mouth Right
     moveMouth('R', command.substring(2).toInt());
-  }
+  } 
   if(cmd == "s") { // Shoulder Right
     moveShoulder();
   }
+
   delay(dly);
 }
 
@@ -131,11 +138,16 @@ void moveEyes() {
 void moveMouth(char channel, int pos) {  
   switch(channel) {
     case('L'):
-      if(mouthL.attached()) mouthL.write(pos+scalarL);
+      if(mouthL.attached()) {
+        mouthL.write(pos+scalarL);
+        if(pos) digitalWrite(4, HIGH);
+      }
       break;
     case('R'):
       if(mouthR.attached()) mouthR.write(pos+scalarR);
       break;
+    default:
+      digitalWrite(4, LOW);
   }
 }
 

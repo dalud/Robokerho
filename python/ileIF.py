@@ -32,7 +32,7 @@ class Ile:
             # Move eyes
             self.arduino.write('ex' + str(amp_L))
             # Blink
-            if(random() < .05):
+            if(random() < .07):
                 self.arduino.write('b')
                 sleep(.15)
         # Right audio channel (Veke)
