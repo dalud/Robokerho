@@ -22,7 +22,7 @@ int trimval;
 int switchval = 0;
 
 // Mouths
-Servo mouthL;
+// Servo mouthL; // replaced by Nilheim (pin 4)
 Servo mouthR;
 // Mouth scalars
 int scalarL = 0; // 90 for continuous, 0 for standard 180*d
@@ -38,7 +38,7 @@ void setup() {
  pwm.begin();  
  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates
    
- mouthL.attach(2);
+//  mouthL.attach(2);
  mouthR.attach(3);
  Serial.begin(9600);
  // zero motors
@@ -138,10 +138,8 @@ void moveEyes() {
 void moveMouth(char channel, int pos) {  
   switch(channel) {
     case('L'):
-      if(mouthL.attached()) {
-        mouthL.write(pos+scalarL);
-        if(pos) digitalWrite(4, HIGH);
-      }
+      // if(mouthL.attached()) mouthL.write(pos+scalarL);
+      if(pos) digitalWrite(4, HIGH);
       break;
     case('R'):
       if(mouthR.attached()) mouthR.write(pos+scalarR);
