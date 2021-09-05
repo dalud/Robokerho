@@ -19,7 +19,7 @@ char chars[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 char inPrimary;
 char inSecondary;
 
-int pause = 50;
+int pause = 150;
 
 int val = 375;
 int width0 = 375;
@@ -38,7 +38,7 @@ void loop() {
   if(digitalRead(2)) {
     phonemeMatch(chars[random(sizeof(chars))]);
   }
-  delay(10); 
+  delay(10);  
 }
 
 void phonemePose(uint16_t phoneme[]) {
@@ -48,6 +48,7 @@ void phonemePose(uint16_t phoneme[]) {
 }
 
 void phonemeMatch(char letter){
+  Serial.println(letter);
   if ((letter == 'a') || (letter == 'e') || (letter == 'i') || (letter == 'h'))
     phonemePose(phonemeA);
   if ((letter == 'o') || (letter == 'u') || (letter == 'w'))
