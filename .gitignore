@@ -1,3 +1,4 @@
+.gitignore
 /muistiot/*
 /wetrans*
 /samples/*
@@ -5,3 +6,4 @@
 /java/Robokerho.iml
 /java/out/*
 /java/.idea/*
+/python/__pycache__/*
