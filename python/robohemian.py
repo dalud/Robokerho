@@ -1,20 +1,23 @@
-from arduinoIF import Arduino
 from wlanIF import Wlan
 from os import listdir
 import os
 from random import random
 from soundIF import Sound
+from ileIF import Ile
 
 
 # Get samples
+<<<<<<< HEAD
 # dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
 dir = '/home/pi/robokerho/samples/marina/'
+=======
+dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
+#dir = '/home/pi/robokerho/samples/marina/'
+>>>>>>> c2ebbd0b1f6a7817bee7b918453ff6cf5c28788a
 samples = os.listdir(dir)
 print(samples)
 
-# Init Arduino
-arduino = Arduino()
-arduino.connect()
+robo = Ile()
 
 # Init Wlan
 wlan = Wlan()
@@ -30,8 +33,11 @@ def speak():
     sound.play(dir+samples[alea])
 
     while sound.active():
-        print('playing:' + samples[alea])
-        wlan.broadcast('playing:' + samples[alea])    
+        with sound.stream() as stream:
+            robo.speak(stream, samples[alea])            
+            wlan.broadcast('playing:' + samples[alea])
+            robo.resetMotors() # Make sure none get locked HIGH
+    robo.resetEyes()
 
 # Main loop
 while(True):    

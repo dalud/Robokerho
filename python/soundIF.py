@@ -8,4 +8,7 @@ class Sound:
 
     def active(self):
         return sd.get_stream().active
+
+    def stream(self):
+        return sd.Stream(sd.default.samplerate, 0, sd.default.device, 2)
         

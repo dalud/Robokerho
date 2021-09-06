@@ -9,6 +9,7 @@ int scalarR = 90;
 
 void setup() {
  pinMode(LED_BUILTIN, OUTPUT);
+ pinMode(4, OUTPUT);
  mouthL.attach(3);
  // mouthR.attach(3);
  Serial.begin(9600);
