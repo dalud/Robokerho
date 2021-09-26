@@ -21,6 +21,7 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
+<<<<<<< HEAD
 // Mouths
 // Servo mouthL; // replaced by Nilheim (pin 4)
 Servo mouthR;
@@ -28,18 +29,17 @@ Servo mouthR;
 int scalarL = 0; // 90 for continuous, 0 for standard 180*d
 int scalarR = 90;
 
-// Shoulder
-const int stepsPerRevolution = 20000; // 30725 = MAX: 14HS13-0804S-PG19
-Stepper shoulder(stepsPerRevolution, 8, 9);
 
 void setup() {
  pinMode(4, OUTPUT); // Suu
  digitalWrite(4, LOW);
  pwm.begin();  
- pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates
    
 //  mouthL.attach(2);
  mouthR.attach(3);
+=======
+ pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates   
+>>>>>>> c99f119b26bb378901e33fad026a483aa0eff508
  Serial.begin(9600);
  // zero motors
  moveMouth('L', 0);
@@ -91,9 +91,13 @@ void loop(){
   } else {
     // moveMouth('X', 0);
   }
-  if(cmd == "mr") { // Mouth Right
+/*  if(cmd == "mr") { // Mouth Right
     moveMouth('R', command.substring(2).toInt());
+<<<<<<< HEAD
   } 
+=======
+  } */
+>>>>>>> c99f119b26bb378901e33fad026a483aa0eff508
   if(cmd == "s") { // Shoulder Right
     moveShoulder();
   }
@@ -138,12 +142,20 @@ void moveEyes() {
 void moveMouth(char channel, int pos) {  
   switch(channel) {
     case('L'):
+<<<<<<< HEAD
       // if(mouthL.attached()) mouthL.write(pos+scalarL);
+=======
+>>>>>>> c99f119b26bb378901e33fad026a483aa0eff508
       if(pos) digitalWrite(4, HIGH);
       break;
+      /*
     case('R'):
       if(mouthR.attached()) mouthR.write(pos+scalarR);
       break;
+<<<<<<< HEAD
+=======
+      */
+>>>>>>> c99f119b26bb378901e33fad026a483aa0eff508
     default:
       digitalWrite(4, LOW);
   }
@@ -153,4 +165,3 @@ void moveShoulder() {
   shoulder.step(stepsPerRevolution);
   delay(dly);
 }
-
