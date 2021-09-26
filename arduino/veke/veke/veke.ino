@@ -54,8 +54,7 @@ void loop() {
     if(xval < 0) xval = 0;
     if(xval > 1023) xval = 1023;
   } else {
-    /*delay(250);
-    xval = 500;*/
+    xval = 500;
   }
   if(cmd == "ey") { // Eye Y
     yval = command.substring(2).toInt();
@@ -127,7 +126,7 @@ void moveMouth(int pos) {
 
 void moveKaula(char channel, int pos) {  
   switch(channel) {
-    case('V'):      
+    case('V'):
       if(kaulaV.attached()) kaulaV.write(pos);
       break;
     case('O'):
@@ -135,4 +134,3 @@ void moveKaula(char channel, int pos) {
       break;
   }
 }
-

@@ -34,9 +34,11 @@ class Ile:
             if(random() < .07):
                 self.arduino.write('b')
                 sleep(.15)
+
         # Right audio channel (Veke)
         if(amp_R > self.pause):
             self.arduino.write('mr' + str(amp_R))        
+
         # Reset eyes
         if(amp_L < self.pause):
             self.resetEyes()

@@ -13,14 +13,11 @@ float pause = .3; // Audio amplitude interpreted as silence
 
 
 void setup() {
-<<<<<<< HEAD
  pinMode(LED_BUILTIN, OUTPUT);
  pinMode(4, OUTPUT);
- mouthL.attach(3);
+
  // mouthR.attach(3);
-=======
  mouth.attach(2);
->>>>>>> c99f119b26bb378901e33fad026a483aa0eff508
  Serial.begin(9600);
  // zero mouth motors
  moveMouth('L', 0);
