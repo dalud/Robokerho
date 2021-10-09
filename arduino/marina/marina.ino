@@ -33,12 +33,12 @@ void loop(){
   
   if(cmd == "ml") {
     moveMouth('L', command.substring(2).toInt());
+    // checkStepperDir(shoulder_R, 2000);
+    moveStepper(shoulder_R, 2000);
   }
 
-  if(command.substring(2).toInt() > pause) {
-    moveStepper(shoulder_R);
-  }  
-  
+  // Serial.println(shoulder_R.currentPosition());
+
   delay(dly);
 }
 
@@ -50,9 +50,20 @@ void moveMouth(char channel, int pos) {
   }
 }
 
-void moveStepper(AccelStepper motor) {
-  motor.enableOutputs();
+void moveStepper(AccelStepper motor, long maxPos) {
+  // Serial.println(motor.currentPosition());
+  // motor.enableOutputs();
   motor.runSpeed();
   // Serial.println(shoulder_R.currentPosition());
-  motor.disableOutputs();
+  // motor.disableOutputs();
+}
+
+void checkStepperDir(AccelStepper motor, long maxPos) {
+  Serial.println("Checking pos:" + motor.currentPosition());
+  if(motor.currentPosition() > maxPos) {
+    motor.setSpeed(-1500);
+  }
+  if(motor.currentPosition() < 0) {
+    motor.setSpeed(1500);    
+  }
 }
