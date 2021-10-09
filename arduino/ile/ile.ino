@@ -21,21 +21,16 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
-// Shoulder
-const int stepsPerRevolution = 20000; // 30725 = MAX: 14HS13-0804S-PG19
-Stepper shoulder(stepsPerRevolution, 8, 9);
-
 void setup() {
  pinMode(4, OUTPUT); // Suu
  digitalWrite(4, LOW);
- pwm.begin();  
+ pwm.begin();   
  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates   
  Serial.begin(9600);
+
  // zero motors
  moveMouth('L', 0);
  moveMouth('R', 0);
- 
- shoulder.setSpeed(10); //60: max for 14HS13-0804S-PG19 = 825Hz
 
  delay(dly);
 }
@@ -79,13 +74,7 @@ void loop(){
   if(cmd == "ml") { // Mouth Left
     moveMouth('L', command.substring(2).toInt());
   }
-/*  if(cmd == "mr") { // Mouth Right
-    moveMouth('R', command.substring(2).toInt());
-  } */
-  if(cmd == "s") { // Shoulder Right
-    moveShoulder();
-  }
-
+  
   delay(dly);
 }
 
@@ -128,18 +117,7 @@ void moveMouth(char channel, int pos) {
     case('L'):
       if(pos) digitalWrite(4, HIGH);
       break;
-      /*
-    case('R'):
-      if(mouthR.attached()) mouthR.write(pos+scalarR);
-      break;
-      */
     default:
       digitalWrite(4, LOW);
   }
 }
-
-void moveShoulder() {
-  shoulder.step(stepsPerRevolution);
-  delay(dly);
-}
-

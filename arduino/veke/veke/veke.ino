@@ -35,7 +35,6 @@ void setup() {
   mouth.attach(2);
   kaulaO.attach(3);
   kaulaV.attach(4);
-  
 
   delay(10);
 }
@@ -45,6 +44,7 @@ void loop() {
   // Serial cmd
   if (Serial.available()) {
     command = Serial.readStringUntil('\n');
+    // Serial.println(command);
   }
   String cmd = command.substring(0,2);
   
@@ -127,11 +127,10 @@ void moveMouth(int pos) {
 void moveKaula(char channel, int pos) {  
   switch(channel) {
     case('V'):
-      
       if(kaulaV.attached()) kaulaV.write(pos);
       break;
     case('O'):
       if(kaulaO.attached()) kaulaO.write(pos);
       break;
   }
-} 
+}

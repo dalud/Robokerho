@@ -1,8 +1,11 @@
 from socket import *
 
 class Wlan:
+    def __init__(self):
+        self.veke = 0
+
     def listen(self):
-        print('I am listening')
+        print('I am listening')        
         ear = socket(AF_INET, SOCK_DGRAM)    
         ear.bind(('', 12345))
         ear.settimeout(10)
@@ -11,10 +14,15 @@ class Wlan:
             print('Hear?', hear)
             while hear[0].decode().startswith('playing:'):
                 print('Hear?', hear)         
-                hear = ear.recvfrom(1024)         
+                hear = ear.recvfrom(1024)
+            if hear[0].decode().startswith('veke:'):
+                self.veke = hear[0].decode().split(':')[1]
+                print(self.veke)
+                return self.veke
         except:
             print('I hear nothing')   
         ear.close()
+        self.veke = False
 
     # TODO: error prone if network not available
     def broadcast(self, msg):
@@ -26,3 +34,6 @@ class Wlan:
         except:
             pass
         mouth.close()
+
+    def veke(self):
+        return self.veke
