@@ -37,3 +37,5 @@ class Marina:
     def resetEyes(self):
         pass
         
+    def vekeActive(self, stream):
+        return 0

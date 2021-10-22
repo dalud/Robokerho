@@ -33,9 +33,11 @@ void setup() {
  // Kaula
  kaula_L.attach(2);
  
- pwm.begin();  
+ // Silmät
+ pwm.begin();
  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates   
  Serial.begin(9600);
+
  // zero motors
  moveMouth('L', 0);
  moveMouth('R', 0);
@@ -86,7 +88,7 @@ void loop(){
     // Kaula debug
     // kaula_L.write(command.substring(2).toInt());
   }
-
+  
   delay(dly);
 }
 
