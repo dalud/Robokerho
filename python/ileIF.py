@@ -31,9 +31,9 @@ class Ile:
             # Move eyes
             self.arduino.write('ex' + str(amp_L))
             # Blink
-            if(random() < .07):
+            if(random() < .1):
                 self.arduino.write('b')
-                sleep(.15)
+                sleep(.3)
 
         # Right audio channel (Veke)
         if(amp_R > self.pause):
