@@ -12,7 +12,6 @@ arduino = Arduino()
 arduino.connect()
 
 
-
 def speak(amp):
     # print(amp)
     arduino.write('mm' + amp)
