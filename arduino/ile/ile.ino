@@ -21,10 +21,18 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
+// Kaula
+Servo kaula_L;
+
 
 void setup() {
- pinMode(4, OUTPUT); // Suu
+ // Suu
+ pinMode(4, OUTPUT);
  digitalWrite(4, LOW);
+
+ // Kaula
+ kaula_L.attach(2);
+ 
  pwm.begin();  
  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates   
  Serial.begin(9600);
@@ -35,7 +43,8 @@ void setup() {
  delay(dly);
 }
 
-void loop(){   
+// int x = 1;
+void loop(){  
   if (Serial.available()) {
     command = Serial.readStringUntil('\n');    
   }
@@ -73,6 +82,9 @@ void loop(){
   // Mouths
   if(cmd == "ml") { // Mouth Left
     moveMouth('L', command.substring(2).toInt());
+    
+    // Kaula debug
+    // kaula_L.write(command.substring(2).toInt());
   }
 
   delay(dly);
@@ -117,11 +129,6 @@ void moveMouth(char channel, int pos) {
     case('L'):
       if(pos) digitalWrite(4, HIGH);
       break;
-      /*
-    case('R'):
-      if(mouthR.attached()) mouthR.write(pos+scalarR);
-      break;
-      */
     default:
       digitalWrite(4, LOW);
   }
