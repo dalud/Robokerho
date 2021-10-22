@@ -9,10 +9,12 @@ void setup() {
   servo.attach(2);
   Serial.begin(9600);
 }
-
+int x = 1;
 void loop() { 
-  if (Serial.available()) {
+  /*if (Serial.available()) {
     command = Serial.readStringUntil('\n');
   }
-  if (command && servo.attached()) servo.write(command.toInt() + scalar);
+  if (command && servo.attached()) servo.write(command.toInt() + scalar);*/
+  servo.write(x);
+  x++;
 }

@@ -28,6 +28,7 @@ def speak():
 
     # Play the sample
     sound.play(dir+samples[alea])
+    #sound.play('/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/hurjajuttu 64 v-tuttaa kaikki.wav')
     
     while sound.active():
         with sound.stream() as stream:
