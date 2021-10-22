@@ -22,7 +22,7 @@ def speak(amp):
     # Blink
     if(random() < .1):
         arduino.write('b')
-        sleep(.15)
+        sleep(.3)
     arduino.write('')
 
 def resetMotors():
