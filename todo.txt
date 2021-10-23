@@ -3,3 +3,5 @@ Tortsua:
 - Servo collides with serial
 
 
+Veke
+- ei liikuta silmiäX ?
