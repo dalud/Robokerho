@@ -7,7 +7,8 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 // Utils
 String command;
-const int dly = 5;
+const int dly = 10;
+
 
 // Eyes
 int xval = 500;
@@ -21,21 +22,33 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
+// Kaula
+Servo kaula_L;
+
+
 void setup() {
- pinMode(4, OUTPUT); // Suu
- digitalWrite(4, LOW);
- pwm.begin();   
- pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates   
- Serial.begin(9600);
-
- // zero motors
- moveMouth('L', 0);
- moveMouth('R', 0);
-
- delay(dly);
+  Serial.begin(9600);
+ 
+  // Suu
+  pinMode(4, OUTPUT);
+  digitalWrite(4, LOW);
+  
+  // Kaula
+  kaula_L.attach(2);
+   
+  // Silmät
+  pwm.begin();
+  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates   
+  
+  // zero motors
+  moveMouth('L', 0);
+  moveMouth('R', 0);
+  
+  delay(dly);
 }
 
-void loop(){   
+// int x = 1;
+void loop(){  
   if (Serial.available()) {
     command = Serial.readStringUntil('\n');    
   }
@@ -73,11 +86,15 @@ void loop(){
   // Mouths
   if(cmd == "ml") { // Mouth Left
     moveMouth('L', command.substring(2).toInt());
+    
+    // Kaula
+    moveKaula(command.substring(2).toInt());
   }
   
   delay(dly);
 }
 
+// void moveEyes(yval) {
 void moveEyes() {
   // Eye read
   lexpulse = map(xval, 0,1023, 270, 390);
@@ -100,13 +117,13 @@ void moveEyes() {
       pwm.setPWM(3, 0, reypulse); 
 
       // Blink
-      if (switchval == HIGH) {
-      pwm.setPWM(4, 0, 240);
-      pwm.setPWM(5, 0, 240);
-      }
-      else if (switchval == LOW) {
-      pwm.setPWM(4, 0, uplidpulse);
-      pwm.setPWM(5, 0, lolidpulse);
+      if (switchval == LOW) {
+        pwm.setPWM(4, 0, uplidpulse);
+        pwm.setPWM(5, 0, lolidpulse);
+      } 
+      else if (switchval == HIGH) {
+        pwm.setPWM(4, 0, 240);
+        pwm.setPWM(5, 0, 240);      
       }
       
   delay(dly);
@@ -120,4 +137,15 @@ void moveMouth(char channel, int pos) {
     default:
       digitalWrite(4, LOW);
   }
+  delay(dly);
+}
+
+void moveKaula(int pos) {
+  if (Serial.available() /*&& kaula_L.attached()*/) {
+    // Serial.println(pos);
+    //kaula_L.write(command.substring(2).toInt());
+    //kaula_L.detach();
+    // delay(500);
+  }
+  // Serial.println(Serial.availableForWrite());    
 }
