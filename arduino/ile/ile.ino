@@ -31,10 +31,6 @@ void setup() {
   // Kaula
   pinMode(3, OUTPUT);
   digitalWrite(3, LOW);
-
-  // Käsi
-  pinMode(4, OUTPUT);
-  digitalWrite(4, LOW);
      
   // Silmät
   pwm.begin();
@@ -81,7 +77,6 @@ void loop(){
   if(cmd == "ml") { // Mouth Left (deprecated)
     moveMouth(command.substring(2).toInt());    
     moveKaula(command.substring(2).toInt());
-    moveKaesi();
   }
   
   delay(dly);
@@ -130,10 +125,5 @@ void moveMouth(int pos) {
 void moveKaula(int pos) {  
   if(pos) digitalWrite(3, HIGH);
   else digitalWrite(3, LOW);
-  delay(dly);
-}
-
-void moveKaesi() {  
-  digitalWrite(4, HIGH);
   delay(dly);
 }

@@ -10,7 +10,11 @@ String command;
 bool logita;
 bool debug;
 char poses[] = { 'z', 'e', 'h', 's', '1' };
-unsigned long kiekka;
+int kiekka = 0;
+unsigned long start = millis();
+unsigned long elapsed;
+char buf[50];
+String stamp = ltoa(millis(), buf, 10);
 
 
 void setup() {
@@ -18,6 +22,9 @@ void setup() {
 
   // Input signal
   pinMode(2, INPUT);
+
+  // Built in LED
+  pinMode(LED_BUILTIN, OUTPUT);
   
   // Logita moottorin asennot?
   logita = false;
@@ -46,22 +53,32 @@ void setup() {
 }
 
 void loop() {
-  kiekka = millis();
-  if(logita) Serial.println(kiekka);
-  
+  kiekka++;  
   // Debug mode using serial commands
   if(debug) {
     if (Serial.available()) {
       command = Serial.readStringUntil('\n');
     }
   }
+  //Serial.println(kiekka);
+  //Serial.println(digitalRead(2));
+  //Serial.println(command);
   // Auto mode
-  // && 
-  if(!debug && digitalRead(2) && !(kiekka%1000)) command = poses[random(sizeof(poses))];
-  Serial.println(digitalRead(2));
-  if(!digitalRead(2)) command = 'z'; 
-   
-  if(logita) Serial.println(command);
+  if(digitalRead(2)) {
+    // kiekka = 0;
+    digitalWrite(LED_BUILTIN, HIGH);
+    //Serial.println("NYT!!!!");
+    if(kiekka>5000) {
+      command = poses[random(sizeof(poses))];
+      kiekka = 0;
+    }    
+  } else {
+    // command = 'z';
+    digitalWrite(LED_BUILTIN, LOW);
+    elapsed = millis();
+  }
+  //Serial.println(kiekka);
+  //Serial.println(command);
   
   if(command == "z") {
     zeroMotors();
