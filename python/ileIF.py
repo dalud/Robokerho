@@ -1,6 +1,11 @@
 from arduinoIF import Arduino
 from random import random
 from time import sleep
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11, GPIO.OUT)
+GPIO.output(11, GPIO.LOW)
 
 
 class Ile:
@@ -27,23 +32,23 @@ class Ile:
         print('Playing:', sample, 'L:', amp_L, 'R:', amp_R)
         # Left audio channel (Tortsua)
         if(amp_L > self.pause):
+            #Move mouth
             self.arduino.write('ml' + str(amp_L))
+
             # Move eyes
             self.arduino.write('ex' + str(amp_L))
             #self.arduino.write('ey' + str(amp_L/3))
-            # Blink
+                # Blink
             if(random() < .1):
                 self.arduino.write('b')
                 sleep(.3)
 
-        # Right audio channel (Veke)
-        if(amp_R > self.pause):
-            self.arduino.write('mr' + str(amp_R))        
-
-        # Reset eyes
+            # Move arm
+            GPIO.output(11, GPIO.HIGH)
         if(amp_L < self.pause):
-            self.resetEyes()
+            GPIO.output(11, GPIO.LOW)
 
+        
     def vekeActive(self, stream):
         amp = stream.read(128)[0] # increase blocksize for better accuracy
         R = []
@@ -61,3 +66,6 @@ class Ile:
     def resetMotors(self):
         self.arduino.write('ml' + str(0))
         self.arduino.write('')
+
+    def resetArm(self):
+        GPIO.output(11, GPIO.LOW)
