@@ -13,11 +13,12 @@ char poses[] = { 'z', 'e', 'h', 's', '1' };
 unsigned long kiekka;
 
 
-void setup()
-{
-  //Serial Communication
+void setup() {
   Serial.begin(9600); //defining some baud rate
-  //---------------------------------------------------------------------------
+
+  // Input signal
+  pinMode(2, INPUT);
+  
   // Logita moottorin asennot?
   logita = false;
   //logita = true;
@@ -55,9 +56,11 @@ void loop() {
     }
   }
   // Auto mode
-  else if(!(kiekka%1000)){
-    command = poses[random(sizeof(poses))];
-  }  
+  // && 
+  if(!debug && digitalRead(2) && !(kiekka%1000)) command = poses[random(sizeof(poses))];
+  Serial.println(digitalRead(2));
+  if(!digitalRead(2)) command = 'z'; 
+   
   if(logita) Serial.println(command);
   
   if(command == "z") {

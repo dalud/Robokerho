@@ -10,6 +10,8 @@ bool debug = false;
 Servo kaula_L;
 Servo kaula_R;
 
+// Käsi
+
 
 void setup() {
   Serial.begin(9600);
