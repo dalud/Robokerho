@@ -2,7 +2,7 @@
 
 // Utils
 String command;
-int dly = 200;
+int dly = 500;
 bool debug = false;
 //bool debug = true;
 
@@ -15,12 +15,17 @@ void setup() {
   Serial.begin(9600);
 
   // Input signal
-  pinMode(2, INPUT);
+  pinMode(5, INPUT);
     
   kaula_L.attach(3);
   kaula_R.attach(4);
   kaula_L.write(0);
   kaula_R.write(0);
+
+  // Käsi
+  pinMode(5, OUTPUT);
+  digitalWrite(5, LOW);
+
   delay(dly);
 }
 
@@ -35,7 +40,11 @@ void loop() {
   }
   // Auto mode
   else {
-    if(digitalRead(2)) moveKaula(random(0, 180));
+    if(digitalRead(2)) {
+      moveKaula(random(0, 180));
+      moveKaesi();
+    }
+    
   }
   kaula_L.write(0);
   kaula_R.write(0);
@@ -45,5 +54,11 @@ void loop() {
 void moveKaula(int pos) {
   kaula_L.write(pos);
   kaula_R.write(pos);
+  delay(dly);
+}
+
+void moveKaesi() {  
+  if(digitalRead(2)) digitalWrite(5, HIGH);
+  else digitalWrite(5, LOW);
   delay(dly);
 }
