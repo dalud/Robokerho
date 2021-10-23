@@ -94,7 +94,6 @@ void loop(){
   delay(dly);
 }
 
-// void moveEyes(yval) {
 void moveEyes() {
   // Eye read
   lexpulse = map(xval, 0,1023, 270, 390);
@@ -141,11 +140,6 @@ void moveMouth(char channel, int pos) {
 }
 
 void moveKaula(int pos) {
-  if (Serial.available() /*&& kaula_L.attached()*/) {
-    // Serial.println(pos);
-    //kaula_L.write(command.substring(2).toInt());
-    //kaula_L.detach();
-    // delay(500);
-  }
-  // Serial.println(Serial.availableForWrite());    
+  // kaula_L.write(pos);
+  delay(dly);
 }
