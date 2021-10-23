@@ -22,10 +22,6 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
-// Kaula
-Servo kaula_L;
-
-
 void setup() {
   Serial.begin(9600);
  
