@@ -1,6 +1,4 @@
-#include <Servo.h>
 #include <Stepper.h>
-#include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
@@ -22,27 +20,25 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
-// Kaula
-Servo kaula_L;
-
 
 void setup() {
   Serial.begin(9600);
  
   // Suu
+  pinMode(2, OUTPUT);
+  digitalWrite(2, LOW);
+
+  // Kaula
+  pinMode(3, OUTPUT);
+  digitalWrite(3, LOW);
+
+  // Käsi
   pinMode(4, OUTPUT);
   digitalWrite(4, LOW);
-  
-  // Kaula
-  kaula_L.attach(2);
-   
+     
   // Silmät
   pwm.begin();
   pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates   
-  
-  // zero motors
-  moveMouth('L', 0);
-  moveMouth('R', 0);
   
   delay(dly);
 }
@@ -55,8 +51,6 @@ void loop(){
   // Serial.println(command);
   delay(10);
   String cmd = command.substring(0,2);
-  
-  digitalWrite(4, LOW);
 
   // Eyes
   if(cmd == "ex") { // Eye X
@@ -83,12 +77,11 @@ void loop(){
   }
   moveEyes();
 
-  // Mouths
-  if(cmd == "ml") { // Mouth Left
-    moveMouth('L', command.substring(2).toInt());
-    
-    // Kaula
+  // Mouth, kaula and käsi
+  if(cmd == "ml") { // Mouth Left (deprecated)
+    moveMouth(command.substring(2).toInt());    
     moveKaula(command.substring(2).toInt());
+    moveKaesi();
   }
   
   delay(dly);
@@ -128,18 +121,19 @@ void moveEyes() {
   delay(dly);
 }
 
-void moveMouth(char channel, int pos) {  
-  switch(channel) {
-    case('L'):
-      if(pos) digitalWrite(4, HIGH);
-      break;
-    default:
-      digitalWrite(4, LOW);
-  }
+void moveMouth(int pos) {  
+  if(pos) digitalWrite(2, HIGH);
+  else digitalWrite(2, LOW);
   delay(dly);
 }
 
-void moveKaula(int pos) {
-  // kaula_L.write(pos);
+void moveKaula(int pos) {  
+  if(pos) digitalWrite(3, HIGH);
+  else digitalWrite(3, LOW);
+  delay(dly);
+}
+
+void moveKaesi() {  
+  digitalWrite(4, HIGH);
   delay(dly);
 }
