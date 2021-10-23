@@ -17,7 +17,11 @@ class Arduino:
                 print('Connecting Arduino via USB. i =', self.i)
                 self.i += 1
 
-    def write(self, msg):
+    def write(self, msg):        
+        #if(not(self.arduino.is_open)):
+        #self.arduino.open()
+        #print('Is serial open?', self.arduino.is_open)
         self.arduino.write(msg.encode())
         self.arduino.write('\n'.encode())
+        #self.arduino.close()
         sleep(.01)

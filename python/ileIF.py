@@ -30,6 +30,7 @@ class Ile:
             self.arduino.write('ml' + str(amp_L))
             # Move eyes
             self.arduino.write('ex' + str(amp_L))
+            #self.arduino.write('ey' + str(amp_L/3))
             # Blink
             if(random() < .1):
                 self.arduino.write('b')
@@ -53,7 +54,9 @@ class Ile:
         return (amp_R)
 
     def resetEyes(self):
-        self.arduino.write('ex500')        
+        self.arduino.write('ex500')
+        self.arduino.write('ey500')
+        self.arduino.write('')
 
     def resetMotors(self):
         self.arduino.write('ml' + str(0))
