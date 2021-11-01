@@ -1,7 +1,5 @@
 Tortsua:
 - eyes Y
-- Servo collides with serial
-
 
 Veke
 - ei liikuta silmiäX ?

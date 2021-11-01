@@ -2,9 +2,9 @@
 
 // Utils
 String command;
-int dly = 250;
-bool debug = false;
-//bool debug = true;
+int dly = 500;
+//bool debug = false;
+bool debug = true;
 
 // Kaula
 Servo kaula_L;
@@ -44,14 +44,15 @@ void loop() {
       moveKaula(random(0, 180));
       moveKaesi();
     } else {
-      kaula_L.write(0);
-      kaula_R.write(0);   
-    }    
+      // kaula_L.write(0);
+      // kaula_R.write(0);   
+    }
+    
   }
   delay(dly);
 }
 
-void moveKaula(int pos) {
+void moveKaula() {
   kaula_L.write(pos);
   kaula_R.write(pos);
   delay(dly);
