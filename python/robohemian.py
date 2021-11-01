@@ -6,7 +6,6 @@ from soundIF import Sound
 from ileIF import Ile
 from marinaIF import Marina
 
-
 # Get samples
 # dir = '/home/pi/robokerho/samples/marina/'
 dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
@@ -39,6 +38,7 @@ def speak():
                 wlan.broadcast('veke:' + str(robo.vekeActive(stream)))
             robo.resetMotors() # Make sure none get locked HIGH
     robo.resetEyes()
+    robo.resetArm()
 
 # Main loop
 while(True):    
