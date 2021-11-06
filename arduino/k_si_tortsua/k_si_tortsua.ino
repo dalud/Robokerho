@@ -11,10 +11,10 @@ bool logita;
 bool debug;
 char poses[] = { 'z', 'e', 'h', 's', '1' };
 int kiekka = 0;
-unsigned long start = millis();
-unsigned long elapsed;
-char buf[50];
-String stamp = ltoa(millis(), buf, 10);
+// unsigned long start = millis();
+// unsigned long elapsed;
+// char buf[50];
+// String stamp = ltoa(millis(), buf, 10);
 
 
 void setup() {
@@ -22,9 +22,12 @@ void setup() {
 
   // Input signal
   pinMode(2, INPUT);
+  // Zero switch
+  pinMode(3, INPUT);
 
   // Built in LED
   pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
   
   // Logita moottorin asennot?
   logita = false;
@@ -68,18 +71,22 @@ void loop() {
     // kiekka = 0;
     digitalWrite(LED_BUILTIN, HIGH);
     //Serial.println("NYT!!!!");
-    if(kiekka>5000) {
+    // if(kiekka>200) {
+    if(kiekka>5000) {  
       command = poses[random(sizeof(poses))];
       kiekka = 0;
     }    
-  } else {
-    // command = 'z';
-    digitalWrite(LED_BUILTIN, LOW);
-    elapsed = millis();
   }
   //Serial.println(kiekka);
   //Serial.println(command);
-  
+
+  // Zero switch
+  if(digitalRead(3)) {
+    digitalWrite(LED_BUILTIN, LOW);
+    //command = "z";
+  }
+
+  // Motion
   if(command == "z") {
     zeroMotors();
   }
