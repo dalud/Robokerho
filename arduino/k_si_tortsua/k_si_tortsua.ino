@@ -9,12 +9,9 @@ String command;
 
 bool logita;
 bool debug;
-char poses[] = { 'z', 'e', 'h', 's', '1' };
+char poses[] = { /*'z',*/ 'e', 'h', 's', '1' };
 int kiekka = 0;
-// unsigned long start = millis();
-// unsigned long elapsed;
-// char buf[50];
-// String stamp = ltoa(millis(), buf, 10);
+int maxi;
 
 
 void setup() {
@@ -22,16 +19,18 @@ void setup() {
 
   // Input signal
   pinMode(2, INPUT);
-  // Zero switch
-  pinMode(3, INPUT);
 
   // Built in LED
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
   
-  // Logita moottorin asennot?
+  // activate debug logging
   logita = false;
   //logita = true;
+  // with log, set kiekka lower
+  if(logita) {
+    maxi = 1000;
+  } else maxi = 10000;
 
   // Run in debug mode
   //debug = true;
@@ -63,27 +62,23 @@ void loop() {
       command = Serial.readStringUntil('\n');
     }
   }
-  //Serial.println(kiekka);
-  //Serial.println(digitalRead(2));
-  //Serial.println(command);
+  
   // Auto mode
   if(digitalRead(2)) {
-    // kiekka = 0;
     digitalWrite(LED_BUILTIN, HIGH);
-    //Serial.println("NYT!!!!");
-    // if(kiekka>200) {
-    if(kiekka>5000) {  
+
+    if(kiekka>maxi) {    
       command = poses[random(sizeof(poses))];
       kiekka = 0;
-    }    
-  }
-  //Serial.println(kiekka);
-  //Serial.println(command);
-
-  // Zero switch
-  if(digitalRead(3)) {
+    }
+  } else {
     digitalWrite(LED_BUILTIN, LOW);
-    //command = "z";
+    command = "z";
+  }
+
+  if(logita) {
+    Serial.print(digitalRead(2));
+    Serial.println(": " +command);
   }
 
   // Motion
@@ -92,16 +87,16 @@ void loop() {
   }
   
   if(command == "h") { // Hail
-    if(logita) Serial.println(shoulder.currentPosition());
+    // if(logita) Serial.println(shoulder.currentPosition());
     hail();
   }
   if(command == "s") { // Spreader
-    if(logita) Serial.println(spreader.currentPosition());
+    // if(logita) Serial.println(spreader.currentPosition());
     spreader.moveTo(-3000);
     spreader.run();    
   }
   if(command == "e") { // Elbow
-    if(logita) Serial.println(elbow.currentPosition());
+    // if(logita) Serial.println(elbow.currentPosition());
     elbow.moveTo(-6000);
     elbow.run();
   }
