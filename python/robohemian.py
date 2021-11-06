@@ -37,8 +37,8 @@ def speak():
 
             if(robo.vekeActive(stream) > .4):
                 wlan.broadcast('veke:' + str(robo.vekeActive(stream)))
-            robo.resetMotors() # Make sure none get locked HIGH
-        robo.resetMotors()
+                robo.resetMotors() # Make sure none get locked HIGH
+    robo.resetMotors()
 
 # Main loop
 while(True):    
@@ -47,6 +47,7 @@ while(True):
         wlan.broadcast('snoozing')
         wlan.listen()
         speak()
+    # TODO: except general error
     except KeyboardInterrupt:
         print("User exit")
         robo.resetMotors()

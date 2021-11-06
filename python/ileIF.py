@@ -5,12 +5,8 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
 # Oikea käsi
-# Run
 GPIO.setup(11, GPIO.OUT)
 GPIO.output(11, GPIO.LOW)
-# Zero
-GPIO.setup(13, GPIO.OUT)
-GPIO.output(13, GPIO.LOW)
 
 
 class Ile:
@@ -49,14 +45,7 @@ class Ile:
                 sleep(.3)
 
             # Move arm
-            #GPIO.output(11, GPIO.HIGH)
-            #GPIO.output(13, GPIO.LOW)
             self.moveArm()
-            
-        #if(amp_L < self.pause):
-            #GPIO.output(11, GPIO.LOW)
-            #GPIO.output(13, GPIO.HIGH)
-
         
     def vekeActive(self, stream):
         amp = stream.read(128)[0] # increase blocksize for better accuracy
@@ -80,8 +69,7 @@ class Ile:
 
     def resetArm(self):
         GPIO.output(11, GPIO.LOW)
-        GPIO.output(13, GPIO.HIGH)
-
+        
     def moveArm(self):
         GPIO.output(11, GPIO.HIGH)
-        GPIO.output(13, GPIO.LOW)
+        
