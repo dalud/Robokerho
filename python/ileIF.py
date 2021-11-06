@@ -4,8 +4,13 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
+# Oikea käsi
+# Run
 GPIO.setup(11, GPIO.OUT)
 GPIO.output(11, GPIO.LOW)
+# Zero
+GPIO.setup(13, GPIO.OUT)
+GPIO.output(13, GPIO.LOW)
 
 
 class Ile:
@@ -44,9 +49,13 @@ class Ile:
                 sleep(.3)
 
             # Move arm
-            GPIO.output(11, GPIO.HIGH)
-        if(amp_L < self.pause):
-            GPIO.output(11, GPIO.LOW)
+            #GPIO.output(11, GPIO.HIGH)
+            #GPIO.output(13, GPIO.LOW)
+            self.moveArm()
+            
+        #if(amp_L < self.pause):
+            #GPIO.output(11, GPIO.LOW)
+            #GPIO.output(13, GPIO.HIGH)
 
         
     def vekeActive(self, stream):
@@ -58,14 +67,21 @@ class Ile:
 
         return (amp_R)
 
+    def resetMotors(self):
+        self.arduino.write('ml' + str(0))
+        self.arduino.write('')
+        self.resetEyes()
+        self.resetArm()
+
     def resetEyes(self):
         self.arduino.write('ex500')
         self.arduino.write('ey500')
         self.arduino.write('')
 
-    def resetMotors(self):
-        self.arduino.write('ml' + str(0))
-        self.arduino.write('')
-
     def resetArm(self):
         GPIO.output(11, GPIO.LOW)
+        GPIO.output(13, GPIO.HIGH)
+
+    def moveArm(self):
+        GPIO.output(11, GPIO.HIGH)
+        GPIO.output(13, GPIO.LOW)

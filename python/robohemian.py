@@ -5,6 +5,7 @@ from random import random
 from soundIF import Sound
 from ileIF import Ile
 from marinaIF import Marina
+import sys
 
 # Get samples
 # dir = '/home/pi/robokerho/samples/marina/'
@@ -26,7 +27,7 @@ def speak():
     alea = (int)(random()*len(samples))
 
     # Play the sample
-    sound.play(dir+samples[alea])
+    sound.play(dir+samples[alea])# Init Wlan
     #sound.play('/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/hurjajuttu 64 v-tuttaa kaikki.wav')
     
     while sound.active():
@@ -37,11 +38,16 @@ def speak():
             if(robo.vekeActive(stream) > .4):
                 wlan.broadcast('veke:' + str(robo.vekeActive(stream)))
             robo.resetMotors() # Make sure none get locked HIGH
-    robo.resetEyes()
-    robo.resetArm()
+        robo.resetMotors()
 
 # Main loop
 while(True):    
-    wlan.broadcast('snoozing')
-    wlan.listen()
-    speak()
+    try:
+        robo.resetMotors()
+        wlan.broadcast('snoozing')
+        wlan.listen()
+        speak()
+    except KeyboardInterrupt:
+        print("User exit")
+        robo.resetMotors()
+        sys.exit()
