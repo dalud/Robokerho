@@ -12,7 +12,7 @@ class Wlan:
         try:
             hear = ear.recvfrom(1024)
             print('Hear?', hear)
-            while hear[0].decode().startswith('playing:'):
+            while hear[0].decode().startswith('playing:') or hear[0].decode().startswith('veke'):
                 print('Hear?', hear)         
                 hear = ear.recvfrom(1024)
             if hear[0].decode().startswith('veke:'):

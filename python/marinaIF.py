@@ -1,6 +1,12 @@
 from arduinoIF import Arduino
 from random import random
 from time import sleep
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BOARD)
+# Niskat
+GPIO.setup(7, GPIO.OUT)
+GPIO.output(7, GPIO.LOW)
 
 
 class Marina:
@@ -26,16 +32,25 @@ class Marina:
 
         print('Playing:', sample, 'L:', amp_L, 'R:', amp_R)
         if(amp_L > self.pause):
-            self.arduino.write('ml' + str(amp_L))
+            #self.arduino.write('ml' + str(amp_L))
+            self.moveNiskat()
             pass
 
     def resetMotors(self):
         self.arduino.write('ml' + str(0))
         self.arduino.write('')
+        self.resetNiskat()
         pass
+
+    def resetNiskat(self):
+        GPIO.output(7, GPIO.LOW)
+        
+    def moveNiskat(self):
+        GPIO.output(7, GPIO.HIGH)
 
     def resetEyes(self):
         pass
         
     def vekeActive(self, stream):
         return 0
+

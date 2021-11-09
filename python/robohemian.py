@@ -8,13 +8,13 @@ from marinaIF import Marina
 import sys
 
 # Get samples
-# dir = '/home/pi/robokerho/samples/marina/'
-dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
+dir = '/home/pi/robokerho/samples/marina/'
+#dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
 samples = os.listdir(dir)
 print(samples)
 
-robo = Ile()
-#robo = Marina()
+#robo = Ile()
+robo = Marina()
 
 # Init Wlan
 wlan = Wlan()
