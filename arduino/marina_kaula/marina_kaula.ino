@@ -2,7 +2,7 @@
 
 // Utils
 String command;
-int dly = 500;
+int dly = 100;
 bool debug = false;
 //bool debug = true;
 
@@ -32,8 +32,8 @@ void setup() {
 void loop() {
   // Debug using serial commands
   if(debug) {
-  if (Serial.available()) {
-    command = Serial.readStringUntil('\n');    
+    if (Serial.available()) {
+      command = Serial.readStringUntil('\n');    
   }
   // Serial.println(command);
     moveKaula(command.toInt());
