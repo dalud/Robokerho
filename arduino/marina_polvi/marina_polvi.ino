@@ -1,4 +1,4 @@
-int reverseSwitch = 2;  // Push button for reverse
+int reverseSwitch =   2;  // Push button for reverse
 int driverPUL = 7;    // PUL- pin
 int driverDIR = 6;    // DIR- pin
 int spd = A0;     // Potentiometer
@@ -18,7 +18,12 @@ void revmotor (){
  
  
 void setup() {
- 
+  Serial.begin(9600);
+  
+  // Input signal
+  pinMode(8, INPUT);
+
+  // Motor func
   pinMode (driverPUL, OUTPUT);
   pinMode (driverDIR, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(reverseSwitch), revmotor, FALLING);
@@ -26,12 +31,14 @@ void setup() {
 }
  
 void loop() {
+  //Serial.println(digitalRead(8));
   
-    pd = map((analogRead(spd)),0,1023,2000,50);
+  pd = map((analogRead(spd)),0,1023,2000,50);
+  if(digitalRead(8)) {
     digitalWrite(driverDIR,setdir);
     digitalWrite(driverPUL,HIGH);
     delayMicroseconds(pd);
     digitalWrite(driverPUL,LOW);
-    delayMicroseconds(pd);
- 
+    delayMicroseconds(pd);  
+  }
 }
