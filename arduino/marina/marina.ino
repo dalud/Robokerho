@@ -13,15 +13,11 @@ float pause = .3; // Audio amplitude interpreted as silence
 
 
 void setup() {
+ Serial.begin(9600);
+ 
  pinMode(LED_BUILTIN, OUTPUT);
  pinMode(4, OUTPUT);
-
- // mouthR.attach(3);
- mouth.attach(2);
- Serial.begin(9600);
- // zero mouth motors
- moveMouth('L', 0);
-
+ 
  shoulder_R.setMaxSpeed(5000); //SPEED = Steps / second  
  shoulder_R.setAcceleration(1000); //ACCELERATION = Steps /(second)^2    
  shoulder_R.setSpeed(1500);

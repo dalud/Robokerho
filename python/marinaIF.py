@@ -7,6 +7,9 @@ GPIO.setmode(GPIO.BOARD)
 # Niskat
 GPIO.setup(7, GPIO.OUT)
 GPIO.output(7, GPIO.LOW)
+# Polvi
+GPIO.setup(11, GPIO.OUT)
+GPIO.output(11, GPIO.LOW)
 
 
 class Marina:
@@ -34,12 +37,14 @@ class Marina:
         if(amp_L > self.pause):
             #self.arduino.write('ml' + str(amp_L))
             self.moveNiskat()
+            self.movePolvi()
             pass
 
     def resetMotors(self):
         self.arduino.write('ml' + str(0))
         self.arduino.write('')
         self.resetNiskat()
+        self.resetPolvi()
         pass
 
     def resetNiskat(self):
@@ -47,6 +52,12 @@ class Marina:
         
     def moveNiskat(self):
         GPIO.output(7, GPIO.HIGH)
+
+    def resetPolvi(self):
+        GPIO.output(11, GPIO.LOW)
+        
+    def movePolvi(self):
+        GPIO.output(11, GPIO.HIGH)
 
     def resetEyes(self):
         pass
