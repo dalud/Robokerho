@@ -2,9 +2,9 @@
 
 // Utils
 String command;
-int dly = 500;
-//bool debug = false;
-bool debug = true;
+int dly = 100;
+bool debug = false;
+//bool debug = true;
 
 // Kaula
 Servo kaula_L;
@@ -32,8 +32,8 @@ void setup() {
 void loop() {
   // Debug using serial commands
   if(debug) {
-  if (Serial.available()) {
-    command = Serial.readStringUntil('\n');    
+    if (Serial.available()) {
+      command = Serial.readStringUntil('\n');    
   }
   // Serial.println(command);
     moveKaula(command.toInt());
@@ -52,7 +52,7 @@ void loop() {
   delay(dly);
 }
 
-void moveKaula() {
+void moveKaula(int pos) {
   kaula_L.write(pos);
   kaula_R.write(pos);
   delay(dly);

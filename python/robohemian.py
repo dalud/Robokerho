@@ -9,7 +9,9 @@ import sys
 
 # Get samples
 #dir = '/home/pi/robokerho/samples/marina/'
-dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
+#dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
+dir = '/home/pi/robokerho/samples/hurjajuttu_lasten/'
+
 samples = os.listdir(dir)
 print(samples)
 
