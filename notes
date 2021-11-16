@@ -1,6 +1,12 @@
+python:
 sudo apt-get install idle3
 python3 -m pip install sounddevice
 sudo apt-get install python3-soundfile
 sudo apt-get install portaudio19-dev
+
+Arduino:
 sudo git clone https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library.git
 	(/usr/share/arduino/libraries)
+
+Autoexec:
+/etc/profile

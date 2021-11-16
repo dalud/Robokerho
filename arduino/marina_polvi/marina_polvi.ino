@@ -1,4 +1,4 @@
-int reverseSwitch = 2;  // Push button for reverse
+int reverseSwitch =   2;  // Push button for reverse
 int driverPUL = 7;    // PUL- pin
 int driverDIR = 6;    // DIR- pin
 int spd = A0;     // Potentiometer
@@ -48,11 +48,11 @@ void loop() {
 
 void movePolvi() {  
   pd = map((analogRead(spd)),0,1023,2000,50);
-    digitalWrite(driverDIR,setdir);
-    digitalWrite(driverPUL,HIGH);
-    delayMicroseconds(pd);
-    digitalWrite(driverPUL,LOW);
-    delayMicroseconds(pd); 
+  digitalWrite(driverDIR,setdir);
+  digitalWrite(driverPUL,HIGH);
+  delayMicroseconds(pd);
+  digitalWrite(driverPUL,LOW);
+  delayMicroseconds(pd); 
 }
 
 void moveKaula() {
