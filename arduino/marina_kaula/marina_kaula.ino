@@ -22,10 +22,6 @@ void setup() {
   kaula_L.write(0);
   kaula_R.write(0);
 
-  // Käsi
-  pinMode(5, OUTPUT);
-  digitalWrite(5, LOW);
-
   delay(dly);
 }
 

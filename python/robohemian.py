@@ -11,6 +11,7 @@ import sys
 #dir = '/home/pi/robokerho/samples/marina/'
 #dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
 dir = '/home/pi/robokerho/samples/hurjajuttu_lasten/'
+
 samples = os.listdir(dir)
 print(samples)
 
@@ -28,7 +29,7 @@ def speak():
     alea = (int)(random()*len(samples))
 
     # Play the sample
-    sound.play(dir+samples[alea])# Init Wlan
+    sound.play(dir+samples[alea])
     #sound.play('/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/hurjajuttu 64 v-tuttaa kaikki.wav')
     
     while sound.active():
