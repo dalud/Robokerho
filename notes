@@ -10,3 +10,12 @@ sudo git clone https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library.git
 
 Autoexec:
 /etc/profile
+
+PulseAudio:
+pacmd list-sinks
+pacmd set-default-sink [index|name] // Will select audio output automatically after BTConnect if set once?
+
+Bluetooth:
+bluetoothctl devices
+bluetoothctl paired-devices
+bluetoothctl connect [MAC:ADDRESS]
