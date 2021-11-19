@@ -38,6 +38,6 @@ while(True):
     # wlan.broadcast('snoozing')
     wlan.listen()
     if(wlan.veke):
-        # print('Nyt meikä!')
+        print('Nyt meikä!')
         speak(wlan.veke)
     #resetMotors()

@@ -11,14 +11,14 @@ class Wlan:
         ear.settimeout(10)
         try:
             hear = ear.recvfrom(1024)
-            print('Hear?', hear)
             while hear[0].decode().startswith('playing:') or hear[0].decode().startswith('veke'):
-                print('Hear?', hear)         
+                print('Hear?', hear)
                 hear = ear.recvfrom(1024)
-            if hear[0].decode().startswith('veke:'):
-                self.veke = hear[0].decode().split(':')[1]
-                print(self.veke)
-                return self.veke
+
+                if hear[0].decode().startswith('veke:'):
+                    self.veke = hear[0].decode().split(':')[1]
+                    print("NYT!", self.veke)
+                    return self.veke
         except:
             print('I hear nothing')   
         ear.close()
