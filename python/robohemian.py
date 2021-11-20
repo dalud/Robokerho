@@ -6,17 +6,25 @@ from soundIF import Sound
 from ileIF import Ile
 from marinaIF import Marina
 import sys
+import configparser
+
+conf = configparser.ConfigParser()
+conf.read('../config')
 
 # Get samples
-#dir = '/home/pi/robokerho/samples/marina/'
-#dir = '/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/'
-dir = '/home/pi/robokerho/samples/hurjajuttu_lasten/'
-
+dir = conf.get('env', 'dir')
 samples = os.listdir(dir)
 print(samples)
 
-robo = Ile()
-#robo = Marina()
+# Select robo
+robo = conf.get('env', 'robo')
+if(robo == 'ile'):
+    robo = Ile()
+elif(robo == 'marina'):
+    robo = Marina()
+else:
+    print("No suitable robot class found. Exiting.")
+    sys.exit(1)
 
 # Init Wlan
 wlan = Wlan()
@@ -29,7 +37,7 @@ def speak():
     alea = (int)(random()*len(samples))
 
     # Play the sample
-    sound.play(dir+samples[alea])# Init Wlan
+    sound.play(dir+samples[alea])
     #sound.play('/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/hurjajuttu 64 v-tuttaa kaikki.wav')
     
     while sound.active():

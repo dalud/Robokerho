@@ -13,7 +13,7 @@ class Ile:
     def __init__(self):
         self.mouthVel_L = 1023 # scale according to mechanics
         self.mouthVel_R = 1023 # 1023 max X/Y value for silmat, 500 = lepo
-        self.pause = .3 # Amp threshold interpreted as mute
+        self.pause = 10 # Amp threshold interpreted as mute
 
         # Init Arduino
         self.arduino = Arduino()
