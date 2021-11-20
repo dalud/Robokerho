@@ -6,3 +6,4 @@
 /java/out/*
 /java/.idea/*
 /python/__pycache__/*
+/config
