@@ -29,6 +29,8 @@ else:
     print("No suitable robot class found. Exiting.")
     sys.exit(1)
 
+robo.resetMotors()
+
 # Init Wlan
 wlan = Wlan()
 
@@ -56,11 +58,12 @@ def speak():
 # Main loop
 while(True):    
     try:
-        robo.resetMotors()
+        #robo.resetMotors()
         wlan.broadcast('snoozing')        
+
         if not wlan.listen():
             speak()
-            sleep(3)
+            sleep(4)
             
     # TODO: except general error
     except KeyboardInterrupt:

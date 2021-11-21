@@ -39,14 +39,8 @@ class Ile:
         print('Playing:', sample, 'L:', amp_L, 'R:', amp_R)
         # Left audio channel (Tortsua)
         if(amp_L > self.pause):
-            # Move kaula
             self.moveKaula()
-
-            #Move mouth
-            self.arduino.write('ml' + str(amp_L)) #deprecated? Use GPIO
             self.moveMouth()            
-
-            # Move eyes
             self.arduino.write('ex' + str(amp_L))
             #self.arduino.write('ey' + str(amp_L/3))
                 # Blink
@@ -67,8 +61,7 @@ class Ile:
         return (amp_R)
 
     def resetMotors(self):
-        self.arduino.write('ml' + str(0))
-        self.arduino.write('')
+        self.arduino.write('\n')
         self.resetKaula()
         self.resetMouth()
         self.resetEyes()
@@ -96,4 +89,4 @@ class Ile:
 
     def moveMouth(self):
         GPIO.output(12, GPIO.HIGH)
-        
+    
