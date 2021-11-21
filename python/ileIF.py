@@ -4,9 +4,15 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
+# Kaula
+GPIO.setup(7, GPIO.OUT)
+GPIO.output(7, GPIO.LOW)
 # Oikea käsi
 GPIO.setup(11, GPIO.OUT)
 GPIO.output(11, GPIO.LOW)
+# Suu
+GPIO.setup(12, GPIO.OUT)
+GPIO.output(12, GPIO.LOW)
 
 
 class Ile:
@@ -33,8 +39,12 @@ class Ile:
         print('Playing:', sample, 'L:', amp_L, 'R:', amp_R)
         # Left audio channel (Tortsua)
         if(amp_L > self.pause):
+            # Move kaula
+            self.moveKaula()
+
             #Move mouth
-            self.arduino.write('ml' + str(amp_L))
+            self.arduino.write('ml' + str(amp_L)) #deprecated? Use GPIO
+            self.moveMouth()            
 
             # Move eyes
             self.arduino.write('ex' + str(amp_L))
@@ -59,6 +69,8 @@ class Ile:
     def resetMotors(self):
         self.arduino.write('ml' + str(0))
         self.arduino.write('')
+        self.resetKaula()
+        self.resetMouth()
         self.resetEyes()
         self.resetArm()
 
@@ -67,9 +79,21 @@ class Ile:
         self.arduino.write('ey500')
         self.arduino.write('')
 
+    def resetKaula(self):
+        GPIO.output(7, GPIO.LOW)
+
+    def moveKaula(self):
+        GPIO.output(7, GPIO.HIGH)
+
     def resetArm(self):
         GPIO.output(11, GPIO.LOW)
-        
+
     def moveArm(self):
         GPIO.output(11, GPIO.HIGH)
+
+    def resetMouth(self):
+        GPIO.output(12, GPIO.LOW)
+
+    def moveMouth(self):
+        GPIO.output(12, GPIO.HIGH)
         
