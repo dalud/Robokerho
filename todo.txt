@@ -6,3 +6,6 @@ Veke:
 
 selectBT:
 Tortsua ei connect terminaalista?
+
+GPIO:
+Default LOW?
