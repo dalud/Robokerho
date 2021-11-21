@@ -5,5 +5,4 @@ Veke:
 - ei liikuta silmiäX ?
 
 selectBT:
-lue MAC:ADRESS conffi.tideostosta
-looppaa 10 alas kunnes 'pacmd set-default-sink' = 0
+Tortsua ei connect terminaalista?

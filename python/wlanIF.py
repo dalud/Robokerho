@@ -7,12 +7,14 @@ class Wlan:
         ear.settimeout(3)
         try:
             hear = ear.recvfrom(1024)
+
             while ("playing" in hear[0].decode()) or ("veke" in hear[0].decode()):
                 print('Hear:', hear)
                 hear = ear.recvfrom(1024)
                 return hear
         except:
-            print('I hear nothing')   
+            print('I hear nothing')
+            #return 0
         ear.close()
 
     # TODO: error prone if network not available

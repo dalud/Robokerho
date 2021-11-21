@@ -57,8 +57,8 @@ def speak():
 while(True):    
     try:
         robo.resetMotors()
-        wlan.broadcast('snoozing')
-        #if not (wlan.listen()):
+        wlan.broadcast('snoozing')        
+
         if not wlan.listen():
             speak()
             sleep(3)
@@ -68,3 +68,4 @@ while(True):
         print("User exit")
         robo.resetMotors()
         sys.exit()
+ 
