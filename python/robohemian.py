@@ -8,6 +8,8 @@ from marinaIF import Marina
 import sys
 import configparser
 
+
+# Read config
 conf = configparser.ConfigParser()
 conf.read('../config')
 
