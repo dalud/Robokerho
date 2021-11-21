@@ -8,12 +8,12 @@ class Wlan:
         try:
             hear = ear.recvfrom(1024)
             while hear[0].decode().startswith('playing:') or hear[0].decode().startswith('veke'):
-                print('Hear?', hear)
+                print('Hear:', hear)
                 hear = ear.recvfrom(1024)
                 return hear
-
         except:
-            print('I hear nothing')   
+            print('I hear nothing')
+            #return 0
         ear.close()
 
     # TODO: error prone if network not available

@@ -7,6 +7,7 @@ from ileIF import Ile
 from marinaIF import Marina
 import sys
 import configparser
+from time import sleep
 
 
 # Read config
@@ -56,9 +57,11 @@ def speak():
 while(True):    
     try:
         robo.resetMotors()
-        wlan.broadcast('snoozing')
-        wlan.listen()
-        speak()
+        wlan.broadcast('snoozing')        
+        if not wlan.listen():
+            speak()
+            sleep(3)
+            
     # TODO: except general error
     except KeyboardInterrupt:
         print("User exit")
