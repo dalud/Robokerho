@@ -31,13 +31,18 @@ def resetMotors():
     arduino.write('mm' + str(0))
     arduino.write('ex' + str(500))
     arduino.write('')
-
+resetMotors()
 
 # Main loop
 while(True):    
-    # wlan.broadcast('snoozing')
     wlan.listen()
-    if(wlan.veke):
-        print('Nyt meikä!')
-        speak(wlan.veke)
-    #resetMotors()
+    hear = wlan.listen()
+    #print(hear[0].decode().split(':')[1])
+    try:
+        if("veke" in hear[0].decode()):
+            #print("NYT!")
+            #print(hear[1])
+            speak(hear[0].decode().split(':')[1])
+    except:
+        #print("Not me")
+        pass
