@@ -10,6 +10,9 @@ import configparser
 from time import sleep
 
 
+# Helpers
+flush = sys.stdout.flush
+
 # Read config
 conf = configparser.ConfigParser()
 conf.read('../config')
@@ -18,13 +21,16 @@ conf.read('../config')
 dir = conf.get('env', 'dir')
 samples = os.listdir(dir)
 print(samples)
+flush()
 
 # Select robo
 robo = conf.get('env', 'robo')
 if(robo == 'ile'):
     robo = Ile()
+    flush()
 elif(robo == 'marina'):
     robo = Marina()
+    flush()
 else:
     print("No suitable robot class found. Exiting.")
     sys.exit(1)
@@ -48,6 +54,7 @@ def speak():
     while sound.active():
         with sound.stream() as stream:
             robo.speak(stream, samples[alea])
+            flush()
             wlan.broadcast('playing:' + samples[alea])
 
             if(robo.vekeActive(stream) > .4):
@@ -58,10 +65,10 @@ def speak():
 # Main loop
 while(True):    
     try:
-        #robo.resetMotors()
-        wlan.broadcast('snoozing')        
+        wlan.broadcast('snoozing')
 
         if not wlan.listen():
+            flush()
             speak()
             sleep(4)
             
@@ -70,3 +77,4 @@ while(True):
         print("User exit")
         robo.resetMotors()
         sys.exit()
+    flush()
