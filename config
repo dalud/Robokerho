@@ -1,7 +1,7 @@
 # Environment
 [env]
-name=Tortsua
-bt=6C:47:60:5C:F3:DA
+name=4
+bt=00:18:91:DA:76:52
 dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
 robo=ile
 
