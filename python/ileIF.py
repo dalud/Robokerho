@@ -4,15 +4,16 @@ from time import sleep
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
-# Kaula
-GPIO.setup(7, GPIO.OUT)
-GPIO.output(7, GPIO.LOW)
 # Oikea käsi
 GPIO.setup(11, GPIO.OUT)
 GPIO.output(11, GPIO.LOW)
 # Suu
 GPIO.setup(12, GPIO.OUT)
 GPIO.output(12, GPIO.LOW)
+# Kaula
+GPIO.setup(13, GPIO.OUT)
+GPIO.output(13, GPIO.LOW)
+
 
 
 class Ile:
@@ -72,12 +73,6 @@ class Ile:
         self.arduino.write('ey500')
         self.arduino.write('')
 
-    def resetKaula(self):
-        GPIO.output(7, GPIO.LOW)
-
-    def moveKaula(self):
-        GPIO.output(7, GPIO.HIGH)
-
     def resetArm(self):
         GPIO.output(11, GPIO.LOW)
 
@@ -90,3 +85,8 @@ class Ile:
     def moveMouth(self):
         GPIO.output(12, GPIO.HIGH)
     
+    def resetKaula(self):
+        GPIO.output(13, GPIO.LOW)
+
+    def moveKaula(self):
+        GPIO.output(13, GPIO.HIGH)

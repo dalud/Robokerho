@@ -58,8 +58,7 @@ def speak():
 # Main loop
 while(True):    
     try:
-        #robo.resetMotors()
-        wlan.broadcast('snoozing')        
+        wlan.broadcast('snoozing')
 
         if not wlan.listen():
             speak()
