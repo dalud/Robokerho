@@ -21,12 +21,18 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
+// Outputs
+int suu = 8;
+
 
 void setup() {
   Serial.begin(9600);
 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
+
+  pinMode(suu, OUTPUT);
+  digitalWrite(suu, LOW);
  
   // Silmät
   pwm.begin();
@@ -51,6 +57,8 @@ void loop(){
     // 0-1023 (lepo = 500)
     if(xval < 0) xval = 0;
     if(xval > 1023) xval = 1023;
+
+    moveOthers();
   }
   if(cmd == "ey") { // Eye Y
     digitalWrite(LED_BUILTIN, HIGH);
@@ -73,6 +81,7 @@ void loop(){
   }
   moveEyes();
   digitalWrite(LED_BUILTIN, LOW);
+  resetOthers();
 
   delay(dly);
 }
@@ -109,4 +118,12 @@ void moveEyes() {
       }
       
   delay(dly);
+}
+
+void moveOthers() {
+  digitalWrite(suu, HIGH);
+}
+
+void resetOthers() {
+  digitalWrite(suu, LOW);
 }

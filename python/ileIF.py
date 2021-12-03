@@ -5,14 +5,14 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
 # Oikea käsi
-GPIO.setup(11, GPIO.OUT)
-GPIO.output(11, GPIO.LOW)
+GPIO.setup(31, GPIO.OUT)
+GPIO.output(31, GPIO.LOW)
 # Suu
-GPIO.setup(12, GPIO.OUT)
-GPIO.output(12, GPIO.LOW)
+GPIO.setup(32, GPIO.OUT)
+GPIO.output(32, GPIO.LOW)
 # Kaula
-GPIO.setup(13, GPIO.OUT)
-GPIO.output(13, GPIO.LOW)
+GPIO.setup(29, GPIO.OUT)
+GPIO.output(29, GPIO.LOW)
 
 
 
@@ -74,19 +74,19 @@ class Ile:
         self.arduino.write('')
 
     def resetArm(self):
-        GPIO.output(11, GPIO.LOW)
+        GPIO.output(31, GPIO.LOW)
 
     def moveArm(self):
-        GPIO.output(11, GPIO.HIGH)
+        GPIO.output(31, GPIO.HIGH)
 
     def resetMouth(self):
-        GPIO.output(12, GPIO.LOW)
+        GPIO.output(32, GPIO.LOW)
 
     def moveMouth(self):
-        GPIO.output(12, GPIO.HIGH)
+        GPIO.output(32, GPIO.HIGH)
     
     def resetKaula(self):
-        GPIO.output(13, GPIO.LOW)
+        GPIO.output(29, GPIO.LOW)
 
     def moveKaula(self):
-        GPIO.output(13, GPIO.HIGH)
+        GPIO.output(29, GPIO.HIGH)
