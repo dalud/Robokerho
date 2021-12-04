@@ -43,7 +43,10 @@ while True:
         start(['python3', 'selectBT.py'])
 
     if event == "RUN":
-        start(['python3', 'robohemian.py'])
+        if (parser.get('env', 'robo') == 'veke'):
+            start(['python3', 'veke.py'])
+        else:
+            start(['python3', 'robohemian.py'])
 
     if event == "STOP":
         start(['killall', 'python3'])
