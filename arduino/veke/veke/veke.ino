@@ -4,24 +4,23 @@
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-String command;
+String command; // Whole serial read
+String cmd; // First 2 chars parsed
+int dly = 10;
 
+// Eyes
 int xval;
 int yval;
-
 int lexpulse;
 int rexpulse;
-
 int leypulse;
 int reypulse;
-
 int uplidpulse;
 int lolidpulse;
-
 int trimval;
-
 int switchval = 0;
 
+// Servos
 Servo mouth;
 Servo kaulaV;
 Servo kaulaO;
@@ -36,7 +35,7 @@ void setup() {
   kaulaO.attach(3);
   kaulaV.attach(4);
 
-  delay(10);
+  delay(dly);
 }
 
 
@@ -44,9 +43,13 @@ void loop() {
   // Serial cmd
   if (Serial.available()) {
     command = Serial.readStringUntil('\n');
-    // Serial.println(command);
+    cmd = command.substring(0,2);
+    delay(dly);
   }
-  String cmd = command.substring(0,2);
+
+  if(cmd == "mm") {
+    moveMouth(command.substring(2).toInt());
+  }  
   
   if(cmd == "ex") { // Eye X
     xval = command.substring(2).toInt();
@@ -74,7 +77,25 @@ void loop() {
   } else {
     switchval = HIGH;
   }
+  
+  if(cmd == "kv") {
+    moveKaula('V', command.substring(2).toInt());
+  }
 
+  if(cmd == "ko") {
+    moveKaula('O', command.substring(2).toInt());
+  }
+
+  moveEyes();      
+  delay(dly);
+}
+
+void moveMouth(int pos) {
+  if(mouth.attached()) mouth.write(pos+90);
+  delay(dly);
+}
+
+void moveEyes() {
   // Eye read
   lexpulse = map(xval, 0,1023, 270, 390);
   rexpulse = lexpulse;
@@ -83,45 +104,27 @@ void loop() {
   reypulse = map(yval, 0,1023, 400, 280);
 
   trimval=map(trimval, 320, 580, -40, 40);
-    uplidpulse = map(yval, 0, 1023, 280, 420);
-      uplidpulse += (trimval-40);
-        uplidpulse = constrain(uplidpulse, 280, 400);
-    lolidpulse = map(yval, 0, 1023, 410, 280);
-      lolidpulse += (trimval/2);
-        lolidpulse = constrain(lolidpulse, 280, 400);    
+  uplidpulse = map(yval, 0, 1023, 280, 420);
+  uplidpulse += (trimval-40);
+  uplidpulse = constrain(uplidpulse, 280, 400);
+  lolidpulse = map(yval, 0, 1023, 410, 280);
+  lolidpulse += (trimval/2);
+  lolidpulse = constrain(lolidpulse, 280, 400);    
     
-      pwm.setPWM(0, 0, lexpulse);
-      pwm.setPWM(1, 0, leypulse);
-      pwm.setPWM(2, 0, rexpulse);
-      pwm.setPWM(3, 0, reypulse); 
+  pwm.setPWM(0, 0, lexpulse);
+  pwm.setPWM(1, 0, leypulse);
+  pwm.setPWM(2, 0, rexpulse);
+  pwm.setPWM(3, 0, reypulse); 
 
-      // Analog blink
-      if (switchval == HIGH) {
-      pwm.setPWM(4, 0, 240);
-      pwm.setPWM(5, 0, 240);
-      }
-      else if (switchval == LOW) {
-      pwm.setPWM(4, 0, uplidpulse);
-      pwm.setPWM(5, 0, lolidpulse);
-      }
-
-  if(cmd == "mm") {
-    moveMouth(command.substring(2).toInt());
+  // Blink
+  if (switchval == LOW) {
+    pwm.setPWM(4, 0, uplidpulse);
+    pwm.setPWM(5, 0, lolidpulse);
+  } else if (switchval == HIGH) {
+    pwm.setPWM(4, 0, 240);
+    pwm.setPWM(5, 0, 240);
   }
-
-  if(cmd == "kv") {
-    moveKaula('V', command.substring(2).toInt());
-  }
-
-  if(cmd == "ko") {
-    moveKaula('O', command.substring(2).toInt());
-  }
-      
-  delay(5); // default 5ms
-}
-
-void moveMouth(int pos) {
-  if(mouth.attached()) mouth.write(pos+90);
+  delay(dly);
 }
 
 void moveKaula(char channel, int pos) {  
@@ -133,4 +136,5 @@ void moveKaula(char channel, int pos) {
       if(kaulaO.attached()) kaulaO.write(pos);
       break;
   }
+  delay(dly);
 }
