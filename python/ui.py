@@ -5,14 +5,12 @@ import sys
 import os
 from threading import Thread
 from queue import Queue, Empty
-import tempfile
+import signal
 
 # Utils
-#stdout = ""
 process = None
 ON_POSIX = 'posix' in sys.builtin_module_names
 q = Queue()
-#echoed = tempfile.TemporaryFile()
 
 def enqueue_output(out, queue):
     for line in iter(out.readline, ''):
@@ -51,8 +49,7 @@ while True:
         start(['killall', 'python3'])
         if process:
             process.stdout.close()
-            process.terminate()
-            process.kill(2)
+            process.send_signal(signal.SIGTERM)
             
     if event == "EXIT" or event == ui.WIN_CLOSED:
         break
