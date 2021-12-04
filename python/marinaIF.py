@@ -5,11 +5,11 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
 # Niskat
-GPIO.setup(7, GPIO.OUT)
-GPIO.output(7, GPIO.LOW)
+GPIO.setup(29, GPIO.OUT)
+GPIO.output(29, GPIO.LOW)
 # Polvi
-GPIO.setup(11, GPIO.OUT)
-GPIO.output(11, GPIO.LOW)
+GPIO.setup(32, GPIO.OUT)
+GPIO.output(32, GPIO.LOW)
 
 
 class Marina:
@@ -45,16 +45,16 @@ class Marina:
         pass
 
     def resetNiskat(self):
-        GPIO.output(7, GPIO.LOW)
+        GPIO.output(29, GPIO.LOW)
         
     def moveNiskat(self):
-        GPIO.output(7, GPIO.HIGH)
+        GPIO.output(29, GPIO.HIGH)
 
     def resetPolvi(self):
-        GPIO.output(11, GPIO.LOW)
+        GPIO.output(32, GPIO.LOW)
         
     def movePolvi(self):
-        GPIO.output(11, GPIO.HIGH)
+        GPIO.output(32, GPIO.HIGH)
 
     def vekeActive(self, stream):
         return 0
