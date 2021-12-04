@@ -50,9 +50,9 @@ while True:
     if event == "STOP":
         start(['killall', 'python3'])
         if process:
-            #process.stdout.close()
+            process.stdout.close()
             process.terminate()
-            process.kill()
+            process.kill(2)
             
     if event == "EXIT" or event == ui.WIN_CLOSED:
         break

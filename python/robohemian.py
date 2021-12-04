@@ -75,6 +75,7 @@ while(True):
     # TODO: except general error
     except KeyboardInterrupt:
         print("User exit")
+        sound.stop()
         robo.resetMotors()
         sys.exit()
     flush()

@@ -15,9 +15,14 @@ flush()
 try:
     if(parser.get('env', 'bt')):
         # Pair bluetooth device
+        print("BT from config:", parser.get('env', 'bt'))        
         paired = subprocess.Popen(['bluetoothctl', 'paired-devices'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout.read()
         print("Bluetooth found paired", paired)
+        if not parser.get('env', 'bt') in paired:
+            print("Device MACs don't match. Exiting.")
+            sys.exit()
         flush()
+        
         connectReturn = 1
         i = 3
         while(connectReturn and i > 0):
@@ -25,6 +30,7 @@ try:
             print("Retries left:", i)
             flush()
             connect = subprocess.run(['bluetoothctl', 'connect', parser.get('env', 'bt')])
+            print(connect)
             connectReturn = connect.returncode
             i = i-1
             if i == 0:
@@ -39,7 +45,7 @@ try:
         # Select audio sink
         sinkReturn = "not"
         x = 0
-        while ("not" in sinkReturn) and (x < 5):
+        while ("not" in sinkReturn) and (x < 10):
             print("Selecting audio sink")
             flush()
             for i in range(10, 1, -1):

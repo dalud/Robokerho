@@ -1,19 +1,6 @@
 from arduinoIF import Arduino
 from random import random
 from time import sleep
-import RPi.GPIO as GPIO
-
-GPIO.setmode(GPIO.BOARD)
-# Oikea käsi
-GPIO.setup(31, GPIO.OUT)
-GPIO.output(31, GPIO.LOW)
-# Suu
-GPIO.setup(32, GPIO.OUT)
-GPIO.output(32, GPIO.LOW)
-# Kaula
-GPIO.setup(29, GPIO.OUT)
-GPIO.output(29, GPIO.LOW)
-
 
 
 class Ile:
@@ -40,18 +27,16 @@ class Ile:
         print('Playing:', sample, 'L:', amp_L, 'R:', amp_R)
         # Left audio channel (Tortsua)
         if(amp_L > self.pause):
-            self.moveKaula()
-            self.moveMouth()            
             self.arduino.write('ex' + str(amp_L))
             #self.arduino.write('ey' + str(amp_L/3))
-                # Blink
+            self.arduino.write('mo')
+            # Blink
             if(random() < .1):
                 self.arduino.write('b')
                 sleep(.3)
+        else:
+            self.resetMotors()
 
-            # Move arm
-            self.moveArm()
-        
     def vekeActive(self, stream):
         amp = stream.read(128)[0] # increase blocksize for better accuracy
         R = []
@@ -61,32 +46,11 @@ class Ile:
 
         return (amp_R)
 
-    def resetMotors(self):
-        self.arduino.write('\n')
-        self.resetKaula()
-        self.resetMouth()
+    def resetMotors(self):                
         self.resetEyes()
-        self.resetArm()
+        self.arduino.write('z')
 
     def resetEyes(self):
         self.arduino.write('ex500')
         self.arduino.write('ey500')
-        self.arduino.write('')
-
-    def resetArm(self):
-        GPIO.output(31, GPIO.LOW)
-
-    def moveArm(self):
-        GPIO.output(31, GPIO.HIGH)
-
-    def resetMouth(self):
-        GPIO.output(32, GPIO.LOW)
-
-    def moveMouth(self):
-        GPIO.output(32, GPIO.HIGH)
-    
-    def resetKaula(self):
-        GPIO.output(29, GPIO.LOW)
-
-    def moveKaula(self):
-        GPIO.output(29, GPIO.HIGH)
+        self.arduino.write('z')
