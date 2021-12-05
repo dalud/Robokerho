@@ -11,4 +11,6 @@ class Sound:
 
     def stream(self):
         return sd.Stream(sd.default.samplerate, 0, sd.default.device, 2)
-        
+
+    def stop(self):
+        sd.stop()

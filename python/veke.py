@@ -2,7 +2,11 @@ from wlanIF import Wlan
 from arduinoIF import Arduino
 from random import random
 from time import sleep
+import sys
 
+
+# Helpers
+flush = sys.stdout.flush
 
 # Init Wlan
 wlan = Wlan()
@@ -23,7 +27,7 @@ def speak(amp):
     if(random() < .1):
         arduino.write('b')
         sleep(.3)
-    arduino.write('')
+    #arduino.write('')
 
 def resetMotors():
     arduino.write('kv' + str(90))
@@ -34,15 +38,17 @@ def resetMotors():
 resetMotors()
 
 # Main loop
-while(True):    
-    wlan.listen()
+while(True):
     hear = wlan.listen()
+    flush()
     #print(hear[0].decode().split(':')[1])
     try:
         if("veke" in hear[0].decode()):
             #print("NYT!")
             #print(hear[1])
             speak(hear[0].decode().split(':')[1])
+        else:
+            resetMotors()
     except:
         #print("Not me")
         pass
