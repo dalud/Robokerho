@@ -10,6 +10,8 @@ sudo git clone https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library.git
 
 Autoexec:
 /etc/profile
+	cd robokerho
+	xinit ./starter
 
 PulseAudio:
 pacmd list-sinks
@@ -26,5 +28,10 @@ chmod -R 755 LCD-show
 sudo dpkg -i xinput-calibartor...
 
 UI:
-python -m pip install pysimplegui
+sudo python -m pip install pysimplegui
 (muista käynnistää python3.x:llä)
+
+Autostart UI:
+https://raspberrypi.stackexchange.com/questions/98944/launch-a-gui-tkinter-program-on-boot
+	(starter script OK, don't use crontab -e)
+sudo chown pi /dev/tty0 (tty1, tty2, ...)
