@@ -8,6 +8,7 @@ from marinaIF import Marina
 import sys
 import configparser
 from time import sleep
+import signal
 
 
 # Helpers
@@ -43,6 +44,14 @@ wlan = Wlan()
 # Init Sound
 sound = Sound()
 
+def signal_term_handler(signal, frame):
+    print("Nyt tuli keskeytys")
+    sound.stop()
+    robo.resetMotors()
+    sys.exit()    
+
+signal.signal(signal.SIGTERM, signal_term_handler)
+
 def speak():
     # Pick random sample
     alea = (int)(random()*len(samples))
@@ -75,6 +84,7 @@ while(True):
     # TODO: except general error
     except KeyboardInterrupt:
         print("User exit")
+        sound.stop()
         robo.resetMotors()
         sys.exit()
     flush()

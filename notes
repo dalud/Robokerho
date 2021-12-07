@@ -32,7 +32,6 @@ UI:
 sudo python -m pip install pysimplegui
 (muista käynnistää python3.x:llä)
 
-Autostart UI:
+UI starter script:
 https://raspberrypi.stackexchange.com/questions/98944/launch-a-gui-tkinter-program-on-boot
 	(starter script OK, don't use crontab -e)
-
