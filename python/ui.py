@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import PySimpleGUI as ui
 import configparser
 import subprocess
@@ -19,7 +21,7 @@ def enqueue_output(out, queue):
     
 # Read config file
 parser = configparser.ConfigParser()
-parser.read('../config')
+parser.read('/home/pi/robokerho/config')
 
 # Build UI
 layout = [[ui.Text("Robohemian: "+parser.get('env', 'name'), font="arial 16 bold")],
@@ -40,13 +42,13 @@ while True:
     window.maximize()
 
     if event == "CONFIG":
-        start(['python3', 'selectBT.py'])
+        start(['python3', '/home/pi/robokerho/python/selectBT.py'])
 
     if event == "RUN":
         if (parser.get('env', 'robo') == 'veke'):
-            start(['python3', 'veke.py'])
+            start(['python3', '/home/pi/robokerho/python/veke.py'])
         else:
-            start(['python3', 'robohemian.py'])
+            start(['python3', '/home/pi/robokerho/python/robohemian.py'])
 
     if event == "STOP":
         start(['killall', 'python3'])

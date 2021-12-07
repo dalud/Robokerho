@@ -16,7 +16,7 @@ flush = sys.stdout.flush
 
 # Read config
 conf = configparser.ConfigParser()
-conf.read('../config')
+conf.read('/home/pi/robokerho/config')
 
 # Get samples
 dir = conf.get('env', 'dir')
@@ -45,10 +45,10 @@ wlan = Wlan()
 sound = Sound()
 
 def signal_term_handler(signal, frame):
-    print("Nyt tuli keskeytys")
+    print("STOPPED")
     sound.stop()
     robo.resetMotors()
-    sys.exit()    
+    sys.exit()
 
 signal.signal(signal.SIGTERM, signal_term_handler)
 
@@ -59,7 +59,7 @@ def speak():
     # Play the sample
     sound.play(dir+samples[alea])
     #sound.play('/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/hurjajuttu 64 v-tuttaa kaikki.wav')
-    
+
     while sound.active():
         with sound.stream() as stream:
             robo.speak(stream, samples[alea])
@@ -72,7 +72,7 @@ def speak():
     robo.resetMotors()
 
 # Main loop
-while(True):    
+while(True):
     try:
         wlan.broadcast('snoozing')
 
@@ -80,7 +80,7 @@ while(True):
             flush()
             speak()
             sleep(4)
-            
+
     # TODO: except general error
     except KeyboardInterrupt:
         print("User exit")

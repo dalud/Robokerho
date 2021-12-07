@@ -1,8 +1,9 @@
 # Environment
 [env]
-name=Veke
+name=4
+bt=00:18:91:DA:76:52
 dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
-robo=veke
+robo=ile
 
 # Hardware
 [hw]
