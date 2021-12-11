@@ -1,5 +1,4 @@
 python:
-alias python='/usr/bin/python3.7'
 sudo apt-get install idle3
 python3 -m pip install sounddevice
 sudo apt-get install python3-soundfile
@@ -20,3 +19,12 @@ Bluetooth:
 bluetoothctl devices
 bluetoothctl paired-devices
 bluetoothctl connect [MAC:ADDRESS]
+
+MPI3508:
+git clone https://ww.github.com/goodtft/LCD-show.git
+chmod -R 755 LCD-show
+sudo dpkg -i xinput-calibartor...
+
+UI:
+python3.7 -m pip install pysimplegui
+(muista käynnistää python3.x:llä)

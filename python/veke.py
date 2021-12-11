@@ -23,7 +23,7 @@ def speak(amp):
     if(random() < .1):
         arduino.write('b')
         sleep(.3)
-    arduino.write('')
+    #arduino.write('')
 
 def resetMotors():
     arduino.write('kv' + str(90))
@@ -43,6 +43,8 @@ while(True):
             #print("NYT!")
             #print(hear[1])
             speak(hear[0].decode().split(':')[1])
+        else:
+            resetMotors()
     except:
         #print("Not me")
         pass

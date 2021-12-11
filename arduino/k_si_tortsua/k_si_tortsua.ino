@@ -9,7 +9,7 @@ String command;
 
 bool logita;
 bool debug;
-char poses[] = { /*'z',*/ 'e', 'h', 's', '1' };
+char poses[] = { 'z', 'e', 'h', 's', '1' };
 int kiekka = 0;
 int maxi;
 

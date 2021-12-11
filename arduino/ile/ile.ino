@@ -6,7 +6,8 @@
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 // Utils
-String command;
+String command; // The whole serial read
+String cmd; // First 2 chars parsed
 const int dly = 10;
 
 // Eyes
@@ -21,12 +22,24 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
+// Outputs
+int suu = 8;
+int niskat = 9;
+int kasi_o = 10;
+
 
 void setup() {
   Serial.begin(9600);
 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
+
+  pinMode(suu, OUTPUT);
+  digitalWrite(suu, LOW);
+  pinMode(niskat, OUTPUT);
+  digitalWrite(niskat, LOW);
+  pinMode(kasi_o, OUTPUT);
+  digitalWrite(kasi_o, LOW);
  
   // Silmät
   pwm.begin();
@@ -39,40 +52,48 @@ void setup() {
 void loop(){  
   if (Serial.available()) {
     command = Serial.readStringUntil('\n');    
+    //Serial.println(command);
+    //delay(10);
+    cmd = command.substring(0,2);
   }
-  //Serial.println(command);
-  delay(10);
-  String cmd = command.substring(0,2);
+
+  if(cmd == "z") {
+    resetOthers();
+  }
 
   // Eyes
-  if(cmd == "ex") { // Eye X
-    digitalWrite(LED_BUILTIN, HIGH);
+  if(cmd == "ex") { // Eye X    
     xval = command.substring(2).toInt();
     // 0-1023 (lepo = 500)
     if(xval < 0) xval = 0;
     if(xval > 1023) xval = 1023;
+
+    //moveOthers();
   }
   if(cmd == "ey") { // Eye Y
-    digitalWrite(LED_BUILTIN, HIGH);
+    // digitalWrite(LED_BUILTIN, HIGH);
     yval = command.substring(2).toInt();
     // 0-1023 (lepo = 500)
     if(yval < 0) yval = 0;
     if(yval > 1023) yval = 1023;
   }
   if(cmd == "li") { // Lids trimval (0-1023, 0 = auki, 1023 = kiinni)
-    digitalWrite(LED_BUILTIN, HIGH);
+    // digitalWrite(LED_BUILTIN, HIGH);
     trimval = command.substring(2).toInt();
   } else {
     trimval = 1023;
   }
   if(cmd == "b") { // Blink
-    digitalWrite(LED_BUILTIN, HIGH);
+    // digitalWrite(LED_BUILTIN, HIGH);
     switchval = LOW;
   } else {
     switchval = HIGH;
   }
+  if(cmd == "mo") { // Move others
+    moveOthers();
+  }
   moveEyes();
-  digitalWrite(LED_BUILTIN, LOW);
+  // resetOthers();
 
   delay(dly);
 }
@@ -108,5 +129,21 @@ void moveEyes() {
         pwm.setPWM(5, 0, 240);      
       }
       
+  delay(dly);
+}
+
+void moveOthers() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(suu, HIGH);
+  digitalWrite(niskat, HIGH);  
+  digitalWrite(kasi_o, HIGH);
+  delay(dly);
+}
+
+void resetOthers() {
+  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(suu, LOW);
+  digitalWrite(niskat, LOW);
+  digitalWrite(kasi_o, LOW);
   delay(dly);
 }

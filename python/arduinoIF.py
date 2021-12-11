@@ -18,10 +18,6 @@ class Arduino:
                 self.i += 1
 
     def write(self, msg):        
-        #if(not(self.arduino.is_open)):
-        #self.arduino.open()
-        #print('Is serial open?', self.arduino.is_open)
         self.arduino.write(msg.encode())
         self.arduino.write('\n'.encode())
-        #self.arduino.close()
-        sleep(.01)
+        #sleep(.01)
