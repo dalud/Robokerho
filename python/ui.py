@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import PySimpleGUI as ui
 import configparser
 import subprocess
@@ -5,14 +7,12 @@ import sys
 import os
 from threading import Thread
 from queue import Queue, Empty
-import tempfile
+import signal
 
 # Utils
-#stdout = ""
 process = None
 ON_POSIX = 'posix' in sys.builtin_module_names
 q = Queue()
-#echoed = tempfile.TemporaryFile()
 
 def enqueue_output(out, queue):
     for line in iter(out.readline, ''):
@@ -21,7 +21,7 @@ def enqueue_output(out, queue):
     
 # Read config file
 parser = configparser.ConfigParser()
-parser.read('../config')
+parser.read('/home/pi/robokerho/config')
 
 # Build UI
 layout = [[ui.Text("Robohemian: "+parser.get('env', 'name'), font="arial 16 bold")],
@@ -35,26 +35,31 @@ def start(cmd):
     t = Thread(target=enqueue_output, args=(process.stdout, q))
     t.daemon = True
     t.start()
-        
+
 # Main loop
 while True:
     event, values = window.read(10)
     window.maximize()
 
     if event == "CONFIG":
-        start(['python3', 'selectBT.py'])
+        start(['killall', 'python3'])
+        start(['python3', '/home/pi/robokerho/python/selectBT.py'])
 
     if event == "RUN":
-        start(['python3', 'robohemian.py'])
+        start(['killall', 'python3'])
+        if (parser.get('env', 'robo') == 'veke'):
+            start(['python3', '/home/pi/robokerho/python/veke.py'])
+        else:
+            start(['python3', '/home/pi/robokerho/python/robohemian.py'])
 
     if event == "STOP":
         start(['killall', 'python3'])
         if process:
             process.stdout.close()
-            process.terminate()
-            process.kill(2)
+            process.send_signal(signal.SIGTERM)
             
     if event == "EXIT" or event == ui.WIN_CLOSED:
+        start(['killall', 'python3'])
         break
 
     try: line = q.get_nowait()
