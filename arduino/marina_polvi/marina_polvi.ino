@@ -26,24 +26,17 @@ void setup() {
   pinMode (driverPUL, OUTPUT);
   pinMode (driverDIR, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(reverseSwitch), revmotor, FALLING);
-
-  // Kaula
-  pinMode(9, OUTPUT);
-  digitalWrite(9, LOW);
-  pinMode(10, OUTPUT);
-  digitalWrite(10, LOW);
 }
  
 void loop() {
   if(digitalRead(8)) {
     digitalWrite(LED_BUILTIN, HIGH);
     movePolvi();
-    moveKaula();
+
   } else {
     digitalWrite(LED_BUILTIN, LOW); 
     resetMotors();
   }
-    
 }
 
 void movePolvi() {  
@@ -55,10 +48,6 @@ void movePolvi() {
   delayMicroseconds(pd); 
 }
 
-void moveKaula() {
-  digitalWrite(9, HIGH);
-  digitalWrite(10, HIGH);
-}
 
 void resetMotors() {
   digitalWrite(9, LOW);

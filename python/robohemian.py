@@ -87,4 +87,3 @@ while(True):
         sound.stop()
         robo.resetMotors()
         sys.exit()
-    flush()
