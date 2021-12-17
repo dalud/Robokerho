@@ -4,7 +4,7 @@ import sys
 
 # Read config
 parser = configparser.ConfigParser()
-parser.read('../config')
+parser.read('/home/pi/robokerho/config')
 
 flush = sys.stdout.flush
 
@@ -15,14 +15,14 @@ flush()
 try:
     if(parser.get('env', 'bt')):
         # Pair bluetooth device
-        print("BT from config:", parser.get('env', 'bt'))        
+        print("BT from config:", parser.get('env', 'bt'))
         paired = subprocess.Popen(['bluetoothctl', 'paired-devices'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout.read()
         print("Bluetooth found paired", paired)
         if not parser.get('env', 'bt') in paired:
             print("Device MACs don't match. Exiting.")
             sys.exit()
         flush()
-        
+
         connectReturn = 1
         i = 3
         while(connectReturn and i > 0):
@@ -37,7 +37,7 @@ try:
                 print("Giving up...")
                 flush()
                 break
-                
+
         print("Bluetooth connection successful!")
         print("================================")
         flush()
