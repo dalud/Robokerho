@@ -26,6 +26,7 @@ int switchval = 0;
 int suu = 8;
 int niskat = 9;
 int kasi_o = 10;
+int kasi_v = 11;
 
 
 void setup() {
@@ -40,6 +41,8 @@ void setup() {
   digitalWrite(niskat, LOW);
   pinMode(kasi_o, OUTPUT);
   digitalWrite(kasi_o, LOW);
+  pinMode(kasi_v, OUTPUT);
+  digitalWrite(kasi_v, LOW);
  
   // Silmät
   pwm.begin();
@@ -130,6 +133,7 @@ void moveOthers() {
   digitalWrite(suu, HIGH);
   digitalWrite(niskat, HIGH);  
   digitalWrite(kasi_o, HIGH);
+  digitalWrite(kasi_v, HIGH);
   delay(dly);
 }
 
@@ -138,5 +142,6 @@ void resetOthers() {
   digitalWrite(suu, LOW);
   digitalWrite(niskat, LOW);
   digitalWrite(kasi_o, LOW);
+  digitalWrite(kasi_v, LOW);
   delay(dly);
 }
