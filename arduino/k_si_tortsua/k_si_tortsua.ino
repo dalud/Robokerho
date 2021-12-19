@@ -9,13 +9,13 @@ String command;
 
 bool logita;
 bool debug;
-char poses[] = { 'z', 'e', 'h', 's', '1' };
+char poses[] = { '1', '2', '3', '4', '5', '6', '7' };
 int kiekka = 0;
 int maxi;
 
 
 void setup() {
-  Serial.begin(9600); //defining some baud rate
+  Serial.begin(9600);
 
   // Input signal
   pinMode(2, INPUT);
@@ -25,15 +25,16 @@ void setup() {
   digitalWrite(LED_BUILTIN, LOW);
   
   // activate debug logging
-  logita = false;
+   logita = false;
   //logita = true;
+  // kiekka < maxi = loop speed
   // with log, set kiekka lower
   if(logita) {
     maxi = 1000;
   } else maxi = 10000;
 
   // Run in debug mode
-  //debug = true;
+  // debug = true;
   debug = false;
 
   //Stepper parameters
@@ -64,17 +65,20 @@ void loop() {
   }
   
   // Auto mode
-  if(digitalRead(2)) {
-    digitalWrite(LED_BUILTIN, HIGH);
-
-    if(kiekka>maxi) {    
-      command = poses[random(sizeof(poses))];
-      kiekka = 0;
+  if(!debug) {
+    if(digitalRead(2)) {
+      digitalWrite(LED_BUILTIN, HIGH);
+  
+      if(kiekka>maxi) {    
+        command = poses[random(sizeof(poses))];
+        kiekka = 0;
+      }
+    } else {
+      digitalWrite(LED_BUILTIN, LOW);
+      command = "z";
     }
-  } else {
-    digitalWrite(LED_BUILTIN, LOW);
-    command = "z";
   }
+
 
   if(logita) {
     Serial.print(digitalRead(2));
@@ -82,15 +86,16 @@ void loop() {
   }
 
   // Motion
-  if(command == "z") {
+  if(command == "z" || command == "0") {
     zeroMotors();
   }
   
-  if(command == "h") { // Hail
+  if(command == "sh") { // Hail
     // if(logita) Serial.println(shoulder.currentPosition());
-    hail();
+    shoulder.moveTo(4000);
+    shoulder.run();
   }
-  if(command == "s") { // Spreader
+  if(command == "sp") { // Spreader
     // if(logita) Serial.println(spreader.currentPosition());
     spreader.moveTo(-3000);
     spreader.run();    
@@ -100,8 +105,26 @@ void loop() {
     elbow.moveTo(-6000);
     elbow.run();
   }
-  if(command == "1") { // Pose1
-    pose1();
+  if(command == "1") { // Poses
+    pose(1);
+  }
+  if(command == "2") {
+    pose(2);
+  }
+  if(command == "3") {
+    pose(3);
+  }
+  if(command == "4") {
+    pose(4);
+  }
+  if(command == "5") {
+    pose(5);
+  }
+  if(command == "6") {
+    pose(6);
+  }
+  if(command == "7") {
+    pose(7);
   }
 }
 
@@ -114,20 +137,63 @@ void zeroMotors() {
   elbow.run();
 }
 
-void pose1() {
-  shoulder.moveTo(4000);
-  shoulder.run();
-  spreader.moveTo(-3000);
-  spreader.run();
-  elbow.moveTo(-6000);
-  elbow.run();
-}
-
-void hail() {
-  shoulder.moveTo(4000); // Parempi käyttää tätä kalibrointipisteiden kanssa
-  shoulder.run();
-  spreader.moveTo(0);
-  spreader.run();
-  elbow.moveTo(0);
-  elbow.run();
+void pose(int pose) {
+  switch(pose) {
+    case 1:
+      shoulder.moveTo(4000);
+      shoulder.run();
+      spreader.moveTo(0);
+      spreader.run();
+      elbow.moveTo(0);
+      elbow.run();
+      break;
+    case 2:
+      shoulder.moveTo(0);
+      shoulder.run();
+      spreader.moveTo(-3000);
+      spreader.run();
+      elbow.moveTo(0);
+      elbow.run();
+      break;
+    case 3:
+      shoulder.moveTo(0);
+      shoulder.run();
+      spreader.moveTo(0);
+      spreader.run();
+      elbow.moveTo(-6000);
+      elbow.run();
+      break;
+    case 4:
+      shoulder.moveTo(4000);
+      shoulder.run();
+      spreader.moveTo(-3000);
+      spreader.run();
+      elbow.moveTo(0);
+      elbow.run();
+      break;
+    case 5:
+      shoulder.moveTo(4000);
+      shoulder.run();
+      spreader.moveTo(0);
+      spreader.run();
+      elbow.moveTo(-6000);
+      elbow.run();
+      break;
+    case 6:
+      shoulder.moveTo(0);
+      shoulder.run();
+      spreader.moveTo(-3000);
+      spreader.run();
+      elbow.moveTo(-6000);
+      elbow.run();
+      break;
+    case 7:
+      shoulder.moveTo(4000);
+      shoulder.run();
+      spreader.moveTo(-3000);
+      spreader.run();
+      elbow.moveTo(-6000);
+      elbow.run();
+      break;
+  }
 }
