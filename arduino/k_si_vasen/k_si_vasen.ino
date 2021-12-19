@@ -9,7 +9,7 @@ String command;
 
 bool logita;
 bool debug;
-String poses[] = { "1", "2", "3", "4", "5", "6", "7" };
+char poses[] = { '1', '2', '3', '4', '5', '6', '7' };
 int kiekka = 0;
 int maxi;
 
@@ -69,7 +69,7 @@ void loop() {
     if(digitalRead(2)) {
       digitalWrite(LED_BUILTIN, HIGH);
   
-      if(kiekka>maxi) {    
+      if(kiekka>maxi) {
         command = poses[random(sizeof(poses))];
         kiekka = 0;
       }
@@ -91,7 +91,7 @@ void loop() {
   }
   
   if(command == "sh") { // Hail
-    if(logita) Serial.println(shoulder.currentPosition());
+    //if(logita) Serial.println(shoulder.currentPosition());
     shoulder.moveTo(-4000);
     shoulder.run();
   }
