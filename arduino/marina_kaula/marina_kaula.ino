@@ -6,21 +6,22 @@ int dly = 100;
 bool debug = false;
 //bool debug = true;
 
-// Kaula
-Servo kaula_L;
-Servo kaula_R;
-
 
 void setup() {
   Serial.begin(9600);
+  
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);   
 
   // Input signal
-  pinMode(5, INPUT);
+  pinMode(2, INPUT);
     
-  kaula_L.attach(3);
-  kaula_R.attach(4);
-  kaula_L.write(0);
-  kaula_R.write(0);
+  // Kaula
+  pinMode(6, OUTPUT);
+  digitalWrite(6, LOW);   
+  pinMode(7, OUTPUT);
+  digitalWrite(7, LOW);   
+
 
   delay(dly);
 }
@@ -32,30 +33,29 @@ void loop() {
       command = Serial.readStringUntil('\n');    
   }
   // Serial.println(command);
-    moveKaula(command.toInt());
+  // moveKaula(command.toInt());
   }
   // Auto mode
   else {
     if(digitalRead(2)) {
-      moveKaula(random(0, 180));
-      moveKaesi();
+      digitalWrite(LED_BUILTIN, HIGH);
+      moveKaula();
+      // moveKaesi();
     } else {
-      // kaula_L.write(0);
-      // kaula_R.write(0);   
+      digitalWrite(LED_BUILTIN, LOW);
+      resetKaula();
     }
     
   }
   delay(dly);
 }
 
-void moveKaula(int pos) {
-  kaula_L.write(pos);
-  kaula_R.write(pos);
-  delay(dly);
+void moveKaula() {
+  digitalWrite(6, HIGH);
+  digitalWrite(7, HIGH);
 }
 
-void moveKaesi() {  
-  if(digitalRead(2)) digitalWrite(5, HIGH);
-  else digitalWrite(5, LOW);
-  delay(dly);
+void resetKaula() {
+  digitalWrite(6, LOW);
+  digitalWrite(7, LOW);
 }

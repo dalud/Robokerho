@@ -25,7 +25,7 @@ void setup() {
   digitalWrite(LED_BUILTIN, LOW);
   
   // activate debug logging
-   logita = false;
+  logita = false;
   //logita = true;
   // kiekka < maxi = loop speed
   // with log, set kiekka lower
@@ -34,7 +34,7 @@ void setup() {
   } else maxi = 10000;
 
   // Run in debug mode
-  // debug = true;
+  //debug = true;
   debug = false;
 
   //Stepper parameters
@@ -69,7 +69,7 @@ void loop() {
     if(digitalRead(2)) {
       digitalWrite(LED_BUILTIN, HIGH);
   
-      if(kiekka>maxi) {    
+      if(kiekka>maxi) {
         command = poses[random(sizeof(poses))];
         kiekka = 0;
       }
@@ -91,13 +91,13 @@ void loop() {
   }
   
   if(command == "sh") { // Hail
-    // if(logita) Serial.println(shoulder.currentPosition());
-    shoulder.moveTo(4000);
+    //if(logita) Serial.println(shoulder.currentPosition());
+    shoulder.moveTo(-4000);
     shoulder.run();
   }
   if(command == "sp") { // Spreader
     // if(logita) Serial.println(spreader.currentPosition());
-    spreader.moveTo(-3000);
+    spreader.moveTo(3000);
     spreader.run();    
   }
   if(command == "e") { // Elbow
@@ -140,7 +140,7 @@ void zeroMotors() {
 void pose(int pose) {
   switch(pose) {
     case 1:
-      shoulder.moveTo(4000);
+      shoulder.moveTo(-4000);
       shoulder.run();
       spreader.moveTo(0);
       spreader.run();
@@ -150,7 +150,7 @@ void pose(int pose) {
     case 2:
       shoulder.moveTo(0);
       shoulder.run();
-      spreader.moveTo(-3000);
+      spreader.moveTo(3000);
       spreader.run();
       elbow.moveTo(0);
       elbow.run();
@@ -164,15 +164,15 @@ void pose(int pose) {
       elbow.run();
       break;
     case 4:
-      shoulder.moveTo(4000);
+      shoulder.moveTo(-4000);
       shoulder.run();
-      spreader.moveTo(-3000);
+      spreader.moveTo(3000);
       spreader.run();
       elbow.moveTo(0);
       elbow.run();
       break;
     case 5:
-      shoulder.moveTo(4000);
+      shoulder.moveTo(-4000);
       shoulder.run();
       spreader.moveTo(0);
       spreader.run();
@@ -182,15 +182,15 @@ void pose(int pose) {
     case 6:
       shoulder.moveTo(0);
       shoulder.run();
-      spreader.moveTo(-3000);
+      spreader.moveTo(3000);
       spreader.run();
       elbow.moveTo(-6000);
       elbow.run();
       break;
     case 7:
-      shoulder.moveTo(4000);
+      shoulder.moveTo(-4000);
       shoulder.run();
-      spreader.moveTo(-3000);
+      spreader.moveTo(3000);
       spreader.run();
       elbow.moveTo(-6000);
       elbow.run();

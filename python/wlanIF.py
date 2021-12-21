@@ -7,7 +7,8 @@ class Wlan:
         ear.settimeout(3)
         try:
             hear = ear.recvfrom(1024)
-            while hear[0].decode().startswith('playing:') or hear[0].decode().startswith('veke'):
+
+            while ("playing" in hear[0].decode()) or ("veke" in hear[0].decode()):
                 print('Hear:', hear)
                 hear = ear.recvfrom(1024)
                 return hear

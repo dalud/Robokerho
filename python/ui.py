@@ -35,16 +35,18 @@ def start(cmd):
     t = Thread(target=enqueue_output, args=(process.stdout, q))
     t.daemon = True
     t.start()
-        
+
 # Main loop
 while True:
     event, values = window.read(10)
     window.maximize()
 
     if event == "CONFIG":
+        start(['killall', 'python3'])
         start(['python3', '/home/pi/robokerho/python/selectBT.py'])
 
     if event == "RUN":
+        start(['killall', 'python3'])
         if (parser.get('env', 'robo') == 'veke'):
             start(['python3', '/home/pi/robokerho/python/veke.py'])
         else:
@@ -57,6 +59,7 @@ while True:
             process.send_signal(signal.SIGTERM)
             
     if event == "EXIT" or event == ui.WIN_CLOSED:
+        start(['killall', 'python3'])
         break
 
     try: line = q.get_nowait()
