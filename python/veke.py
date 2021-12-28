@@ -10,10 +10,12 @@ flush = sys.stdout.flush
 
 # Init Wlan
 wlan = Wlan()
+flush()
 
 # Init Arduino
 arduino = Arduino()
 arduino.connect()
+flush()
 
 
 def speak(amp):
@@ -32,8 +34,9 @@ def speak(amp):
 def resetMotors():
     arduino.write('kv' + str(90))
     arduino.write('ko' + str(90))
-    arduino.write('mm' + str(0))
+    #arduino.write('mm' + str(0))
     arduino.write('ex' + str(500))
+    arduino.write('zz')
     arduino.write('')
 resetMotors()
 
@@ -50,5 +53,5 @@ while(True):
         else:
             resetMotors()
     except:
-        #print("Not me")
+        resetMotors()
         pass
