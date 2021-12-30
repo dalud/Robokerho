@@ -26,9 +26,10 @@ def signal_term_handler(signal, frame):
 signal.signal(signal.SIGTERM, signal_term_handler)
 
 def speak(amp):
-    print("MEikä puhhuu" + amp)
-    arduino.write('mm' + amp)
+    #print("MEikä puhhuu" + amp)
+    arduino.write('mm' + amp) # Kädet integrated into mm ?
     arduino.write('ex' + amp)
+    # Kaulat
     arduino.write('kv' + amp)
     arduino.write('ko' + amp)
 
@@ -54,11 +55,10 @@ while(True):
         hear = wlan.listen()
         flush()
         if("veke" in hear[0].decode()):
-            #print("NYT!")
-            #print(hear[1])
             speak(hear[0].decode().split(':')[1])
         else:
             resetMotors()
+            #pass
 
     # TODO: except general error
     except KeyboardInterrupt:
@@ -67,4 +67,5 @@ while(True):
         sys.exit()
 
     except:
-        resetMotors()
+        #resetMotors()
+        pass
