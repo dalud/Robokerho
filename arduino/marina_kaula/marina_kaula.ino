@@ -2,7 +2,7 @@
 
 // Utils
 String command;
-int dly = 100;
+int dly = 10;
 bool debug = false;
 //bool debug = true;
 

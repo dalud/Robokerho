@@ -29,8 +29,8 @@ chmod -R 755 LCD-show
 sudo dpkg -i xinput-calibartor...
 
 UI:
-sudo python -m pip install pysimplegui
-(muista käynnistää python3.x:llä)
+sudo python3.# -m pip install pysimplegui
+(muista käynnistää python3.#:llä)
 
 UI starter script:
 https://raspberrypi.stackexchange.com/questions/98944/launch-a-gui-tkinter-program-on-boot
