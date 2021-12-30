@@ -1,9 +1,0 @@
-# Environment
-[env]
-name=Tortsua
-bt=6C:47:60:5C:F3:DA
-dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
-robo=ile
-
-# Hardware
-[hw]
