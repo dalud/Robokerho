@@ -24,7 +24,7 @@ try:
         flush()
 
         connectReturn = 1
-        i = 3
+        i = 10
         while(connectReturn and i > 0):
             print("Bluetooth connecting to paired", paired)
             print("Retries left:", i)

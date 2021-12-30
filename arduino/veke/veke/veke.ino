@@ -25,6 +25,10 @@ Servo mouth;
 Servo kaulaV;
 Servo kaulaO;
 
+// Outputs
+int ko = 8;
+int kv = 9; 
+
 void setup() {
   Serial.begin(9600);
  
@@ -35,6 +39,11 @@ void setup() {
   kaulaO.attach(3);
   kaulaV.attach(4);
 
+  pinMode(ko, OUTPUT);
+  digitalWrite(ko, LOW);
+  pinMode(kv, OUTPUT);
+  digitalWrite(kv, LOW);
+  
   delay(dly);
 }
 
@@ -49,6 +58,7 @@ void loop() {
 
   if(cmd == "mm") {
     moveMouth(command.substring(2).toInt());
+    moveArms();
   }  
   
   if(cmd == "ex") { // Eye X
@@ -85,14 +95,30 @@ void loop() {
   if(cmd == "ko") {
     moveKaula('O', command.substring(2).toInt());
   }
+  else {
+    // resetMotors();
+  }
 
   moveEyes();      
+  delay(dly);
+}
+
+void resetMotors() {
+  digitalWrite(ko, LOW);
+  digitalWrite(kv, LOW);
   delay(dly);
 }
 
 void moveMouth(int pos) {
   if(mouth.attached()) mouth.write(pos+90);
   delay(dly);
+}
+
+void moveArms() {
+  digitalWrite(ko, HIGH);
+  digitalWrite(kv, HIGH);
+  delay(dly);
+  
 }
 
 void moveEyes() {

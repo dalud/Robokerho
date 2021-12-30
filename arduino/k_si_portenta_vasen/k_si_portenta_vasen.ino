@@ -1,15 +1,15 @@
 #include <AccelStepper.h>
 
-AccelStepper shoulder(1, 8, 9);
-AccelStepper spreader(1, 10, 11);
-AccelStepper elbow(1, 12, 13);
+AccelStepper shoulder(1, D6, D7);
+AccelStepper spreader(1, D8, D9);
+AccelStepper elbow(1, D10, D11);
 int speedo = 1500;
 
 String command;
 
 bool logita;
 bool debug;
-char poses[] = { '1', '2', '3', '4', '5', '6', '7' };
+String poses[] = { "1", "2", "3", "4", "5", "6", "7" };
 int kiekka = 0;
 int maxi;
 
@@ -18,15 +18,15 @@ void setup() {
   Serial.begin(9600);
 
   // Input signal
-  pinMode(2, INPUT);
+  pinMode(D0, INPUT);
 
   // Built in LED
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
   
   // activate debug logging
-   logita = false;
-  //logita = true;
+  //logita = false;
+  logita = true;
   // kiekka < maxi = loop speed
   // with log, set kiekka lower
   if(logita) {
@@ -34,8 +34,8 @@ void setup() {
   } else maxi = 10000;
 
   // Run in debug mode
-  // debug = true;
-  debug = false;
+  debug = true;
+  //debug = false;
 
   //Stepper parameters
   //setting up some default values for maximum speed and maximum acceleration
@@ -66,7 +66,7 @@ void loop() {
   
   // Auto mode
   if(!debug) {
-    if(digitalRead(2)) {
+    if(digitalRead(D0)) {
       digitalWrite(LED_BUILTIN, HIGH);
   
       if(kiekka>maxi) {    
@@ -81,7 +81,7 @@ void loop() {
 
 
   if(logita) {
-    Serial.print(digitalRead(2));
+    Serial.print(digitalRead(D0));
     Serial.println(": " +command);
   }
 
@@ -91,8 +91,8 @@ void loop() {
   }
   
   if(command == "sh") { // Hail
-    // if(logita) Serial.println(shoulder.currentPosition());
-    shoulder.moveTo(4000);
+    if(logita) Serial.println(shoulder.currentPosition());
+    shoulder.moveTo(1000); // old max = 4000
     shoulder.run();
   }
   if(command == "sp") { // Spreader

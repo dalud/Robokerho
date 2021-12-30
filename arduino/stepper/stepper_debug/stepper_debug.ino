@@ -1,7 +1,7 @@
 int DIR = 2;
 int PUL = 3;
 
-int dly = 2000;
+int dly = 2000!;
 
 void setup() {
   pinMode(DIR, OUTPUT);

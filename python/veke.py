@@ -24,7 +24,7 @@ def speak(amp):
     arduino.write('ko' + amp)
 
     # Blink
-    if(random() < .1):
+    if(random() < .2):
         arduino.write('b')
         sleep(.3)
     #arduino.write('')
