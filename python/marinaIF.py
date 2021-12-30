@@ -6,6 +6,7 @@ import sys
 # Helpers
 flush = sys.stdout.flush
 
+
 class Marina:
     def __init__(self):
         self.mouthVel_L = 1023 # scale according to mechanics

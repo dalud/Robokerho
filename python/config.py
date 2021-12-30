@@ -13,6 +13,9 @@ if(robo == 'ile'):
     robo = Ile()    
 elif(robo == 'marina'):
     robo = Marina()
+elif(robo == 'veke'):
+    # Use Ile proxy just motor reset
+    robo = Ile()
 else:
     print("No suitable robot class found. Exiting.")
     sys.exit(1)

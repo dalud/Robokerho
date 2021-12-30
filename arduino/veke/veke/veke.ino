@@ -26,7 +26,7 @@ Servo kaulaV;
 Servo kaulaO;
 
 // Outputs
-int ko = 8;
+int ko = 8; // Kädet
 int kv = 9; 
 
 void setup() {
@@ -39,6 +39,7 @@ void setup() {
   kaulaO.attach(3);
   kaulaV.attach(4);
 
+  // Kädet
   pinMode(ko, OUTPUT);
   digitalWrite(ko, LOW);
   pinMode(kv, OUTPUT);
@@ -54,6 +55,10 @@ void loop() {
     command = Serial.readStringUntil('\n');
     cmd = command.substring(0,2);
     delay(dly);
+  }
+
+  if(cmd == "z") {
+    resetMotors();
   }
 
   if(cmd == "mm") {
@@ -94,9 +99,6 @@ void loop() {
 
   if(cmd == "ko") {
     moveKaula('O', command.substring(2).toInt());
-  }
-  else {
-    // resetMotors();
   }
 
   moveEyes();      
