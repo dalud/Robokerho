@@ -1,15 +1,6 @@
 from arduinoIF import Arduino
 from random import random
 from time import sleep
-import RPi.GPIO as GPIO
-
-GPIO.setmode(GPIO.BOARD)
-# Niskat
-GPIO.setup(29, GPIO.OUT)
-GPIO.output(29, GPIO.LOW)
-# Polvi
-GPIO.setup(32, GPIO.OUT)
-GPIO.output(32, GPIO.LOW)
 
 
 class Marina:

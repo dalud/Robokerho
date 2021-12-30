@@ -57,7 +57,7 @@ void loop() {
     delay(dly);
   }
 
-  if(cmd == "zz") {
+  if(cmd == "z") {
     resetMotors();
   }
 
