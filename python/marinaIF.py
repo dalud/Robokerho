@@ -1,8 +1,10 @@
 from arduinoIF import Arduino
 from random import random
 from time import sleep
-import RPi.GPIO as GPIO
+import sys
 
+# Helpers
+flush = sys.stdout.flush
 
 class Marina:
     def __init__(self):
@@ -13,6 +15,7 @@ class Marina:
         # Init Arduino
         self.arduino = Arduino()
         self.arduino.connect()
+        flush()
 
     def speak(self, stream, sample):
         amp = stream.read(128)[0] # increase blocksize for better accuracy        

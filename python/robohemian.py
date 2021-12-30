@@ -40,9 +40,11 @@ robo.resetMotors()
 
 # Init Wlan
 wlan = Wlan()
+flush()
 
 # Init Sound
 sound = Sound()
+flush()
 
 def signal_term_handler(signal, frame):
     print("STOPPED")
@@ -64,21 +66,26 @@ def speak():
         with sound.stream() as stream:
             robo.speak(stream, samples[alea])
             flush()
-            wlan.broadcast('playing:' + samples[alea])
+            #wlan.broadcast('playing:' + samples[alea])
 
             if(robo.vekeActive(stream) > .4):
                 wlan.broadcast('veke:' + str(robo.vekeActive(stream)))
                 robo.resetMotors() # Make sure none get locked HIGH
+            else:
+                wlan.broadcast('playing:' + samples[alea])
+                flush()
     robo.resetMotors()
 
 # Main loop
 while(True):
+    flush()
     try:
         wlan.broadcast('snoozing')
 
         if not wlan.listen():
             flush()
             speak()
+            flush()
             sleep(4)
 
     # TODO: except general error

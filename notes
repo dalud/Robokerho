@@ -23,6 +23,12 @@ bluetoothctl devices
 bluetoothctl paired-devices
 bluetoothctl connect [MAC:ADDRESS]
 
+BTs:
+name=Marina
+bt=00:42:79:1E:CF:3F
+name=Tortsua
+bt=6C:47:60:5C:F3:DA
+
 MPI3508:
 git clone https://ww.github.com/goodtft/LCD-show.git
 chmod -R 755 LCD-show
