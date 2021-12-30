@@ -1,9 +1,23 @@
 # Environment
 [env]
+<<<<<<< HEAD
 name=Veke
 #bt=6C:47:60:5C:F3:DA
 dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
 robo=veke
+=======
+<<<<<<< HEAD
+name=Marina
+bt=00:42:79:1E:CF:3F
+dir=/home/pi/robokerho/samples/marina/
+robo=marina
+=======
+name=Tortsua
+bt=6C:47:60:5C:F3:DA
+dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
+robo=ile
+>>>>>>> parent of bf7dc5d... Delete config
+>>>>>>> 723e7f2f49809dc9d78ef8df5a375cb56b89dd8e
 
 # Hardware
 [hw]

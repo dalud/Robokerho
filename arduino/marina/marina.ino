@@ -1,26 +1,24 @@
-#include <Servo.h>
-#include <AccelStepper.h>
-
 String command;
 
-Servo mouth;
-int scalar = 90; // 90 for continuous, 0 for standard 180*d
-
-AccelStepper shoulder_R(1, 8, 9);
-
-int dly = 1; // Universal delay. Scale down to speed motor functions up
-float pause = .3; // Audio amplitude interpreted as silence
+int dly = 10; // Universal delay. Scale down to speed motor functions up
+float pause = 10; // Audio amplitude interpreted as silence
+int amp;
+// Kädet
+int ko = 10;
+int kv = 11;
 
 
 void setup() {
  Serial.begin(9600);
  
  pinMode(LED_BUILTIN, OUTPUT);
- pinMode(4, OUTPUT);
+ // pinMode(8, OUTPUT); // Niskat
+ // pinMode(9, OUTPUT); // Polvi
+ pinMode(ko, OUTPUT);
+ pinMode(kv, OUTPUT);
+ digitalWrite(ko, LOW);
+ digitalWrite(kv, LOW);
  
- shoulder_R.setMaxSpeed(5000); //SPEED = Steps / second  
- shoulder_R.setAcceleration(1000); //ACCELERATION = Steps /(second)^2    
- shoulder_R.setSpeed(1500);
  delay(500);
 }
 
@@ -31,39 +29,40 @@ void loop(){
   // Serial.println(command);
   String cmd = command.substring(0,2);
   
-  if(cmd == "ml") {
-    moveMouth('L', command.substring(2).toInt());
-    // checkStepperDir(shoulder_R, 2000);
-    moveStepper(shoulder_R, 2000);
+  if(cmd == "mo") { // Move Others
+    // movePolvi();
+    moveKadet();
+    
+    // Move niskat only when speaking
+    amp = command.substring(2).toInt();
+    if (amp > pause) {
+      // moveNiskat();
+    }
+  } else {
+    resetAll();
   }
-
-  // Serial.println(shoulder_R.currentPosition());
 
   delay(dly);
 }
 
-void moveMouth(char channel, int pos) {  
-  switch(channel) {
-    case('L'):
-      if(mouth.attached()) mouth.write(pos+scalar);
-      break;
-  }
+void resetAll() {
+  digitalWrite(LED_BUILTIN, LOW);
+  // digitalWrite(8, LOW);
+  // digitalWrite(9, LOW);
+  digitalWrite(ko, LOW);
+  digitalWrite(kv, LOW);
 }
 
-void moveStepper(AccelStepper motor, long maxPos) {
-  // Serial.println(motor.currentPosition());
-  // motor.enableOutputs();
-  motor.runSpeed();
-  // Serial.println(shoulder_R.currentPosition());
-  // motor.disableOutputs();
+void movePolvi() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(9, HIGH);
 }
 
-void checkStepperDir(AccelStepper motor, long maxPos) {
-  Serial.println("Checking pos:" + motor.currentPosition());
-  if(motor.currentPosition() > maxPos) {
-    motor.setSpeed(-1500);
-  }
-  if(motor.currentPosition() < 0) {
-    motor.setSpeed(1500);    
-  }
+void moveNiskat() {
+  digitalWrite(8, HIGH);
+}
+
+void moveKadet() {
+  digitalWrite(ko, HIGH);
+  digitalWrite(kv, HIGH);
 }
