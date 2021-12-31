@@ -10,8 +10,11 @@ class Arduino:
     
     def connect(self):        
         while(not self.arduino):
-            try:                
+            try:
+                for port in list_ports.comports():
+                    print(port)
                 self.arduino = serial.Serial(str(list_ports.comports()[self.i]).split()[0], 9600, timeout=1)
+                #self.arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
                 print('Arduino:', arduino)
             except:
                 print('Connecting Arduino via USB. i =', self.i)

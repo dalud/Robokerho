@@ -23,14 +23,20 @@ bluetoothctl devices
 bluetoothctl paired-devices
 bluetoothctl connect [MAC:ADDRESS]
 
+BTs:
+name=Marina
+bt=00:42:79:1E:CF:3F
+name=Tortsua
+bt=6C:47:60:5C:F3:DA
+
 MPI3508:
 git clone https://ww.github.com/goodtft/LCD-show.git
 chmod -R 755 LCD-show
 sudo dpkg -i xinput-calibartor...
 
 UI:
-sudo python -m pip install pysimplegui
-(muista käynnistää python3.x:llä)
+sudo python3.# -m pip install pysimplegui
+(muista käynnistää python3.#:llä)
 
 UI starter script:
 sudo apt-get install xorg openbox

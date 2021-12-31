@@ -27,7 +27,7 @@ parser.read('/home/pi/robokerho/config')
 layout = [[ui.Text("Robohemian: "+parser.get('env', 'name'), font="arial 16 bold")],
           [ui.Button("CONFIG", button_color="orange"), ui.Button("RUN", button_color="green"), ui.Button("STOP", button_color="brown"), ui.Button("EXIT")],
           [ui.Multiline(reroute_stdout=True, reroute_stderr=True, auto_refresh=True, autoscroll=True, expand_x=True, expand_y=True, no_scrollbar=True)]]
-window = ui.Window("Robohemian: "+parser.get('env', 'name'), layout, size=(420, 320), default_button_element_size=(15, 6), auto_size_buttons=False, resizable=True)
+window = ui.Window("Robohemian: "+parser.get('env', 'name'), layout, size=(420, 320), default_button_element_size=(11, 3), auto_size_buttons=False, resizable=True)
 
 # Helpers
 def start(cmd):
@@ -55,7 +55,7 @@ while True:
     if event == "STOP":
         start(['killall', 'python3'])
         if process:
-            process.stdout.close()
+            #process.stdout.close()
             process.send_signal(signal.SIGTERM)
             
     if event == "EXIT" or event == ui.WIN_CLOSED:
