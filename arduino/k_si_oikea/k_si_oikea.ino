@@ -1,9 +1,9 @@
 #include <AccelStepper.h>
 
 AccelStepper shoulder(1, 8, 9);
-int sh = -4000; // Motor max
+int sh = 4000; // Motor max
 AccelStepper spreader(1, 10, 11);
-int sp = 3000;
+int sp = -2500;
 AccelStepper elbow(1, 12, 13);
 int speedo = 2000;
 int accel = 1500;

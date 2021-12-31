@@ -4,7 +4,7 @@
 String command;
 int dly = 250;
 bool debug = false;
-// bool debug = true;
+//bool debug = true;
 
 // Kaula moottorit
 Servo kaula_L;
@@ -33,7 +33,7 @@ void loop() {
   // Debug using serial commands
   if(debug) {
     // Monitor input
-    Serial.println(digitalRead(2));
+    // Serial.println(digitalRead(2));
     if (Serial.available()) {
       command = Serial.readStringUntil('\n');    
     }

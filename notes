@@ -33,5 +33,7 @@ sudo python -m pip install pysimplegui
 (muista käynnistää python3.x:llä)
 
 UI starter script:
+sudo apt-get install xorg openbox
+sudo apt-get install openbox obconf
 https://raspberrypi.stackexchange.com/questions/98944/launch-a-gui-tkinter-program-on-boot
 	(starter script OK, don't use crontab -e)

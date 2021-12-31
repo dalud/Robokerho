@@ -1,11 +1,2 @@
-Tortsua:
-- eyes Y
-
-Veke:
-- ei liikuta silmiäX ?
-
-selectBT:
-Tortsua ei connect terminaalista?
-
-GPIO:
-Default LOW?
+Veke
+- ctrl-C -keskeytys
