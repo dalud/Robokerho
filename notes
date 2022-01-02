@@ -28,6 +28,8 @@ name=Marina
 bt=00:42:79:1E:CF:3F
 name=Tortsua
 bt=6C:47:60:5C:F3:DA
+Himassa:
+bt=00:18:91:DA:76:52 #BT-03
 
 MPI3508:
 git clone https://ww.github.com/goodtft/LCD-show.git
