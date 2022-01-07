@@ -28,6 +28,8 @@ name=Marina
 bt=00:42:79:1E:CF:3F
 name=Tortsua
 bt=6C:47:60:5C:F3:DA
+Himassa:
+bt=00:18:91:DA:76:52 #BT-03
 
 MPI3508:
 git clone https://ww.github.com/goodtft/LCD-show.git
@@ -39,5 +41,7 @@ sudo python3.# -m pip install pysimplegui
 (muista käynnistää python3.#:llä)
 
 UI starter script:
+sudo apt-get install xorg openbox
+sudo apt-get install openbox obconf
 https://raspberrypi.stackexchange.com/questions/98944/launch-a-gui-tkinter-program-on-boot
 	(starter script OK, don't use crontab -e)
