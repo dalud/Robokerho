@@ -1,10 +1,11 @@
 #include <AccelStepper.h>
 
 AccelStepper shoulder(1, 8, 9);
-int sh = 4000; // Motor max
+int sh = 3000; // Motor max
 AccelStepper spreader(1, 10, 11);
-int sp = -2500;
+int sp = -3500;
 AccelStepper elbow(1, 12, 13);
+int e = -3500; // -6000 = rälläkkä
 int speedo = 2000;
 int accel = 1500;
 int speedo_elbow = 5000;
@@ -106,7 +107,7 @@ void loop() {
   }
   if(command == "e") { // Elbow
     // if(logita) Serial.println(elbow.currentPosition());
-    elbow.moveTo(-6000);
+    elbow.moveTo(e);
     elbow.run();
   }
   if(command == "1") { // Poses
