@@ -11,6 +11,7 @@ from threading import Thread
 
 # Helpers
 flush = sys.stdout.flush
+ON_POSIX = 'posix' in sys.builtin_module_names
 
 # Init Wlan
 wlan = Wlan()
@@ -22,18 +23,15 @@ arduino.connect()
 flush()
 
 def signal_term_handler(signal, frame):
-    print("SIGTERM")
-    wlan.stop()
     resetMotors()
-    sys.exit()
+    print("STOPPED")
+    start(['sudo', 'kill', '-9', str(os.getpid())])
     stop()
-    start(['killall', 'python3'])
-
+    
 signal.signal(signal.SIGTERM, signal_term_handler)
-#signal.signal(signal.SIGINT, signal_term_handler)
+signal.signal(signal.SIGINT, signal_term_handler)
 
 def speak(amp):
-    #print("MEikä puhhuu" + amp)
     arduino.write('mm' + amp) # Kädet integrated into mm ?
     arduino.write('ex' + amp)
     # Kaulat
@@ -44,12 +42,9 @@ def speak(amp):
     if(random() < .2):
         arduino.write('b')
         sleep(.3)
-    #arduino.write('')
+
 
 def resetMotors():
-    #arduino.write('kv' + str(90))
-    #arduino.write('ko' + str(90))
-    #arduino.write('mm' + str(0))
     arduino.write('ex' + str(500))
     arduino.write('z')
     arduino.write('')
@@ -63,48 +58,26 @@ def start(cmd):
     t.start()
 
 def stop():
-    print("User exit")
-    flush()     
-    resetMotors()    
+    print("STOPPED")    
+    wlan.stop()
+    resetMotors()
     sys.exit()
-    os.kill(os.getpid(), signal.SIGINT)
-    os.kill(os.getpid(), signal.SIGTERM)
-    start(['killall', 'python3'])
-    flush()
+    start(['sudo', 'kill', '-9', str(os.getpid())])
+
 
 # Main loop
-#while(True):    
-    #flush()
-    #try:
-        #hear = wlan.listen()
-        #if("veke" in hear[0].decode()):
-            #print("Nyt meikä")
-            #speak(hear[0].decode().split(':')[1])
-            #flush()
-        #else:
-            #resetMotors()
-while(True):
+while True:
     flush()
     try:
-        wlan.broadcast('snoozing')
-
-        if not wlan.listen():
+        if("veke" in wlan.listen()[0].decode()):
+            speak(wlan.listen()[0].decode().split(':')[1])
             flush()
         else:
-            hear = wlan.listen()
-            if("veke" in hear[0].decode()):
-                print("Nyt meikä")
-                speak(hear[0].decode().split(':')[1])
-                flush()
-            else:
-                resetMotors()
-
+            resetMotors()
+    
     except KeyboardInterrupt:
         print("Keyboard interrupt")
-        resetMotors()
-        wlan.stop()
         stop()
-        start(['killall', 'python3'])
 
     except:
-        resetMotors()
+        pass

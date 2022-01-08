@@ -1,4 +1,12 @@
 from socket import *
+import signal
+import sys
+
+def signal_term_handler(signal, frame):
+    print("SIGTERM from wlan")
+    sys.exit()
+
+signal.signal(signal.SIGTERM, signal_term_handler)
 
 class Wlan:
     def listen(self):
@@ -12,6 +20,9 @@ class Wlan:
                 print('Hear:', hear)
                 hear = ear.recvfrom(1024)
                 return hear
+        except KeyboardInterrupt:
+            print("Keyboard interrupt")
+            sys.exit()
         except:
             print('I hear nothing')
             #return 0
@@ -27,3 +38,8 @@ class Wlan:
         except:
             pass
         mouth.close()
+
+    def stop(self):
+        kill = socket(AF_INET, SOCK_DGRAM)
+        kill.close()
+        
