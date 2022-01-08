@@ -12,7 +12,7 @@ Autoexec:
 /etc/profile
 	sudo chown pi /dev/tty2 (tty0, tty1, ?)
 	cd robokerho
-	xinit ./starter
+	(sudo) xinit ./starter
 
 PulseAudio:
 pacmd list-sinks
@@ -43,5 +43,6 @@ sudo python3.# -m pip install pysimplegui
 UI starter script:
 sudo apt-get install xorg openbox
 sudo apt-get install openbox obconf
+sudo chmod +x starter
 https://raspberrypi.stackexchange.com/questions/98944/launch-a-gui-tkinter-program-on-boot
 	(starter script OK, don't use crontab -e)

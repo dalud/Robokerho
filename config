@@ -5,5 +5,10 @@ name=Veke
 dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
 robo=veke
 
+#name=Marina
+#bt=00:42:79:1E:CF:3F
+#dir=/home/pi/robokerho/samples/marina/
+#robo=marina
+
 # Hardware
 [hw]
