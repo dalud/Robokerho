@@ -1,7 +1,7 @@
 String command;
 
 int dly = 10; // Universal delay. Scale down to speed motor functions up
-float pause = 10; // Audio amplitude interpreted as silence
+float pause = 75; // Audio amplitude interpreted as silence
 int amp;
 // Kädet
 int ko = 10;
@@ -12,8 +12,8 @@ void setup() {
  Serial.begin(9600);
  
  pinMode(LED_BUILTIN, OUTPUT);
- // pinMode(8, OUTPUT); // Niskat
- // pinMode(9, OUTPUT); // Polvi
+ pinMode(8, OUTPUT); // Niskat
+ pinMode(9, OUTPUT); // Polvi
  pinMode(ko, OUTPUT);
  pinMode(kv, OUTPUT);
  digitalWrite(ko, LOW);
@@ -30,13 +30,13 @@ void loop(){
   String cmd = command.substring(0,2);
   
   if(cmd == "mo") { // Move Others
-    // movePolvi();
+    movePolvi();
     moveKadet();
     
     // Move niskat only when speaking
     amp = command.substring(2).toInt();
     if (amp > pause) {
-      // moveNiskat();
+      moveNiskat();
     }
   } else {
     resetAll();
@@ -47,8 +47,8 @@ void loop(){
 
 void resetAll() {
   digitalWrite(LED_BUILTIN, LOW);
-  // digitalWrite(8, LOW);
-  // digitalWrite(9, LOW);
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
   digitalWrite(ko, LOW);
   digitalWrite(kv, LOW);
 }
