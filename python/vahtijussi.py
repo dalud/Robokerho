@@ -6,10 +6,6 @@ import signal
 # Helpers
 flush = sys.stdout.flush
 
-# Read config
-conf = configparser.ConfigParser()
-conf.read('/home/pi/robokerho/config')
-
 # Init Wlan
 wlan = Wlan()
 flush()
@@ -24,8 +20,10 @@ signal.signal(signal.SIGINT, signal_term_handler)
 
 # Main loop
 while(True):
-    #wlan.listen()
+    wlan.listen()
     cmd = input("Master:")
-    print(cmd)
-    wlan.broadcast(cmd)
+    if cmd:
+        wlan.broadcast('jussi:' + cmd)
+    else:
+        wlan.broadcast('jussi:' + 'NO')
     flush()
