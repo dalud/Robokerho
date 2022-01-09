@@ -81,6 +81,7 @@ while(True):
     flush()
     try:
         wlan.broadcast('snoozing')
+        flush()
 
         if not wlan.listen():
             flush()
