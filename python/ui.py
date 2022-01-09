@@ -50,15 +50,15 @@ while True:
         start(['killall', 'python3'])
         if not process:
             if (parser.get('env', 'robo') == 'veke'):
-                start(['python3', '/home/pi/robokerho/python/veke.py'])
+                start(['python3', '/home/pi/robokerho/python/veke_2.py'])
             else:
                 start(['python3', '/home/pi/robokerho/python/robohemian.py'])
 
-    if event == "STOP":
+    if event == "STOP":        
         start(['killall', 'python3'])
         if process:
             process.stdout.close()
-            process.send_signal(signal.SIGTERM)
+            process.send_signal(signal.SIGTERM)        
 
     if event == "REBOOT":
         start(['sudo', 'reboot'])
