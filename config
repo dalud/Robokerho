@@ -1,9 +1,12 @@
 # Environment
 [env]
-name=Veke
-#bt=6C:47:60:5C:F3:DA
+name=Tortsua
 dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
-robo=veke
+bt=6C:47:60:5C:F3:DA
+robo=ile
+
+#name=Veke
+#robo=veke
 
 #name=Marina
 #bt=00:42:79:1E:CF:3F

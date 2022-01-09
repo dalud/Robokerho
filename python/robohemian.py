@@ -13,6 +13,7 @@ import signal
 
 # Helpers
 flush = sys.stdout.flush
+go = False
 
 # Read config
 conf = configparser.ConfigParser()
@@ -78,16 +79,27 @@ def speak():
 
 # Main loop
 while(True):
+    print(go)
     flush()
     try:
-        wlan.broadcast('snoozing')
+        hear = wlan.listen()
+        if hear and 'GO' in hear[0].decode():
+            print("Nyt!" + hear[0].decode())
+            go = True
+        if hear and 'NO' in hear[0].decode():
+            print("Ei enää" + hear[0].decode())
+            go = False
         flush()
 
-        if not wlan.listen():
-            flush()
+        if go and not wlan.listen():
             speak()
             flush()
             sleep(4)
+
+        #if not wlan.listen():
+            #flush()            
+            #flush()
+            #sleep(4)
 
     # TODO: except general error
     except KeyboardInterrupt:
