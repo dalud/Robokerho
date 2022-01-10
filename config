@@ -1,17 +1,17 @@
 # Environment
 [env]
-name=Tortsua
-dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
-bt=6C:47:60:5C:F3:DA
-robo=ile
+#name=Tortsua
+#dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
+#bt=6C:47:60:5C:F3:DA
+#robo=ile
 
 #name=Veke
 #robo=veke
 
-#name=Marina
-#bt=00:42:79:1E:CF:3F
-#dir=/home/pi/robokerho/samples/marina/
-#robo=marina
+name=Marina
+bt=00:42:79:1E:CF:3F
+dir=/home/pi/robokerho/samples/marina/
+robo=marina
 
 # Hardware
 [hw]

@@ -1,6 +1,11 @@
 from socket import *
 import signal
 import sys
+import configparser
+
+# Read config
+conf = configparser.ConfigParser()
+conf.read('/home/pi/robokerho/config')
 
 def signal_term_handler(signal, frame):
     print("SIGTERM from wlan")
@@ -8,17 +13,24 @@ def signal_term_handler(signal, frame):
 
 signal.signal(signal.SIGTERM, signal_term_handler)
 
+# Select robo
+robo = conf.get('env', 'robo')
+
 class Wlan:
     def listen(self):
         ear = socket(AF_INET, SOCK_DGRAM)    
         ear.bind(('', 12345))
-        ear.settimeout(3)
+
+        if(robo == 'marina'):
+            ear.settimeout(1)
+        else:
+            ear.settimeout(3)
+        
         try:
             hear = ear.recvfrom(1024)
 
             while ("playing" in hear[0].decode()) or ("veke" in hear[0].decode()) or ("jussi" in hear[0].decode()):
                 print('Hear:', hear)
-                #hear = ear.recvfrom(1024)
                 return hear
         except KeyboardInterrupt:
             print("Keyboard interrupt")

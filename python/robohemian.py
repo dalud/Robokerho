@@ -88,20 +88,15 @@ while(True):
             go = True
         if hear and 'NO' in hear[0].decode():
             print("Ei enää" + hear[0].decode())
+            robo.resetMotors()
             go = False
         flush()
 
         if go and not wlan.listen():
             speak()
             flush()
-            sleep(4)
+            sleep(10)
 
-        #if not wlan.listen():
-            #flush()            
-            #flush()
-            #sleep(4)
-
-    # TODO: except general error
     except KeyboardInterrupt:
         print("User exit")
         sound.stop()
