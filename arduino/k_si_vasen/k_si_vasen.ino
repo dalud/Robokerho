@@ -5,6 +5,7 @@ int sh = -3000; // Motor max
 AccelStepper spreader(1, 10, 11);
 int sp = 3000;
 AccelStepper elbow(1, 12, 13);
+int e = 8000; // -6000 rälläkkä
 int speedo = 2000;
 int accel = 1500;
 int speedo_elbow = 5000;
@@ -38,8 +39,8 @@ void setup() {
   } else maxi = 10000;
 
   // Run in debug mode
-  //debug = true;
-  debug = false;
+  debug = true;
+  // debug = false;
 
   //Stepper parameters
   //setting up some default values for maximum speed and maximum acceleration
@@ -106,7 +107,7 @@ void loop() {
   }
   if(command == "e") { // Elbow
     // if(logita) Serial.println(elbow.currentPosition());
-    elbow.moveTo(-6000);
+    elbow.moveTo(e);
     elbow.run();
   }
   if(command == "1") { // Poses
@@ -164,7 +165,7 @@ void pose(int pose) {
       shoulder.run();
       spreader.moveTo(0);
       spreader.run();
-      elbow.moveTo(-6000);
+      elbow.moveTo(e);
       elbow.run();
       break;
     case 4:
@@ -180,7 +181,7 @@ void pose(int pose) {
       shoulder.run();
       spreader.moveTo(0);
       spreader.run();
-      elbow.moveTo(-6000);
+      elbow.moveTo(e);
       elbow.run();
       break;
     case 6:
@@ -188,7 +189,7 @@ void pose(int pose) {
       shoulder.run();
       spreader.moveTo(sp);
       spreader.run();
-      elbow.moveTo(-6000);
+      elbow.moveTo(e);
       elbow.run();
       break;
     case 7:
@@ -196,7 +197,7 @@ void pose(int pose) {
       shoulder.run();
       spreader.moveTo(sp);
       spreader.run();
-      elbow.moveTo(-6000);
+      elbow.moveTo(e);
       elbow.run();
       break;
   }

@@ -1,9 +1,19 @@
 # Environment
 [env]
+<<<<<<< HEAD
 name=Vahti-Jussi
 #bt=6C:47:60:5C:F3:DA
 dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
 robo=ile
+=======
+name=Tortsua
+dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
+bt=6C:47:60:5C:F3:DA
+robo=ile
+
+#name=Veke
+#robo=veke
+>>>>>>> 4950e60112095132b51d8523985879d7faeb9aed
 
 #name=Marina
 #bt=00:42:79:1E:CF:3F
