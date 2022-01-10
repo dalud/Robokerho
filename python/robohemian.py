@@ -84,12 +84,8 @@ while(True):
     try:
         hear = wlan.listen()
         if hear and 'GO' in hear[0].decode():
-            print("Nyt!" + hear[0].decode())
-            flush()
             go = True
         if hear and 'NO' in hear[0].decode():
-            print("Ei enää" + hear[0].decode())
-            flush()
             robo.resetMotors()
             go = False
 
