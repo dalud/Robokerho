@@ -22,9 +22,9 @@ class Wlan:
         ear.bind(('', 12345))
 
         if(robo == 'marina'):
-            ear.settimeout(1)
+            ear.settimeout(2)
         else:
-            ear.settimeout(3)
+            ear.settimeout(1)
         
         try:
             hear = ear.recvfrom(1024)
