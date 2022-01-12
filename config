@@ -9,7 +9,7 @@
 #robo=veke
 
 name=Marina
-bt=00:42:79:1E:CF:3F
+bt=D8:37:3B:8F:CD:DE
 dir=/home/pi/robokerho/samples/marina/
 robo=marina
 

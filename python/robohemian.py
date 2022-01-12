@@ -13,7 +13,7 @@ import signal
 
 # Helpers
 flush = sys.stdout.flush
-go = False
+go = True
 
 # Read config
 conf = configparser.ConfigParser()
@@ -49,11 +49,14 @@ flush()
 
 def signal_term_handler(signal, frame):
     print("STOPPED")
+    flush()
     sound.stop()
     robo.resetMotors()
     sys.exit()
+    start(['sudo', 'kill', '-9', str(os.getpid())])
 
 signal.signal(signal.SIGTERM, signal_term_handler)
+signal.signal(signal.SIGINT, signal_term_handler)
 
 def speak():
     # Pick random sample
@@ -79,7 +82,7 @@ def speak():
 
 # Main loop
 while(True):
-    print(go)
+    print("Aktiv: ", go)
     flush()
     try:
         hear = wlan.listen()
@@ -92,7 +95,7 @@ while(True):
         if go and not wlan.listen():
             speak()
             flush()
-            sleep(1)
+            sleep(20)
 
     except KeyboardInterrupt:
         print("User exit")

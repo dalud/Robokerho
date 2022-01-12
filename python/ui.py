@@ -25,7 +25,7 @@ parser.read('/home/pi/robokerho/config')
 
 # Build UI
 layout = [[ui.Text("Robohemian: "+parser.get('env', 'name'), font="arial 16 bold")],
-          [ui.Button("CONFIG", button_color="orange"), ui.Button("RUN", button_color="green"), ui.Button("STOP", button_color="brown"), ui.Button("REBOOT")],
+          [ui.Button("CONFIG", button_color="orange"), ui.Button("RUN", button_color="green"), ui.Button("STOP", button_color="brown"), ui.Button("SHUTDOWN")],
           [ui.Multiline(reroute_stdout=True, reroute_stderr=True, auto_refresh=True, autoscroll=True, expand_x=True, expand_y=True, no_scrollbar=True)]]
 window = ui.Window("Robohemian: "+parser.get('env', 'name'), layout, size=(420, 320), default_button_element_size=(11, 4), auto_size_buttons=False, resizable=True)
 
@@ -60,8 +60,8 @@ while True:
             process.stdout.close()
             process.send_signal(signal.SIGTERM)        
 
-    if event == "REBOOT":
-        start(['sudo', 'reboot'])
+    if event == "SHUTDOWN":
+        start(['sudo', 'shutdown', 'now'])
 
     if event == ui.WIN_CLOSED:
         start(['killall', 'python3'])
