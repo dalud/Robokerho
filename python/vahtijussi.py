@@ -20,7 +20,7 @@ signal.signal(signal.SIGINT, signal_term_handler)
 
 # Main loop
 while(True):
-    #wlan.listen()
+    wlan.listen()
     cmd = input("Master:")
     if cmd:
         wlan.broadcast('jussi:' + cmd)

@@ -24,3 +24,7 @@ class Arduino:
         self.arduino.write(msg.encode())
         self.arduino.write('\n'.encode())
         #sleep(.01)
+
+    def read(self):
+        return self.arduino.readline()
+        #sleep(1)

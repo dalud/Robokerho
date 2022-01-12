@@ -76,7 +76,8 @@ def speak():
                 wlan.broadcast('veke:' + str(robo.vekeActive(stream)))
                 robo.resetMotors() # Make sure none get locked HIGH
             else:
-                wlan.broadcast('playing:' + samples[alea])
+                wlan.broadcast('master:' + samples[alea])
+                #wlan.broadcast('Vahti-Jussi:' + samples[alea])
                 flush()
     robo.resetMotors()
 

@@ -1,5 +1,8 @@
 # Environment
 [env]
+name=Vahti-Jussi
+robo=ile
+
 #name=Tortsua
 #dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
 #bt=6C:47:60:5C:F3:DA
