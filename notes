@@ -10,6 +10,7 @@ sudo git clone https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library.git
 
 Autoexec:
 /etc/profile
+	pulseaudio -D
 	sudo chown pi /dev/tty2 (tty0, tty1, ?)
 	cd robokerho
 	(sudo) xinit ./starter
@@ -25,7 +26,7 @@ bluetoothctl connect [MAC:ADDRESS]
 
 BTs:
 name=Marina
-bt=00:42:79:1E:CF:3F
+bt=D8:37:3B:8F:CD:DE
 name=Tortsua
 bt=6C:47:60:5C:F3:DA
 Himassa:

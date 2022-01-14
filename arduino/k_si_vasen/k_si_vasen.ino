@@ -3,9 +3,9 @@
 AccelStepper shoulder(1, 8, 9);
 int sh = -3000; // Motor max
 AccelStepper spreader(1, 10, 11);
-int sp = 3000;
+int sp = 1000;
 AccelStepper elbow(1, 12, 13);
-int e = 8000; // -6000 rälläkkä
+int e = 1500; // -6000 rälläkkä
 int speedo = 2000;
 int accel = 1500;
 int speedo_elbow = 5000;
@@ -30,7 +30,7 @@ void setup() {
   digitalWrite(LED_BUILTIN, LOW);
   
   // activate debug logging
-   logita = false;
+  logita = false;
   //logita = true;
   // kiekka < maxi = loop speed
   // with log, set kiekka lower
@@ -39,8 +39,8 @@ void setup() {
   } else maxi = 10000;
 
   // Run in debug mode
-  debug = true;
-  // debug = false;
+  //debug = true;
+  debug = false;
 
   //Stepper parameters
   //setting up some default values for maximum speed and maximum acceleration
