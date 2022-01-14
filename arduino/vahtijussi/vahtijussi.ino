@@ -11,8 +11,10 @@ void loop() {
     if(!digitalRead(2)) {
       Serial.println(1);
       digitalWrite(LED_BUILTIN, HIGH);
+      delay(2000);
     } else {
-      Serial.println(0);
+      //Serial.println(0);      
       digitalWrite(LED_BUILTIN, LOW);
+      delay(100);
     }
 }

@@ -31,6 +31,9 @@ name=Tortsua
 bt=6C:47:60:5C:F3:DA
 Himassa:
 bt=00:18:91:DA:76:52 #BT-03
+Hirvi?
+bt=D8:37:3B:8F:7A:0C
+
 
 MPI3508:
 git clone https://ww.github.com/goodtft/LCD-show.git

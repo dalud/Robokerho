@@ -13,7 +13,7 @@ import signal
 
 # Helpers
 flush = sys.stdout.flush
-go = False
+go = True
 
 # Read config
 conf = configparser.ConfigParser()
@@ -49,11 +49,14 @@ flush()
 
 def signal_term_handler(signal, frame):
     print("STOPPED")
+    flush()
     sound.stop()
     robo.resetMotors()
     sys.exit()
+    start(['sudo', 'kill', '-9', str(os.getpid())])
 
 signal.signal(signal.SIGTERM, signal_term_handler)
+signal.signal(signal.SIGINT, signal_term_handler)
 
 def speak():
     # Pick random sample
@@ -73,37 +76,31 @@ def speak():
                 wlan.broadcast('veke:' + str(robo.vekeActive(stream)))
                 robo.resetMotors() # Make sure none get locked HIGH
             else:
-                wlan.broadcast('playing:' + samples[alea])
+                wlan.broadcast('master:' + samples[alea])
+                #wlan.broadcast('Vahti-Jussi:' + samples[alea])
                 flush()
     robo.resetMotors()
 
 # Main loop
 while(True):
-    print(go)
+    print("Aktiv: ", go)
     flush()
     try:
         hear = wlan.listen()
         if hear and 'GO' in hear[0].decode():
-            print("Nyt!" + hear[0].decode())
             go = True
         if hear and 'NO' in hear[0].decode():
-            print("Ei enää" + hear[0].decode())
+            robo.resetMotors()
             go = False
-        flush()
 
         if go and not wlan.listen():
             speak()
             flush()
-            sleep(4)
+            sleep(20)
 
-        #if not wlan.listen():
-            #flush()            
-            #flush()
-            #sleep(4)
-
-    # TODO: except general error
     except KeyboardInterrupt:
         print("User exit")
+        flush()
         sound.stop()
         robo.resetMotors()
         sys.exit()
