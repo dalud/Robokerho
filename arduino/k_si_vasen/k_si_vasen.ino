@@ -3,9 +3,9 @@
 AccelStepper shoulder(1, 8, 9);
 int sh = -3000; // Motor max
 AccelStepper spreader(1, 10, 11);
-int sp = 1000;
+int sp = 2000;
 AccelStepper elbow(1, 12, 13);
-int e = 1500; // -6000 rälläkkä
+int e = 2500; // -6000 rälläkkä
 int speedo = 2000;
 int accel = 1500;
 int speedo_elbow = 5000;
