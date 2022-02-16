@@ -10,6 +10,7 @@ sudo git clone https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library.git
 
 Autoexec:
 /etc/profile
+	pulseaudio -D
 	sudo chown pi /dev/tty2 (tty0, tty1, ?)
 	cd robokerho
 	(sudo) xinit ./starter
@@ -25,11 +26,14 @@ bluetoothctl connect [MAC:ADDRESS]
 
 BTs:
 name=Marina
-bt=00:42:79:1E:CF:3F
+bt=D8:37:3B:8F:CD:DE
 name=Tortsua
 bt=6C:47:60:5C:F3:DA
 Himassa:
 bt=00:18:91:DA:76:52 #BT-03
+Hirvi?
+bt=D8:37:3B:8F:7A:0C
+
 
 MPI3508:
 git clone https://ww.github.com/goodtft/LCD-show.git
