@@ -1,7 +1,7 @@
 # Environment
 [env]
-name=Vahti-Jussi
-robo=ile
+#name=Vahti-Jussi
+#robo=ile
 
 #name=Tortsua
 #dir=/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/
@@ -12,7 +12,9 @@ robo=ile
 #robo=veke
 
 name=Marina
-bt=D8:37:3B:8F:CD:DE
+#bt=D8:37:3B:8F:CD:DE
+#bt=00:18:91:DA:76:52
+bt=D8:37:3B:8F:7A:0C
 dir=/home/pi/robokerho/samples/marina/
 robo=marina
 
