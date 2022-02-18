@@ -23,7 +23,7 @@ int trimval;
 int switchval = 0;
 
 // Outputs
-int suu = 8;
+int suu = 8;w
 int niskat = 9;
 int kasi_o = 10;
 int kasi_v = 11;
