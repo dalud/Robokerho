@@ -50,3 +50,7 @@ sudo apt-get install openbox obconf
 sudo chmod +x starter
 https://raspberrypi.stackexchange.com/questions/98944/launch-a-gui-tkinter-program-on-boot
 	(starter script OK, don't use crontab -e)
+
+VIDEO:
+pip install python-vlc
+
