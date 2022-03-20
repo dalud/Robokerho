@@ -19,5 +19,3 @@ def speak():
 
 while True:
     listen()
-
-
