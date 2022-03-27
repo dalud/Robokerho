@@ -105,16 +105,16 @@ while(True):
             mile = 22000
             if(time>mile and time<(mile+chunk)): scene2()
 
-            # 0:40 (0:60!)
-            mile = 60000
+            # 0:40
+            mile = 56000#40000
             if(time>mile and time<(mile+chunk)): scene3()
 
             # 1:04
-            mile = 121000
+            mile = 104000
             if(time>mile and time<(mile+chunk)): scene4()
 
             # 1:34
-            mile = 151000
+            mile = 131000
             if(time>mile and time<(mile+chunk)): scene5()
 
             # 2:43
@@ -122,7 +122,7 @@ while(True):
             if(time>mile and time<(mile+chunk)): scene6()
 
             # 4:05
-            mile = 245000
+            mile = 247500
             if(time>mile and time<(mile+chunk)): scene7()
 
             # 7:08
@@ -130,11 +130,11 @@ while(True):
             if(time>mile and time<(mile+chunk)): scene8()
 
             # 7:28
-            mile = 448000
+            mile = 450000
             if(time>mile and time<(mile+chunk)): scene9()
 
             # 8:14
-            mile = 494000
+            mile = 497000
             if(time>mile and time<(mile+chunk)): scene10()
 
             # 8:50
@@ -142,11 +142,11 @@ while(True):
             if(time>mile and time<(mile+chunk)): scene11()
 
             # 9:46
-            mile = 586000
+            mile = 587000
             if(time>mile and time<(mile+chunk)): scene12()
 
             # 10:40
-            mile = 640000
+            mile = 636000
             if(time>mile and time<(mile+chunk)): scene13()
         
     except KeyboardInterrupt:
