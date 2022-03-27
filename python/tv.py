@@ -7,7 +7,8 @@ import sys
 flush = sys.stdout.flush
 
 # Init video
-video = Video("/home/pi/robokerho/samples/video/sample_1280x720_surfing_with_audio.mp4")
+#video = Video("/home/pi/robokerho/samples/video/sample_1280x720_surfing_with_audio.mp4")
+video = Video("/home/pi/robokerho/samples/video/Unheroic_labours_2_h264_AdobeCreativeCloudExpress.mp4")
 video.play()
 
 # Init Wlan
