@@ -1,7 +1,8 @@
 from wlanIF import Wlan
 import sys
 from time import sleep
-
+from soundIF import Sound
+        
 
 # Helpers
 flush = sys.stdout.flush
@@ -10,63 +11,77 @@ flush = sys.stdout.flush
 wlan = Wlan()
 flush()
 
+# Init Sound
+sound = Sound()
+flush()
+
+
 # Scenes
 def scene1():
-    print("###########################")
-    print("THE OCEAN BLAA BLAA BLAA...")
-    print("###########################")
+    sound.play('/home/pi/robokerho/samples/stockholm/0_00.wav')
+    while sound.active(): print("scene1: playing 0:00")
     flush()
-    sleep(1)
 
 def scene2():
-    print("#################################")
-    print("TÄMÄ ON HYVÄ BIISI, BY THE WAY...")
-    print("#################################")
+    sound.play('/home/pi/robokerho/samples/stockholm/0_22.wav')
+    while sound.active(): print("scene2: playing 0:22")
     flush()
-    sleep(3)
-    print("###################")
-    print("- NIIN MUUTEN ONKI!")
-    print("###################")
-    flush()
-    sleep(1)
-
 
 def scene3():
-    print("############")
-    print("WHO ARE YOU?")
-    print("############")
+    sound.play('/home/pi/robokerho/samples/stockholm/0_40.wav')
+    while sound.active(): print("scene3: playing 0:40")
     flush()
-    sleep(1)
-    print("################")
-    print("WHO AM I TO YOU?")
-    print("################")
-    flush()
-    sleep(1)
-        
+    
 def scene4():
-    print("#########")
-    print("DELFIINI!")
-    print("#########")
+    sound.play('/home/pi/robokerho/samples/stockholm/1_04_2.wav')
+    while sound.active(): print("scene4: playing 1:04 (2)")
     flush()
-    sleep(1)
 
 def scene5():
-    print("####################")
-    print("KIVA TÄMÄ VIULUSOOLO")
-    print("####################")
+    sound.play('/home/pi/robokerho/samples/stockholm/1_34.wav')
+    while sound.active(): print("scene5: playing 1:34")
     flush()
-    sleep(5)
-    print("###############")
-    print("- NIIN KYLLÄ ON")
-    print("###############")
-    flush()
-    sleep(2)
-    print("###########")
-    print("- TOSI KIVA")
-    print("###########")
-    flush()
-    sleep(1)
 
+def scene6():
+    sound.play('/home/pi/robokerho/samples/stockholm/2_43.wav')
+    while sound.active(): print("scene6: playing 2:43")
+    flush()
+
+def scene7():
+    sound.play('/home/pi/robokerho/samples/stockholm/4_05.wav')
+    while sound.active(): print("scene7: playing 4:05")
+    flush()
+
+def scene8():
+    print("scene8: playing 7:08")
+    sound.play('/home/pi/robokerho/samples/stockholm/7_08.wav')
+    while sound.active(): print("scene8: playing 7:08")
+    flush()
+
+def scene9():
+    sound.play('/home/pi/robokerho/samples/stockholm/7_28.wav')
+    while sound.active(): print("scene9: playing 7:28")
+    flush()
+
+def scene10():
+    sound.play('/home/pi/robokerho/samples/stockholm/8_14.wav')
+    while sound.active(): print("scene10: playing 8:14")
+    flush()
+
+def scene11():
+    sound.play('/home/pi/robokerho/samples/stockholm/8_50.wav')
+    while sound.active(): print("scene11: playing 8:50")
+    flush()
+
+def scene12():
+    sound.play('/home/pi/robokerho/samples/stockholm/9_46.wav')
+    while sound.active(): print("scene12: playing 9:46")
+    flush()
+
+def scene13():
+    sound.play('/home/pi/robokerho/samples/stockholm/10_40.wav')
+    while sound.active(): print("scene13: playing 10:40")
+    flush()
 
 
 # Main loop
@@ -80,27 +95,59 @@ while(True):
             except: continue
 
             # Milestones (what is a good chunk length?)
-            chunk = 500
+            chunk = 2000
 
-            # The Ocean
-            mile = 10500
+            # 0:00
+            mile = 100
             if(time>mile and time<(mile+chunk)): scene1()
 
-            # The Song
-            mile = 23000
+            # 0:22
+            mile = 22000
             if(time>mile and time<(mile+chunk)): scene2()
 
-            # The Chorus
-            mile = 47500
+            # 0:40 (0:60!)
+            mile = 60000
             if(time>mile and time<(mile+chunk)): scene3()
 
-            # The Dolphin
-            mile = 74000
+            # 1:04
+            mile = 121000
             if(time>mile and time<(mile+chunk)): scene4()
 
-            # The Solo
-            mile = 115000
+            # 1:34
+            mile = 151000
             if(time>mile and time<(mile+chunk)): scene5()
+
+            # 2:43
+            mile = 163000
+            if(time>mile and time<(mile+chunk)): scene6()
+
+            # 4:05
+            mile = 245000
+            if(time>mile and time<(mile+chunk)): scene7()
+
+            # 7:08
+            mile = 428000
+            if(time>mile and time<(mile+chunk)): scene8()
+
+            # 7:28
+            mile = 448000
+            if(time>mile and time<(mile+chunk)): scene9()
+
+            # 8:14
+            mile = 494000
+            if(time>mile and time<(mile+chunk)): scene10()
+
+            # 8:50
+            mile = 530000
+            if(time>mile and time<(mile+chunk)): scene11()
+
+            # 9:46
+            mile = 586000
+            if(time>mile and time<(mile+chunk)): scene12()
+
+            # 10:40
+            mile = 640000
+            if(time>mile and time<(mile+chunk)): scene13()
         
     except KeyboardInterrupt:
         print("User exit")
