@@ -8,7 +8,7 @@ class Video:
     def play(self):
         self.media.play()
         self.media.toggle_fullscreen()
-        #self.media.set_position(.65)
+        #self.media.set_position(.6)
 
     def time(self):
         if self.media.is_playing(): return self.media.get_time()

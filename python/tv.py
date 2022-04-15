@@ -7,7 +7,6 @@ import sys
 flush = sys.stdout.flush
 
 # Init video
-#video = Video("/home/pi/robokerho/samples/video/sample_1280x720_surfing_with_audio.mp4")
 video = Video("/home/pi/robokerho/samples/video/Unheroic_labours_2_h264_AdobeCreativeCloudExpress.mp4")
 video.play()
 
@@ -18,59 +17,8 @@ flush()
 while True:
     if video.time():
         print(video.time(), "(", int(video.time()/60000), ":", int(video.time()%60000/1000), ")")
-        wlan.broadcast('TV:' + str(video.time()))#str(robo.vekeActive(stream)))
+        wlan.broadcast('TV:' + str(video.time()))
         flush()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
