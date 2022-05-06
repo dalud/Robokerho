@@ -30,7 +30,7 @@ class Wlan:
         try:
             hear = ear.recvfrom(1024)
 
-            while ("playing" in hear[0].decode()) or ("veke" in hear[0].decode()) or ("jussi" in hear[0].decode() or ("TV" in hear[0].decode())):
+            while ("playing" in hear[0].decode()) or ("veke" in hear[0].decode()) or ("jussi" in hear[0].decode() or ("TV" in hear[0].decode()) or ("VIDEO" in hear[0].decode())):
                 print('Hear:', hear)
                 return hear
         except KeyboardInterrupt:
