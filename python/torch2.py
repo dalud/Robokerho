@@ -65,7 +65,7 @@ def speak(sample):
 def adlib():
     global lap
 
-    if lap > 1:
+    if lap >= 2:
         print("TV päälle!")
         wlan.broadcast("VIDEO")
         sleep(1)
@@ -186,7 +186,8 @@ while(True):
         hear = wlan.listen()
         if hear and 'TV' in hear[0].decode():
             # Watch TV with parsed time code
-            watch(int(hear[0].decode().split(':')[1]))
+            if hear[0].decode().split(':')[1]:
+                watch(int(hear[0].decode().split(':')[1]))
         else: adlib()
     except KeyboardInterrupt:
         print("User exit")
