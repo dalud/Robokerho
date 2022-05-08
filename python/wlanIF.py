@@ -25,7 +25,7 @@ class Wlan:
             #ear.settimeout(2)
         #else:
             #ear.settimeout(1)
-        ear.settimeout(1)
+        ear.settimeout(2)
         
         try:
             hear = ear.recvfrom(1024)

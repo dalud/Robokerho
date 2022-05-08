@@ -70,10 +70,9 @@ def adlib():
         wlan.broadcast("VIDEO")
         sleep(1)
         wlan.broadcast("VIDEO")
-        sleep(3)
+        sleep(2)
         lap = 0
     else:
-        print("Nyt meikä improvisoi...")
         if not wlan.listen():
             # Pick random sample
             alea = (int)(random()*len(samples))
@@ -87,7 +86,7 @@ def adlib():
 # Watch TV and react
 def watch(time):
             # Milestones
-            chunk = 2000 # window of opportunity to proc scene
+            chunk = 3000 # window of opportunity to proc scene
 
             # 0:06
             mile = 5000
@@ -137,46 +136,57 @@ def watch(time):
 def scene1():
     speak('/home/pi/robokerho/samples/tukholma3/0_06.wav')
     flush()
+    sleep(1)
 
 def scene2():
     speak('/home/pi/robokerho/samples/tukholma3/1_17.wav')
     flush()
+    sleep(1)
 
 def scene3():
     speak('/home/pi/robokerho/samples/tukholma3/1_57.wav')
     flush()
+    sleep(1)
     
 def scene4():
     speak('/home/pi/robokerho/samples/tukholma3/2_42.wav')
     flush()
+    sleep(1)
 
 def scene5():
     speak('/home/pi/robokerho/samples/tukholma3/4_24.wav')
     flush()
+    sleep(1)
 
 def scene6():
     speak('/home/pi/robokerho/samples/tukholma3/5_18.wav')
     flush()
+    sleep(1)
 
 def scene7():
     speak('/home/pi/robokerho/samples/tukholma3/5_46.wav')
     flush()
+    sleep(1)
 
 def scene8():
     speak('/home/pi/robokerho/samples/tukholma3/6_48.wav')
     flush()
+    sleep(1)
 
 def scene9():
     speak('/home/pi/robokerho/samples/tukholma3/8_15.wav')
     flush()
+    sleep(1)
 
 def scene10():
     speak('/home/pi/robokerho/samples/tukholma3/9_47.wav')
     flush()
+    sleep(1)
 
 def scene11():
     speak('/home/pi/robokerho/samples/tukholma3/10_38.wav')
     flush()
+    sleep(2)
 
 
 # Main loop
