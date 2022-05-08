@@ -14,6 +14,7 @@ import signal
 # Helpers
 flush = sys.stdout.flush
 lap = 0
+dir = '/home/pi/robokerho/samples/tukholma4'
 
 # Get samples for adlib program
 samples = os.listdir("/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan")
@@ -134,57 +135,57 @@ def watch(time):
 
 # Scenes
 def scene1():
-    speak('/home/pi/robokerho/samples/tukholma3/0_06.wav')
+    speak(dir + '/0_06.wav')
     flush()
     sleep(1)
 
 def scene2():
-    speak('/home/pi/robokerho/samples/tukholma3/1_17.wav')
+    speak(dir + '/1_17.wav')
     flush()
     sleep(1)
 
 def scene3():
-    speak('/home/pi/robokerho/samples/tukholma3/1_57.wav')
+    speak(dir + '/1_57.wav')
     flush()
     sleep(1)
     
 def scene4():
-    speak('/home/pi/robokerho/samples/tukholma3/2_42.wav')
+    speak(dir + '/2_42.wav')
     flush()
     sleep(1)
 
 def scene5():
-    speak('/home/pi/robokerho/samples/tukholma3/4_24.wav')
+    speak(dir + '/4_24.wav')
     flush()
     sleep(1)
 
 def scene6():
-    speak('/home/pi/robokerho/samples/tukholma3/5_18.wav')
+    speak(dir + '/5_18.wav')
     flush()
     sleep(1)
 
 def scene7():
-    speak('/home/pi/robokerho/samples/tukholma3/5_46.wav')
+    speak(dir + '/5_46.wav')
     flush()
     sleep(1)
 
 def scene8():
-    speak('/home/pi/robokerho/samples/tukholma3/6_48.wav')
+    speak(dir + '/6_48.wav')
     flush()
     sleep(1)
 
 def scene9():
-    speak('/home/pi/robokerho/samples/tukholma3/8_15.wav')
+    speak(dir + '/8_15.wav')
     flush()
     sleep(1)
 
 def scene10():
-    speak('/home/pi/robokerho/samples/tukholma3/9_47.wav')
+    speak(dir + '/9_47.wav')
     flush()
     sleep(1)
 
 def scene11():
-    speak('/home/pi/robokerho/samples/tukholma3/10_38.wav')
+    speak(dir + '/10_38.wav')
     flush()
     sleep(2)
 
