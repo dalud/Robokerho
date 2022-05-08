@@ -24,11 +24,11 @@ def play():
         sleep(1)
 
     while video.is_playing():
-        print(video.time(), "(", int(video.time()/60000), ":", int(video.time()%60000/1000), ")")
+        #if video.time(): print(video.time(), "(", int(video.time()/60000), ":", int(video.time()%60000/1000), ")")
         if video.time():
             wlan.broadcast('TV:' + str(video.time()))
             flush()
-            sleep(.5)
+            sleep(.4)
         if video.get_position() > .98:
             video.stop()
 

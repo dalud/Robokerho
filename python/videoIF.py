@@ -6,9 +6,10 @@ class Video:
         print("Media set:", media)
 
     def play(self):
+        #self.media.set_position(.94)
         self.media.play()
+        self.media.set_position(0)
         self.media.set_fullscreen(1)
-        self.media.set_position(.94)
 
     def time(self):
         if self.media.is_playing(): return self.media.get_time()
