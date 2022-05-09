@@ -17,7 +17,8 @@ lap = 0
 dir = '/home/pi/robokerho/samples/tukholma4'
 
 # Get samples for adlib program
-samples = os.listdir("/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan")
+randoms = "/home/pi/robokerho/samples/tukholma_random/"
+samples = os.listdir("/home/pi/robokerho/samples/tukholma_random")
 print(samples)
 flush()
 
@@ -79,7 +80,7 @@ def adlib():
             alea = (int)(random()*len(samples))
 
             # Play the sample
-            speak("/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/"+samples[alea])
+            speak(randoms +samples[alea])
             flush()
             lap = lap+1
             sleep(2)
