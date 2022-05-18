@@ -13,11 +13,15 @@ import signal
 
 # Helpers
 flush = sys.stdout.flush
-lap = 0
+lap = 0 # Lap count for adLib rounds
+tresh = 2 # Max laps before video start
+played = [] # Collect played randoms in an array
 dir = '/home/pi/robokerho/samples/tukholma4'
 
 # Get samples for adlib program
+#randoms = "/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan/"
 randoms = "/home/pi/robokerho/samples/tukholma_random/"
+#samples = os.listdir("/home/pi/robokerho/samples/ile/Hurjajutut_LeftRightPan")
 samples = os.listdir("/home/pi/robokerho/samples/tukholma_random")
 print(samples)
 flush()
@@ -52,6 +56,7 @@ def speak(sample):
     
     while sound.active():
         with sound.stream() as stream:
+            print("LAP:", lap)
             robo.speak(stream, sample)
             flush()
 
@@ -65,25 +70,13 @@ def speak(sample):
 
 # Adlib a random sample
 def adlib():
-    global lap
+    # Pick random sample
+    alea = (int)(random()*len(samples))
 
-    if lap >= 2:
-        print("TV päälle!")
-        wlan.broadcast("VIDEO")
-        sleep(1)
-        wlan.broadcast("VIDEO")
-        sleep(2)
-        lap = 0
-    else:
-        if not wlan.listen():
-            # Pick random sample
-            alea = (int)(random()*len(samples))
-
-            # Play the sample
-            speak(randoms +samples[alea])
-            flush()
-            lap = lap+1
-            sleep(2)
+    # Play the sample
+    speak(randoms +samples[alea])
+    flush()
+    sleep(1)
 
 # Watch TV and react
 def watch(time):
@@ -186,6 +179,8 @@ def scene10():
     sleep(1)
 
 def scene11():
+    global lap
+    lap = 0
     speak(dir + '/10_38.wav')
     flush()
     sleep(2)
@@ -193,14 +188,29 @@ def scene11():
 
 # Main loop
 while(True):
+    print("LAP:", lap)
     flush()
+
     try:
         hear = wlan.listen()
         if hear and 'TV' in hear[0].decode():
             # Watch TV with parsed time code
             if hear[0].decode().split(':')[1]:
                 watch(int(hear[0].decode().split(':')[1]))
-        else: adlib()
+        else:
+            if not wlan.listen() and lap >= tresh:
+                print("TV päälle!")
+                wlan.broadcast("VIDEO")
+                flush()
+                sleep(1)
+                wlan.broadcast("VIDEO")
+                flush()
+                sleep(1)
+                
+            elif not wlan.listen():
+                lap = lap+1
+                adlib()
+                    
     except KeyboardInterrupt:
         print("User exit")
         flush()
