@@ -1,8 +1,10 @@
 [Desktop Entry]
 Type=Application
 Name=ROBO
-Exec=/usr/bin/python3.9 /home/pi/robokerho/python/ui.py
+Exec=xterm -hold -e '/usr/bin/python3.9 /home/pi/robokerho/python/ui.py'
 
 Name[en_US]=ROBO.desktop
-Terminal=true
-StartupNotify=true
+Terminal=false
+StartupNotify=false
+Name[fi_FI]=ROBO.desktop
+

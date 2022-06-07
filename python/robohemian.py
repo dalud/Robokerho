@@ -22,6 +22,7 @@ conf.read('/home/pi/robokerho/config')
 # Get samples
 dir = conf.get('env', 'dir')
 samples = os.listdir(dir)
+played = []
 print(samples)
 flush()
 
@@ -62,6 +63,15 @@ def speak():
     # Pick random sample
     alea = (int)(random()*len(samples))
 
+    # Don't repeat yourself
+    while played.count(alea):
+        print("Täytyy arpoa uus...")
+        alea = (int)(random()*len(samples))
+        if len(played) == len(samples):
+            print("Kaikki meni jo!")
+            played.clear()
+            #sleep(3)
+
     # Play the sample
     sound.play(dir+samples[alea])
     #sound.play('/home/pi/robokerho/samples/marina/14 llave.wav')
@@ -76,7 +86,7 @@ def speak():
                 wlan.broadcast('veke:' + str(robo.vekeActive(stream)))
                 robo.resetMotors() # Make sure none get locked HIGH
             else:
-                wlan.broadcast('master:' + samples[alea])
+                wlan.broadcast('playing:' + samples[alea])
                 #wlan.broadcast('Vahti-Jussi:' + samples[alea])
                 flush()
     robo.resetMotors()
@@ -88,15 +98,18 @@ while(True):
     try:
         hear = wlan.listen()
         if hear and 'GO' in hear[0].decode():
+            print("Nyt pitäis aktivoitua")
+            sleep(1)
             go = True
         if hear and 'NO' in hear[0].decode():
             robo.resetMotors()
+            print("Nyt pitäis passivoitua")
             go = False
 
         if go and not wlan.listen():
             speak()
             flush()
-            sleep(20)
+            sleep(15)
 
     except KeyboardInterrupt:
         print("User exit")

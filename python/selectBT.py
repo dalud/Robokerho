@@ -38,7 +38,7 @@ try:
                 flush()
                 break
 
-        print("Bluetooth connection successful!")
+        print("BLUETOOTH CONNECTION SUCCESSFUL!")
         print("================================")
         flush()
 
@@ -53,7 +53,7 @@ try:
                 print(sinkReturn)
 
                 if not "not" in sinkReturn:
-                    print("Sink", i, "selected successfully!")
+                    print("SINK", i, "SELECTED SUCCESSFULLY!")
                     print("=============================")
                     flush()
                     break
