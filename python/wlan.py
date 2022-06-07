@@ -4,8 +4,11 @@ from socket import *
 def listen():
     ear = socket(AF_INET, SOCK_DGRAM)
     ear.bind(('', 12345))
-    data = ear.recvfrom(1024)    
-    print('I hear:', data)
+    ear.settimeout(1)
+    try:
+        data = ear.recvfrom(1024)    
+        if data: print('I hear:', data)
+    except: print("I hear nothing...")
 
 # Speak
 def speak():
@@ -16,5 +19,3 @@ def speak():
 
 while True:
     listen()
-
-

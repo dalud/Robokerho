@@ -1,18 +1,16 @@
-// Tortsua eyes (USB from Rasp)
-
-#include <Stepper.h>
+#include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
+#include <Servo.h>
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-// Utils
-String command; // The whole serial read
+String command; // Whole serial read
 String cmd; // First 2 chars parsed
-const int dly = 10;
+int dly = 10;
 
 // Eyes
-int xval = 500;
-int yval = 500;
+int xval;
+int yval;
 int lexpulse;
 int rexpulse;
 int leypulse;
@@ -22,60 +20,68 @@ int lolidpulse;
 int trimval;
 int switchval = 0;
 
-// Outputs
-int suu = 8;w
-int niskat = 9;
-int kasi_o = 10;
-int kasi_v = 11;
+// Servos
+Servo mouth;
 
+// Outputs
+int kaula = 3;
+int ko = 8; // Kädet
+int kv = 9; 
 
 void setup() {
   Serial.begin(9600);
-
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
-
-  pinMode(suu, OUTPUT);
-  digitalWrite(suu, LOW);
-  pinMode(niskat, OUTPUT);
-  digitalWrite(niskat, LOW);
-  pinMode(kasi_o, OUTPUT);
-  digitalWrite(kasi_o, LOW);
-  pinMode(kasi_v, OUTPUT);
-  digitalWrite(kasi_v, LOW);
  
-  // Silmät
-  pwm.begin();
-  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates   
+  pwm.begin();  
+  pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates
+
+  mouth.attach(2);
+  
+  // Kaula
+  pinMode(kaula, OUTPUT);
+  digitalWrite(kaula, LOW);
+
+  // Kädet
+  pinMode(ko, OUTPUT);
+  digitalWrite(ko, LOW);
+  pinMode(kv, OUTPUT);
+  digitalWrite(kv, LOW);
   
   delay(dly);
 }
 
 
-void loop(){  
+void loop() {
+  // Serial cmd
   if (Serial.available()) {
-    command = Serial.readStringUntil('\n');    
-    //Serial.println(command);
-    //delay(10);
+    command = Serial.readStringUntil('\n');
     cmd = command.substring(0,2);
+    delay(dly);
   }
 
   if(cmd == "z") {
-    resetOthers();
+    resetMotors();
   }
 
-  // Eyes
-  if(cmd == "ex") { // Eye X    
+  if(cmd == "mm") {
+    moveMouth(command.substring(2).toInt());
+    moveArms();
+  }  
+  
+  if(cmd == "ex") { // Eye X
     xval = command.substring(2).toInt();
     // 0-1023 (lepo = 500)
     if(xval < 0) xval = 0;
     if(xval > 1023) xval = 1023;
+  } else {
+    xval = 500;
   }
   if(cmd == "ey") { // Eye Y
     yval = command.substring(2).toInt();
     // 0-1023 (lepo = 500)
     if(yval < 0) yval = 0;
     if(yval > 1023) yval = 1023;
+  } else {
+    yval = 500;
   }
   if(cmd == "li") { // Lids trimval (0-1023, 0 = auki, 1023 = kiinni)
     trimval = command.substring(2).toInt();
@@ -87,12 +93,30 @@ void loop(){
   } else {
     switchval = HIGH;
   }
-  if(cmd == "mo") { // Move others
-    moveOthers();
+  
+  if(cmd == "kv") {
+    moveKaula();
   }
-  moveEyes();
-  // resetOthers();
 
+  moveEyes();      
+  delay(dly);
+}
+
+void resetMotors() {
+  digitalWrite(kaula, LOW);
+  digitalWrite(ko, LOW);
+  digitalWrite(kv, LOW);
+  delay(dly);
+}
+
+void moveMouth(int pos) {
+  if(mouth.attached()) mouth.write(pos+90);
+  delay(dly);
+}
+
+void moveArms() {
+  digitalWrite(ko, HIGH);
+  digitalWrite(kv, HIGH);
   delay(dly);
 }
 
@@ -120,28 +144,15 @@ void moveEyes() {
   // Blink
   if (switchval == LOW) {
     pwm.setPWM(4, 0, uplidpulse);
-    pwm.setPWM(5, 0, lolidpulse); 
+    pwm.setPWM(5, 0, lolidpulse);
   } else if (switchval == HIGH) {
     pwm.setPWM(4, 0, 240);
-    pwm.setPWM(5, 0, 240);      
-  }      
+    pwm.setPWM(5, 0, 240);
+  }
   delay(dly);
 }
 
-void moveOthers() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  digitalWrite(suu, HIGH);
-  digitalWrite(niskat, HIGH);  
-  digitalWrite(kasi_o, HIGH);
-  digitalWrite(kasi_v, HIGH);
-  delay(dly);
-}
-
-void resetOthers() {
-  digitalWrite(LED_BUILTIN, LOW);
-  digitalWrite(suu, LOW);
-  digitalWrite(niskat, LOW);
-  digitalWrite(kasi_o, LOW);
-  digitalWrite(kasi_v, LOW);
+void moveKaula() {
+  digitalWrite(kaula, HIGH);
   delay(dly);
 }

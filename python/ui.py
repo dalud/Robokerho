@@ -52,7 +52,7 @@ while True:
             if (parser.get('env', 'robo') == 'veke'):
                 start(['python3', '/home/pi/robokerho/python/veke_2.py'])
             else:
-                start(['python3', '/home/pi/robokerho/python/robohemian.py'])
+                start(['python3', '/home/pi/robokerho/python/torch2.py'])
 
     if event == "STOP":        
         start(['killall', 'python3'])

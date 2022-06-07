@@ -38,8 +38,8 @@ try:
                 flush()
                 break
 
-        print("BLUETOOTH CONNECTION SUCCESSFUL!")
-        print("================================")
+        print("BLUETOOTH CONNECTED SUCCESSFULLY!")
+        print("=================================")
         flush()
 
         # Select audio sink
