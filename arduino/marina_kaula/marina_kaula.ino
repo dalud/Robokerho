@@ -32,26 +32,6 @@ void loop() {
     motor3.run(FORWARD);
     motor4.run(FORWARD);
     delay(10);
-  
-    /*delay(4000);
-    motor1.run(RELEASE);
-    motor2.run(RELEASE);
-    motor3.run(RELEASE);
-    motor4.run(RELEASE);
-    delay(200);
-    
-    motor1.run(BACKWARD);
-    motor2.run(BACKWARD);
-    motor3.run(BACKWARD);
-    motor4.run(BACKWARD);
-  
-    delay(4000);
-    motor1.run(RELEASE);
-    motor2.run(RELEASE);
-    motor3.run(RELEASE);
-    motor4.run(RELEASE);
-    delay(200);*/
-    
   } else {
     motor1.run(RELEASE);
     motor2.run(RELEASE);
