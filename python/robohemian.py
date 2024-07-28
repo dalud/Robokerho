@@ -9,6 +9,7 @@ import sys
 import configparser
 from time import sleep
 import signal
+from datetime import datetime
 
 
 # Helpers
@@ -23,6 +24,7 @@ conf.read('/home/pi/robokerho/config')
 dir = conf.get('env', 'dir')
 samples = os.listdir(dir)
 played = []
+samples.sort()
 print(samples)
 flush()
 
@@ -70,24 +72,29 @@ def speak():
         if len(played) == len(samples):
             print("Kaikki meni jo!")
             played.clear()
-            #sleep(3)
 
     # Play the sample
-    sound.play(dir+samples[alea])
-    #sound.play('/home/pi/robokerho/samples/marina/14 llave.wav')
+    #sound.play(dir+samples[alea])
+    sound.play(dir+samples[1])
+
+    # Get start time
+    st = datetime.timestamp(datetime.now())
 
     while sound.active():
+        # Calculate running time
+        rt = int(datetime.timestamp(datetime.now())-st)
+        #print(rt)
         with sound.stream() as stream:
-            robo.speak(stream, samples[alea])
+            #robo.speak(stream, samples[alea])
+            robo.speak(stream, samples[1])
             flush()
-            #wlan.broadcast('playing:' + samples[alea])
 
             if(robo.vekeActive(stream) > .4):
-                wlan.broadcast('veke:' + str(robo.vekeActive(stream)))
+                wlan.broadcast('veke:' +str(robo.vekeActive(stream)) +':' +str(rt))
                 robo.resetMotors() # Make sure none get locked HIGH
             else:
-                wlan.broadcast('playing:' + samples[alea])
-                #wlan.broadcast('Vahti-Jussi:' + samples[alea])
+                #wlan.broadcast('playing:' + samples[alea] + str(rt))
+                wlan.broadcast('playing:' +samples[1] +':' +str(rt))
                 flush()
     robo.resetMotors()
 

@@ -1,2 +1,2 @@
 Veke
-- ctrl-C -keskeytys
+- tsekkaa running time broadcastin jälkeinen toimivuus
