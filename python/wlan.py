@@ -7,7 +7,7 @@ def listen():
     ear.settimeout(1)
     try:
         data = ear.recvfrom(1024)    
-        if data: print('I hear:', data)
+        if data: print('I hear:', data[0].decode())
     except: print("I hear nothing...")
 
 # Speak
