@@ -63,19 +63,20 @@ signal.signal(signal.SIGINT, signal_term_handler)
 
 def speak():
     # Pick random sample
-    alea = (int)(random()*len(samples))
+    #alea = (int)(random()*len(samples))
+    alea = 0
 
     # Don't repeat yourself
     while played.count(alea):
         print("Täytyy arpoa uus...")
-        alea = (int)(random()*len(samples))
+        #alea = (int)(random()*len(samples))
+        alea = 0
         if len(played) == len(samples):
             print("Kaikki meni jo!")
             played.clear()
 
     # Play the sample
-    #sound.play(dir+samples[alea])
-    sound.play(dir+samples[1])
+    sound.play(dir+samples[alea])
 
     # Get start time
     st = datetime.timestamp(datetime.now())
@@ -85,16 +86,14 @@ def speak():
         rt = int(datetime.timestamp(datetime.now())-st)
         #print(rt)
         with sound.stream() as stream:
-            #robo.speak(stream, samples[alea])
-            robo.speak(stream, samples[1])
+            robo.speak(stream, samples[alea])
             flush()
 
             if(robo.vekeActive(stream) > .4):
-                wlan.broadcast('veke:' +str(robo.vekeActive(stream)) +':' +str(rt) +':' +samples[1])
+                wlan.broadcast('veke:' +str(robo.vekeActive(stream)) +':' +str(rt) +':' +samples[alea])
                 robo.resetMotors() # Make sure none get locked HIGH
             else:
-                #wlan.broadcast('playing:' + samples[alea] + str(rt))
-                wlan.broadcast('playing:' +samples[1] +':' +str(rt))
+                wlan.broadcast('playing:' +samples[alea] +':' +str(rt))
                 flush()
     robo.resetMotors()
 
