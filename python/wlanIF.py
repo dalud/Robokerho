@@ -20,20 +20,21 @@ class Wlan:
     def listen(self):
         ear = socket(AF_INET, SOCK_DGRAM)    
         ear.bind(('', 12345))
-        ear.settimeout(3)
+        ear.settimeout(1)
         
         try:
             hear = ear.recvfrom(1024)
+            #print('Hear:', hear)
 
             while ("playing" in hear[0].decode()) or ("veke" in hear[0].decode()) or ("jussi" in hear[0].decode()) or ("TV" in hear[0].decode()) or ("VIDEO" in hear[0].decode()):
-                print('Hear:', hear)
                 return hear
         except KeyboardInterrupt:
             print("Keyboard interrupt")
             sys.exit()
         except:
-            print('I hear nothing')
+            #print('I hear nothing')
             #return 0
+            return
         ear.close()
 
     # TODO: error prone if network not available
@@ -50,4 +51,3 @@ class Wlan:
     def stop(self):
         kill = socket(AF_INET, SOCK_DGRAM)
         kill.close()
-        

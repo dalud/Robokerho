@@ -1,5 +1,4 @@
 from wlanIF import Wlan
-from os import listdir
 import os
 from random import random
 from soundIF import Sound
