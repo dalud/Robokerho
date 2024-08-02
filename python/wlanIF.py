@@ -20,7 +20,7 @@ class Wlan:
     def listen(self):
         ear = socket(AF_INET, SOCK_DGRAM)    
         ear.bind(('', 12345))
-        ear.settimeout(3)
+        ear.settimeout(1)
         
         try:
             hear = ear.recvfrom(1024)
