@@ -34,7 +34,7 @@ class Ile:
             if(random() < .1):
                 self.arduino.write('b')
                 sleep(.3)
-        else:
+        else: 
             self.resetMotors()
 
     def vekeActive(self, stream):

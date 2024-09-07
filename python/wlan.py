@@ -15,7 +15,8 @@ def speak():
     print('I am speaking')
     mouth = socket(AF_INET, SOCK_DGRAM)
     mouth.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-    mouth.sendto(b'this is ...',('255.255.255.255',12345))
+    mouth.sendto(b'tok',('255.255.255.255',12345))
 
 while True:
     listen()
+    #speak()

@@ -39,7 +39,7 @@ void setup() {
   } else maxi = 10000;
 
   // Run in debug mode
-  //debug = true;
+  // debug = true;
   debug = false;
 
   //Stepper parameters

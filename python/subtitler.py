@@ -24,11 +24,11 @@ previous = ""
 while True:
     searchString = getSearchString()
     if searchString in texts and searchString != previous:
-        file = open(dir+searchString, 'r')
+        file = open(dir+searchString, 'r', encoding='utf-8')
         lines = file.readlines()
         while lines:
             hear = wlan.listen()
-            if hear:
+            if hear: 
                 time = int(hear[0].decode().split(':')[2])
                 comp = int(lines[0].split(':')[0])
                 #print(time)

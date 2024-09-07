@@ -10,10 +10,10 @@ void setup() {
   digitalWrite(LED_BUILTIN, LOW);
   
   // Input signal
-  pinMode(22, INPUT);
+  pinMode(2, INPUT);
 
   motor1.setSpeed(255);
-  motor2.setSpeed(255);
+  motor2.setSpeed(25);
   motor3.setSpeed(255);
   motor4.setSpeed(255);
   
@@ -24,7 +24,8 @@ void setup() {
 }
 
 void loop() {  
-  if(digitalRead(22)) {
+  if(digitalRead(2)) {
+  //if(true) {
     digitalWrite(LED_BUILTIN, HIGH);
     
     motor1.run(FORWARD);

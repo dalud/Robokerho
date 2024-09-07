@@ -23,10 +23,11 @@ int trimval;
 int switchval = 0;
 
 // Outputs
-int suu = 8;w
+int suu = 8;
 int niskat = 9;
 int kasi_o = 10;
 int kasi_v = 11;
+int eyes = 12;
 
 
 void setup() {
@@ -43,6 +44,8 @@ void setup() {
   digitalWrite(kasi_o, LOW);
   pinMode(kasi_v, OUTPUT);
   digitalWrite(kasi_v, LOW);
+  pinMode(eyes, OUTPUT);
+  digitalWrite(eyes, LOW);
  
   // Silmät
   pwm.begin();
@@ -134,6 +137,7 @@ void moveOthers() {
   digitalWrite(niskat, HIGH);  
   digitalWrite(kasi_o, HIGH);
   digitalWrite(kasi_v, HIGH);
+  digitalWrite
   delay(dly);
 }
 
@@ -143,5 +147,5 @@ void resetOthers() {
   digitalWrite(niskat, LOW);
   digitalWrite(kasi_o, LOW);
   digitalWrite(kasi_v, LOW);
-  delay(dly);
+  delay(100);
 }

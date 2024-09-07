@@ -69,6 +69,6 @@ void resetOthers() {
   digitalWrite(kasi_o, LOW);
   digitalWrite(kasi_v, LOW);
   digitalWrite(silmat, LOW);
-  delay(dly);
+  delay(100);
 }
   
