@@ -62,14 +62,16 @@ signal.signal(signal.SIGINT, signal_term_handler)
 
 def speak():
     # Pick random sample
-    #alea = (int)(random()*len(samples))
-    alea = 0
+    #alea = (int)(random()*len(samples))-
+    alea = (int)(random()*31)
+    #alea = 31
 
     # Don't repeat yourself
     while played.count(alea):
         print("Täytyy arpoa uus...")
         #alea = (int)(random()*len(samples))
-        alea = 0
+        alea = (int)(random()*31)
+        #alea = 31
         if len(played) == len(samples):
             print("Kaikki meni jo!")
             played.clear()
