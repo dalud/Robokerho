@@ -30,10 +30,10 @@ class Wlan:
                 return hear
         except KeyboardInterrupt:
             print("Keyboard interrupt")
+            ear.close()
             sys.exit()
         except:
             #print('I hear nothing')
-            #return 0
             return
         ear.close()
 
