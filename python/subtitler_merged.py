@@ -6,25 +6,45 @@ import os
 from time import sleep
 import sys
 import signal
+from tkinter import *
+from subprocess import Popen, PIPE
+import signal
 
 wlan = Wlan()
-flush = sys.stdout.flush
-dir = '/home/pi/robokerho/samples/transcripts/kiina/'
+dir = '/home/pi/robokerho/samples/transcripts/'
 texts = os.listdir(dir)
-br = 10 # How many line breaks to clr. Set according to font size. Obsolete if padx, pady aet?
 print(texts)
-flush()
+root = Tk()
+root.configure(bg="black", cursor="none")
+root.attributes('-fullscreen', True)
+# TODO: set correct size and pads. 4 lines is enough?
+text = Text(
+    root,
+    bg="black",
+    fg="white",
+    border=-10,
+    padx=(root.winfo_screenwidth()/10),
+    font=("Piboto", int(root.winfo_screenwidth()/31)),
+    wrap=WORD,
+    cursor="none"
+)
+text.tag_configure("center", justify='center')
+text.tag_add("center", "1.0", "end")
+text.pack(
+    expand=True,
+    fill='both',
+    pady=(root.winfo_screenheight()/3, root.winfo_screenheight()/4-10),
+)
+root.update_idletasks()
 
-def signal_term_handler(signal, frame):
-    print("SIGTERM from wlan")
-    wlan.stop()
-    sys.exit()
+# TODO: resolve interrupt for Tk.root()
 
-signal.signal(signal.SIGTERM, signal_term_handler)
+def update():
+    text.update_idletasks()
+    text.see("1.0")
 
 def getSearchString():
     hear = wlan.listen()
-    flush()
     if hear:
         searchString = "not found"
         data = hear[0].decode().split(':')
@@ -33,7 +53,6 @@ def getSearchString():
         else:
             searchString = data[1].replace('wav', 'txt')
         print(searchString)
-        flush()
         return searchString
 
 previous = ""
@@ -48,19 +67,15 @@ while True:
             if hear: 
                 time = int(hear[0].decode().split(':')[2])
                 comp = int(lines[0].split(':')[0])
-                #print(time)
+                
                 if time >= comp-0: # set reduction value to match wlan print lag
-                    #print("\n"*br)
-                    print("#CLR#")
-                    print(lines.pop(0).split(':')[1])
-                    flush()
-            try:
+                    text.delete("1.0", END)
+                    update()
+                    text.insert("1.0", lines.pop(0).split(':')[1], "center")
+                    update()
                 if lines[0].split(':')[1] == '':
                     sleep(6)
-                    #print("\n"*br)
-                    print("#CLR#")
-                    flush()
+                    text.delete("1.0", END)
+                    update()
                     break
-            except e:
-                print(e, "in", searcString)
         previous = searchString
