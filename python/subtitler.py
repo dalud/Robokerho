@@ -9,7 +9,7 @@ import signal
 
 wlan = Wlan()
 flush = sys.stdout.flush
-dir = '/home/pi/robokerho/samples/transcripts/kiina/'
+dir = '/home/pi/robokerho/samples/transcripts/'
 texts = os.listdir(dir)
 br = 10 # How many line breaks to clr. Set according to font size. Obsolete if padx, pady aet?
 print(texts)
@@ -43,6 +43,8 @@ while True:
     if searchString in texts and searchString != previous:
         file = open(dir+searchString, 'r', encoding='utf-8')
         lines = file.readlines()
+        for line in lines:
+            print(line)
         while lines:
             hear = wlan.listen()
             if hear: 
@@ -50,17 +52,13 @@ while True:
                 comp = int(lines[0].split(':')[0])
                 #print(time)
                 if time >= comp-0: # set reduction value to match wlan print lag
-                    #print("\n"*br)
-                    print("#CLR#")
-                    print(lines.pop(0).split(':')[1])
+                    line = lines.pop(0)
+                    print(line.split(':')[1])
                     flush()
-            try:
-                if lines[0].split(':')[1] == '':
-                    sleep(6)
-                    #print("\n"*br)
-                    print("#CLR#")
+                if line.split(':')[1] == '':
+                    print("Last line, yo!")
+                    print("comp:", comp)
+                    print(time)
                     flush()
                     break
-            except e:
-                print(e, "in", searcString)
         previous = searchString

@@ -33,9 +33,12 @@ text.tag_add("center", "1.0", "end")
 text.pack(
     expand=True,
     fill='both',
-    pady=(root.winfo_screenheight()/3, root.winfo_screenheight()/4-10),
+    pady=(root.winfo_screenheight()/3+42, root.winfo_screenheight()/5),
 )
-root.update_idletasks()
+
+def check():
+    print("Checking...")
+    root.after(50, check)
 
 # TODO: resolve interrupt for Tk.root()
 
@@ -56,26 +59,43 @@ def getSearchString():
         return searchString
 
 previous = ""
+#debug = "Mitä jos onkin paljon tekstiä? Esimerkiksi vaikka 4 riviä, niin mistä se alkaa? Ja mistä tietää mahtuuko se näytölle? Ja kuinka paljon laitetaan paddingiä etc. mihinki laitaan?"
 
-while True:
-    searchString = getSearchString()
-    if searchString in texts and searchString != previous:
-        file = open(dir+searchString, 'r', encoding='utf-8')
-        lines = file.readlines()
-        while lines:
-            hear = wlan.listen()
-            if hear: 
-                time = int(hear[0].decode().split(':')[2])
-                comp = int(lines[0].split(':')[0])
-                
-                if time >= comp-0: # set reduction value to match wlan print lag
-                    text.delete("1.0", END)
-                    update()
-                    text.insert("1.0", lines.pop(0).split(':')[1], "center")
-                    update()
-                if lines[0].split(':')[1] == '':
-                    sleep(6)
-                    text.delete("1.0", END)
-                    update()
-                    break
-        previous = searchString
+def quit(event):
+    print(event)
+    root.destroy()
+    sys.exit(0)
+    
+def main(previous):
+    while True:
+        try:
+            searchString = getSearchString()
+            if searchString in texts and searchString != previous:
+                file = open(dir+searchString, 'r', encoding='utf-8')
+                lines = file.readlines()
+                while lines:
+                        hear = wlan.listen()
+                        if hear:
+                            time = int(hear[0].decode().split(':')[2])
+                            comp = int(lines[0].split(':')[0])
+                                    
+                            if time >= comp:
+                                sleep(1) # set desired offset
+                                line = lines.pop(0)
+                                text.delete("1.0", END)
+                                update()
+                                text.insert("1.0", line.split(':')[1], "center")
+                                #text.insert("1.0", debug, "center")
+                                update()
+                                if line.split(':')[1] == '':
+                                    text.delete("1.0", END)
+                                    update()
+                                    break
+                        previous = searchString
+        except KeyboardInterrupt as intr:
+            quit(intr)
+        
+root.bind('<Control-c>', quit)
+root.update_idletasks()
+root.after(100, main(previous))
+root.mainloop()
