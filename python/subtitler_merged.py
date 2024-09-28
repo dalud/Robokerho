@@ -11,7 +11,7 @@ from subprocess import Popen, PIPE
 import signal
 
 wlan = Wlan()
-dir = '/home/pi/robokerho/samples/transcripts/'
+dir = '/home/pi/robokerho/samples/transcripts/kiina/'
 texts = os.listdir(dir)
 print(texts)
 root = Tk()
@@ -33,7 +33,7 @@ text.tag_add("center", "1.0", "end")
 text.pack(
     expand=True,
     fill='both',
-    pady=(root.winfo_screenheight()/3+42, root.winfo_screenheight()/5),
+    pady=(root.winfo_screenheight()/3+42, root.winfo_screenheight()/4),
 )
 
 def check():
@@ -59,7 +59,7 @@ def getSearchString():
         return searchString
 
 previous = ""
-#debug = "Mitä jos onkin paljon tekstiä? Esimerkiksi vaikka 4 riviä, niin mistä se alkaa? Ja mistä tietää mahtuuko se näytölle? Ja kuinka paljon laitetaan paddingiä etc. mihinki laitaan?"
+#debug = "Mitä jos onkin paljon tekstiä? Esimerkiksi vaikka 4 riviä, niin mistä se alkaa? Ja mistä tietää mahtuuko se näytölle? Ja kuinka paljon laitetaan paddingiä etc. mihinki laitaan? Onko olemassa vielä viideskin rivi siis?"
 
 def quit(event):
     print(event)
