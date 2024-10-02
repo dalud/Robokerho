@@ -11,13 +11,12 @@ from subprocess import Popen, PIPE
 import signal
 
 wlan = Wlan()
-dir = '/home/pi/robokerho/samples/transcripts/kiina/'
+dir = '/home/pi/robokerho/samples/transcripts/'
 texts = os.listdir(dir)
 print(texts)
 root = Tk()
 root.configure(bg="black", cursor="none")
 root.attributes('-fullscreen', True)
-# TODO: set correct size and pads. 4 lines is enough?
 text = Text(
     root,
     bg="black",
@@ -33,7 +32,7 @@ text.tag_add("center", "1.0", "end")
 text.pack(
     expand=True,
     fill='both',
-    pady=(root.winfo_screenheight()/3+42, root.winfo_screenheight()/4),
+    pady=(root.winfo_screenheight()/3+42, 0), #root.winfo_screenheight()/4),
 )
 
 def check():
