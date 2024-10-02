@@ -7,3 +7,4 @@
 /java/.idea/*
 /python/__pycache__/*
 /config
+.vscode/*

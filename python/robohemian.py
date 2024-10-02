@@ -62,18 +62,13 @@ signal.signal(signal.SIGINT, signal_term_handler)
 
 def speak():
     # Pick random sample
-    #alea = (int)(random()*len(samples))-
-    alea = (int)(random()*31)
-    #alea = 31
-
+    alea = (int)(random()*len(samples))
+    
     # Don't repeat yourself
     while played.count(alea):
-        print("Täytyy arpoa uus...")
-        #alea = (int)(random()*len(samples))
-        alea = (int)(random()*31)
-        #alea = 31
+        alea = (int)(random()*len(samples))
+        
         if len(played) == len(samples):
-            print("Kaikki meni jo!")
             played.clear()
 
     # Play the sample
@@ -85,7 +80,7 @@ def speak():
     while sound.active():
         # Calculate running time
         rt = int(datetime.timestamp(datetime.now())-st)
-        #print(rt)
+        
         with sound.stream() as stream:
             robo.speak(stream, samples[alea])
             flush()
@@ -96,6 +91,7 @@ def speak():
             else:
                 wlan.broadcast('playing:' +samples[alea] +':' +str(rt))
                 flush()
+    played.append(alea)
     robo.resetMotors()
 
 # Main loop
@@ -104,13 +100,12 @@ while(True):
     flush()
     try:
         hear = wlan.listen()
+        #Check Vahtijussi
         if hear and 'GO' in hear[0].decode():
-            print("Nyt pitäis aktivoitua")
             sleep(1)
             go = True
         if hear and 'NO' in hear[0].decode():
             robo.resetMotors()
-            print("Nyt pitäis passivoitua")
             go = False
 
         if go and not wlan.listen():
